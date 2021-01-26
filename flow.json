@@ -106,7 +106,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 490,
-        "y": 440,
+        "y": 400,
         "wires": []
     },
     {
@@ -117,7 +117,7 @@
         "statusCode": "200",
         "headers": {},
         "x": 500,
-        "y": 500,
+        "y": 460,
         "wires": []
     },
     {
@@ -151,7 +151,7 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1290,
+        "x": 1310,
         "y": 320,
         "wires": [
             [
@@ -206,7 +206,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "msg.message = msg.req.body.message.text;\nmsg.chat_id = msg.payload.message.from.id;\n\nreturn msg;",
+        "func": "if (msg.req.body.callback_query) {\n    msg.message = msg.req.body.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n} else {\n    msg.message = msg.req.body.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -216,6 +216,25 @@
         "wires": [
             [
                 "ddcb36ce.baf108"
+            ]
+        ]
+    },
+    {
+        "id": "769f8e60.75d1d",
+        "type": "http in",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "url": "/callback_query",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 380,
+        "wires": [
+            [
+                "ac7f1cdc.11adc",
+                "8b708744.7cb6f8",
+                "98632046.faae7"
             ]
         ]
     }
