@@ -261,19 +261,19 @@
                 "b48e521d.7a459"
             ],
             [
-                "a610b509.4ef3c8"
+                "2b168ecb.915b02"
             ],
             [
-                "c5950fae.522ea"
+                "84969f23.caa1"
             ],
             [
-                "555a1c6e.69d454"
+                "b50620a8.7515"
             ],
             [
-                "d62a028d.f4887"
+                "1356b19c.1cb64e"
             ],
             [
-                "a563ca4c.81c678"
+                "ce92fb67.2ac148"
             ],
             [
                 "fee03af4.838098"
@@ -294,8 +294,8 @@
         "links": [
             "20e0ef34.86f5"
         ],
-        "x": 945,
-        "y": 180,
+        "x": 1055,
+        "y": 120,
         "wires": []
     },
     {
@@ -306,8 +306,8 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 945,
-        "y": 240,
+        "x": 1055,
+        "y": 220,
         "wires": []
     },
     {
@@ -318,154 +318,20 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 945,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "a610b509.4ef3c8",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set occupation as an applicant",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Applicant' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1200,
-        "y": 360,
-        "wires": [
-            [
-                "f6a3970b.de28e8"
-            ]
-        ]
-    },
-    {
-        "id": "c5950fae.522ea",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set occupation as one of the parents",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'One of the parents' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1220,
-        "y": 420,
-        "wires": [
-            [
-                "f6a3970b.de28e8"
-            ]
-        ]
-    },
-    {
-        "id": "555a1c6e.69d454",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set occupation as a teacher",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Teacher' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1190,
-        "y": 480,
-        "wires": [
-            [
-                "f6a3970b.de28e8"
-            ]
-        ]
-    },
-    {
-        "id": "d62a028d.f4887",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set occupation as a student",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Student' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1190,
-        "y": 540,
-        "wires": [
-            [
-                "f6a3970b.de28e8"
-            ]
-        ]
-    },
-    {
-        "id": "a563ca4c.81c678",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set occupation as other",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Other' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1180,
-        "y": 600,
-        "wires": [
-            [
-                "f6a3970b.de28e8"
-            ]
-        ]
-    },
-    {
-        "id": "f6a3970b.de28e8",
-        "type": "mysql",
-        "z": "dbbd86af.74c0d8",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 1650,
-        "y": 420,
-        "wires": [
-            [
-                "91531385.957b2",
-                "81bf882c.626308"
-            ]
-        ]
-    },
-    {
-        "id": "91531385.957b2",
-        "type": "debug",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1920,
-        "y": 480,
+        "x": 1055,
+        "y": 260,
         "wires": []
     },
     {
         "id": "51ec0c6.d7d05f4",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Edit username or city",
+        "name": "Edit username or city or no",
         "links": [
             "957981a1.8fdad"
         ],
-        "x": 1085,
-        "y": 780,
-        "wires": []
-    },
-    {
-        "id": "81bf882c.626308",
-        "type": "link out",
-        "z": "dbbd86af.74c0d8",
-        "name": "Print main menu",
-        "links": [
-            "f1be3b15.c41ab8"
-        ],
-        "x": 1975,
-        "y": 420,
+        "x": 1095,
+        "y": 840,
         "wires": []
     },
     {
@@ -474,7 +340,6 @@
         "z": "dbbd86af.74c0d8",
         "name": "Print main menu command",
         "links": [
-            "3f350d21.de9482",
             "f1be3b15.c41ab8"
         ],
         "x": 1085,
@@ -487,7 +352,6 @@
         "z": "dbbd86af.74c0d8",
         "name": "Print Users data command",
         "links": [
-            "140b8a64.a34d26",
             "ede2adae.233ef"
         ],
         "x": 1085,
@@ -505,7 +369,7 @@
         "initialize": "",
         "finalize": "",
         "x": 670,
-        "y": 920,
+        "y": 640,
         "wires": [
             [
                 "ed1ef233.79d67"
@@ -523,7 +387,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1280,
-        "y": 880,
+        "y": 600,
         "wires": [
             [
                 "f99540dc.a6d2a",
@@ -545,7 +409,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 1250,
-        "y": 980,
+        "y": 700,
         "wires": [
             []
         ]
@@ -557,7 +421,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 590,
-        "y": 1060,
+        "y": 780,
         "wires": [
             [
                 "d29b3da6.dcb2f",
@@ -579,7 +443,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 710,
-        "y": 1200,
+        "y": 920,
         "wires": []
     },
     {
@@ -593,7 +457,7 @@
         "initialize": "",
         "finalize": "",
         "x": 770,
-        "y": 1020,
+        "y": 740,
         "wires": [
             [
                 "7ada2dbc.12ec34",
@@ -615,7 +479,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 990,
-        "y": 1040,
+        "y": 760,
         "wires": []
     },
     {
@@ -629,7 +493,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1610,
-        "y": 780,
+        "y": 500,
         "wires": [
             [
                 "6e40bda9.cffce4"
@@ -643,7 +507,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1810,
-        "y": 640,
+        "y": 360,
         "wires": [
             [
                 "dfd8eae3.5bcee8"
@@ -664,7 +528,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1880,
-        "y": 720,
+        "y": 440,
         "wires": []
     },
     {
@@ -678,7 +542,7 @@
         "initialize": "",
         "finalize": "",
         "x": 340,
-        "y": 1140,
+        "y": 860,
         "wires": [
             [
                 "f859dabc.d52988"
@@ -694,7 +558,7 @@
             "6f6510b5.ba06a"
         ],
         "x": 175,
-        "y": 1140,
+        "y": 860,
         "wires": [
             [
                 "66ebb3af.808c7c"
@@ -715,7 +579,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 970,
-        "y": 880,
+        "y": 600,
         "wires": [
             [
                 "5faa08f6.5806b8"
@@ -816,8 +680,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 750,
-        "y": 1480,
+        "x": 670,
+        "y": 1440,
         "wires": [
             [
                 "bd56f212.0323f"
@@ -832,8 +696,8 @@
         "links": [
             "10255fd1.dbe8"
         ],
-        "x": 485,
-        "y": 1480,
+        "x": 405,
+        "y": 1440,
         "wires": [
             [
                 "643d38df.03a4c8"
@@ -853,8 +717,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1060,
-        "y": 1480,
+        "x": 980,
+        "y": 1440,
         "wires": [
             [
                 "32bc9488.39455c"
@@ -871,8 +735,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1300,
-        "y": 1480,
+        "x": 1220,
+        "y": 1440,
         "wires": [
             [
                 "66c7218a.a9dc1"
@@ -885,8 +749,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1640,
-        "y": 1480,
+        "x": 1560,
+        "y": 1440,
         "wires": [
             [
                 "29b87cf7.8de694"
@@ -906,8 +770,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1830,
-        "y": 1520,
+        "x": 1750,
+        "y": 1480,
         "wires": []
     },
     {
@@ -920,8 +784,8 @@
             "4d10c364.bba70c",
             "fc83002f.8146f"
         ],
-        "x": 475,
-        "y": 1580,
+        "x": 395,
+        "y": 1620,
         "wires": [
             [
                 "b0e558db.fd1018"
@@ -938,8 +802,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 750,
-        "y": 1580,
+        "x": 670,
+        "y": 1620,
         "wires": [
             [
                 "7763c6a4.d3c748"
@@ -959,8 +823,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1050,
-        "y": 1580,
+        "x": 970,
+        "y": 1620,
         "wires": [
             [
                 "6d50e6ea.4d4118"
@@ -977,8 +841,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1290,
-        "y": 1580,
+        "x": 1210,
+        "y": 1620,
         "wires": [
             [
                 "3812e880.0bda88"
@@ -991,8 +855,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1650,
-        "y": 1580,
+        "x": 1570,
+        "y": 1620,
         "wires": [
             [
                 "d7c7aeb2.450db"
@@ -1012,8 +876,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1780,
-        "y": 1640,
+        "x": 1770,
+        "y": 1660,
         "wires": []
     },
     {
@@ -1092,8 +956,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2460,
-        "y": 1520,
+        "x": 2660,
+        "y": 1440,
         "wires": [
             [
                 "bdc1a1d4.37764"
@@ -1106,8 +970,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 2790,
-        "y": 1520,
+        "x": 2990,
+        "y": 1440,
         "wires": [
             [
                 "85b6a435.a2d908",
@@ -1120,13 +984,13 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Edit username ot city or no",
-        "func": "if (msg.payload[0].username && msg.payload[0].username == '/editingField3252346') {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [msg, null];\n} else if (msg.payload[0].city && msg.payload[0].city == '/editingField3252346') {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [null, msg];\n}\n\nreturn [null, null];",
+        "func": "if (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == '/editingField3252346') {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [msg, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == '/editingField3252346') {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [null, msg];\n}\n\nreturn [null, null];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 3100,
-        "y": 1520,
+        "x": 3300,
+        "y": 1440,
         "wires": [
             [
                 "17cb6e60.6123d2",
@@ -1143,8 +1007,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 3430,
-        "y": 1500,
+        "x": 3630,
+        "y": 1420,
         "wires": [
             [
                 "fc83002f.8146f"
@@ -1164,8 +1028,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2950,
-        "y": 1600,
+        "x": 3150,
+        "y": 1520,
         "wires": []
     },
     {
@@ -1181,8 +1045,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3370,
-        "y": 1560,
+        "x": 3570,
+        "y": 1480,
         "wires": []
     },
     {
@@ -1193,8 +1057,8 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 3595,
-        "y": 1500,
+        "x": 3795,
+        "y": 1420,
         "wires": []
     },
     {
@@ -1203,8 +1067,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 3430,
-        "y": 1640,
+        "x": 3630,
+        "y": 1560,
         "wires": [
             [
                 "eb6c15f.d5924e8"
@@ -1219,8 +1083,8 @@
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 3595,
-        "y": 1640,
+        "x": 3795,
+        "y": 1560,
         "wires": []
     },
     {
@@ -1231,8 +1095,8 @@
         "links": [
             "51ec0c6.d7d05f4"
         ],
-        "x": 2175,
-        "y": 1520,
+        "x": 2375,
+        "y": 1440,
         "wires": [
             [
                 "22e30d81.7d4372"
@@ -1246,7 +1110,8 @@
         "name": "",
         "links": [
             "81bf882c.626308",
-            "fee03af4.838098"
+            "fee03af4.838098",
+            "9d38cfeb.72544"
         ],
         "x": 225,
         "y": 200,
@@ -1303,8 +1168,8 @@
         "links": [
             "7e438f2.6f8737"
         ],
-        "x": 215,
-        "y": 300,
+        "x": 235,
+        "y": 400,
         "wires": [
             [
                 "f04698f.feef268"
@@ -1315,14 +1180,14 @@
         "id": "f04698f.feef268",
         "type": "function",
         "z": "276bc02d.e347",
-        "name": "Ger Users data",
+        "name": "Get Users data",
         "func": "msg.topic = 'SELECT * FROM Users;';\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 420,
-        "y": 300,
+        "x": 440,
+        "y": 400,
         "wires": [
             [
                 "6fdbc51b.0b04cc"
@@ -1335,8 +1200,8 @@
         "z": "276bc02d.e347",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 730,
-        "y": 300,
+        "x": 710,
+        "y": 400,
         "wires": [
             [
                 "ab111597.f201c8"
@@ -1353,8 +1218,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1000,
-        "y": 300,
+        "x": 1020,
+        "y": 400,
         "wires": [
             [
                 "2d4359d3.e692c6"
@@ -1374,8 +1239,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1270,
-        "y": 300,
+        "x": 1290,
+        "y": 400,
         "wires": [
             [
                 "b9256fa9.4718f"
@@ -1412,8 +1277,412 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1430,
-        "y": 340,
+        "x": 1450,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "2b168ecb.915b02",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set occupation as an applicant",
+        "links": [
+            "3272d461.c8fe5c"
+        ],
+        "x": 1135,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "84969f23.caa1",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set occupation as one of the parents",
+        "links": [
+            "84f1ccf3.e8c91"
+        ],
+        "x": 1135,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "98fdf016.8692a",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Set occupation as an applicant",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Applicant' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2110,
+        "y": 1920,
+        "wires": [
+            [
+                "4754b1d0.9aef7"
+            ]
+        ]
+    },
+    {
+        "id": "d3ef359d.63c3c8",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Set occupation as one of the parents",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'One of the parents' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2130,
+        "y": 1980,
+        "wires": [
+            [
+                "4754b1d0.9aef7"
+            ]
+        ]
+    },
+    {
+        "id": "3b455ae1.743046",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Set occupation as a teacher",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Teacher' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2100,
+        "y": 2040,
+        "wires": [
+            [
+                "4754b1d0.9aef7"
+            ]
+        ]
+    },
+    {
+        "id": "b51b9abb.ade798",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Set occupation as a student",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Student' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2100,
+        "y": 2100,
+        "wires": [
+            [
+                "4754b1d0.9aef7"
+            ]
+        ]
+    },
+    {
+        "id": "15be5938.abfe77",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Set occupation as other",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Other' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2090,
+        "y": 2160,
+        "wires": [
+            [
+                "4754b1d0.9aef7"
+            ]
+        ]
+    },
+    {
+        "id": "4754b1d0.9aef7",
+        "type": "mysql",
+        "z": "4c6874fb.68b9dc",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 2560,
+        "y": 1980,
+        "wires": [
+            [
+                "2feb8cfa.d2af34",
+                "9d38cfeb.72544"
+            ]
+        ]
+    },
+    {
+        "id": "2feb8cfa.d2af34",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2830,
+        "y": 2040,
+        "wires": []
+    },
+    {
+        "id": "9d38cfeb.72544",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Print main menu",
+        "links": [
+            "f1be3b15.c41ab8"
+        ],
+        "x": 2885,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "3272d461.c8fe5c",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "links": [
+            "2b168ecb.915b02"
+        ],
+        "x": 1835,
+        "y": 1920,
+        "wires": [
+            [
+                "98fdf016.8692a"
+            ]
+        ]
+    },
+    {
+        "id": "84f1ccf3.e8c91",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "links": [
+            "84969f23.caa1"
+        ],
+        "x": 1835,
+        "y": 1980,
+        "wires": [
+            [
+                "d3ef359d.63c3c8"
+            ]
+        ]
+    },
+    {
+        "id": "7ed591d4.8c433",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "links": [
+            "b50620a8.7515"
+        ],
+        "x": 1835,
+        "y": 2040,
+        "wires": [
+            [
+                "3b455ae1.743046"
+            ]
+        ]
+    },
+    {
+        "id": "6ef222d3.893f0c",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "links": [
+            "1356b19c.1cb64e"
+        ],
+        "x": 1835,
+        "y": 2100,
+        "wires": [
+            [
+                "b51b9abb.ade798"
+            ]
+        ]
+    },
+    {
+        "id": "b50620a8.7515",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set occupation as a teacher",
+        "links": [
+            "7ed591d4.8c433"
+        ],
+        "x": 1135,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "1356b19c.1cb64e",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set occupation as a student",
+        "links": [
+            "6ef222d3.893f0c"
+        ],
+        "x": 1135,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ce92fb67.2ac148",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set occupation as other",
+        "links": [
+            "bebaf9fd.57b3d8"
+        ],
+        "x": 1135,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "bebaf9fd.57b3d8",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "links": [
+            "ce92fb67.2ac148"
+        ],
+        "x": 1835,
+        "y": 2160,
+        "wires": [
+            [
+                "15be5938.abfe77"
+            ]
+        ]
+    },
+    {
+        "id": "3e335eba.efe392",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Setting occupation",
+        "info": "# Setting occupation",
+        "x": 1220,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3671d50b.6c473a",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Main menu",
+        "info": "",
+        "x": 1120,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "d838b14c.4ad9b",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Other messages",
+        "info": "",
+        "x": 1170,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "2debe527.475a1a",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Editing name",
+        "info": "",
+        "x": 1110,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "dc891e8a.73ae6",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting occupation",
+        "info": "",
+        "x": 1910,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "8a6485ef.e1fd08",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Start",
+        "info": "",
+        "x": 210,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "37feab15.469a44",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting username to default name",
+        "info": "",
+        "x": 1830,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "65b589a2.4e3958",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Processing other messages. Edit username or city or nothing",
+        "info": "",
+        "x": 2580,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "56b28ca1.adcfe4",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Request message to enter a new username",
+        "info": "",
+        "x": 560,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "c8d9b4ad.8ef0e8",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Request message to enter a city",
+        "info": "",
+        "x": 510,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "8b77eb06.056ff8",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Request message to choose an occupation",
+        "info": "",
+        "x": 560,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "eb6872ba.76213",
+        "type": "comment",
+        "z": "276bc02d.e347",
+        "name": "Message with main menu",
+        "info": "",
+        "x": 310,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "afe778d0.9c5708",
+        "type": "comment",
+        "z": "276bc02d.e347",
+        "name": "User data message",
+        "info": "",
+        "x": 310,
+        "y": 360,
         "wires": []
     }
 ]
