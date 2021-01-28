@@ -84,7 +84,7 @@
         "method": "POST",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/setWebhook?url=https://8e7d379ba0ea.ngrok.io/bot",
+        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/setWebhook?url=https://8b762eb5c91d.ngrok.io/bot",
         "tls": "",
         "persist": false,
         "proxy": "",
