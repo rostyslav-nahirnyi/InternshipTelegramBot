@@ -43,7 +43,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 690,
+        "x": 830,
         "y": 120,
         "wires": []
     },
@@ -57,7 +57,13 @@
                 "p": "payload"
             },
             {
-                "p": "topic",
+                "p": "ngrokUrl",
+                "v": "https://768b157b38a1.ngrok.io",
+                "vt": "str"
+            },
+            {
+                "p": "token",
+                "v": "1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw",
                 "vt": "str"
             }
         ],
@@ -68,11 +74,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 260,
+        "x": 170,
         "y": 120,
         "wires": [
             [
-                "da0d125b.5e9c9"
+                "dd86135f.e7b04"
             ]
         ]
     },
@@ -84,12 +90,12 @@
         "method": "POST",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/setWebhook?url=https://8b762eb5c91d.ngrok.io/bot",
+        "url": "",
         "tls": "",
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 490,
+        "x": 670,
         "y": 120,
         "wires": [
             [
@@ -149,7 +155,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "if (msg.req.body.callback_query) {\n    msg.message = msg.req.body.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n} else {\n    msg.message = msg.req.body.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n}\n\nreturn msg;",
+        "func": "if (msg.req.body.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n} else {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -726,55 +732,6 @@
         ]
     },
     {
-        "id": "32bc9488.39455c",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Changing username field",
-        "func": "msg.topic = \"UPDATE Users SET username = '/editingField3252346' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1220,
-        "y": 1440,
-        "wires": [
-            [
-                "66c7218a.a9dc1"
-            ]
-        ]
-    },
-    {
-        "id": "66c7218a.a9dc1",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 1560,
-        "y": 1440,
-        "wires": [
-            [
-                "29b87cf7.8de694"
-            ]
-        ]
-    },
-    {
-        "id": "29b87cf7.8de694",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1750,
-        "y": 1480,
-        "wires": []
-    },
-    {
         "id": "b0af6159.780a4",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
@@ -983,13 +940,13 @@
         "id": "85b6a435.a2d908",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Edit username ot city or no",
-        "func": "if (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == '/editingField3252346') {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [msg, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == '/editingField3252346') {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [null, msg];\n}\n\nreturn [null, null];",
-        "outputs": 2,
+        "name": "Edit username or city or nothing",
+        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
+        "outputs": 3,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 3300,
+        "x": 3310,
         "y": 1440,
         "wires": [
             [
@@ -997,7 +954,11 @@
                 "25f85bfa.c72ef4"
             ],
             [
-                "5d47b509.1bbcfc"
+                "5d47b509.1bbcfc",
+                "25f85bfa.c72ef4"
+            ],
+            [
+                "3ef99c74.081df4"
             ]
         ]
     },
@@ -1007,7 +968,7 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 3630,
+        "x": 3690,
         "y": 1420,
         "wires": [
             [
@@ -1045,7 +1006,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3570,
+        "x": 3630,
         "y": 1480,
         "wires": []
     },
@@ -1057,7 +1018,7 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 3795,
+        "x": 3855,
         "y": 1420,
         "wires": []
     },
@@ -1067,7 +1028,7 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 3630,
+        "x": 3690,
         "y": 1560,
         "wires": [
             [
@@ -1083,7 +1044,7 @@
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 3795,
+        "x": 3855,
         "y": 1560,
         "wires": []
     },
@@ -1684,5 +1645,119 @@
         "x": 310,
         "y": 360,
         "wires": []
+    },
+    {
+        "id": "29b87cf7.8de694",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1750,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "66c7218a.a9dc1",
+        "type": "mysql",
+        "z": "4c6874fb.68b9dc",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 1560,
+        "y": 1440,
+        "wires": [
+            [
+                "29b87cf7.8de694"
+            ]
+        ]
+    },
+    {
+        "id": "32bc9488.39455c",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Changing username field",
+        "func": "msg.topic = \"UPDATE Users SET username = '/editingField3252346' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1220,
+        "y": 1440,
+        "wires": [
+            [
+                "66c7218a.a9dc1"
+            ]
+        ]
+    },
+    {
+        "id": "3ef99c74.081df4",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 3510,
+        "y": 1620,
+        "wires": [
+            [
+                "72b075f6.de4fcc"
+            ]
+        ]
+    },
+    {
+        "id": "72b075f6.de4fcc",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3670,
+        "y": 1700,
+        "wires": []
+    },
+    {
+        "id": "dd86135f.e7b04",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & msg.token & \"/setWebhook?url=\" & msg.ngrokUrl & \"/bot\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "da0d125b.5e9c9"
+            ]
+        ]
     }
 ]
