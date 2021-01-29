@@ -202,12 +202,17 @@
             },
             {
                 "t": "eq",
-                "v": "/continueWithCurrentName",
+                "v": "/setCurrentName",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/changeName",
+                "v": "/setName",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "/setCity",
                 "vt": "str"
             },
             {
@@ -253,7 +258,7 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 11,
+        "outputs": 12,
         "x": 730,
         "y": 400,
         "wires": [
@@ -265,6 +270,9 @@
             ],
             [
                 "b48e521d.7a459"
+            ],
+            [
+                "67e90bd9.a1e8c4"
             ],
             [
                 "2b168ecb.915b02"
@@ -308,7 +316,7 @@
         "id": "96e4744d.d20358",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "/continueWithCurrentName",
+        "name": "/setCurrentName",
         "links": [
             "49db1ec2.c7de4"
         ],
@@ -320,7 +328,7 @@
         "id": "b48e521d.7a459",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "/changeName",
+        "name": "/setName",
         "links": [
             "407592c4.adb5ec"
         ],
@@ -387,7 +395,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response to '/start' (Appeling part)",
-        "func": "msg.payload = {\n    text: \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"/continueWithCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"/changeName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"/setCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"/setName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -597,7 +605,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Updating user name",
-        "func": "msg.topic = \"UPDATE Users SET username = '\" + msg.req.body.callback_query.from.first_name + \" \" + msg.req.body.callback_query.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "func": "if(msg.payload.callback_query) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.callback_query.from.first_name + \" \" + msg.payload.callback_query.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n} else {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.message.from.first_name + \" \" + msg.payload.message.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -616,7 +624,7 @@
         "z": "4c6874fb.68b9dc",
         "name": "",
         "links": [
-            "8a865dd0.2c13e"
+            "96e4744d.d20358"
         ],
         "x": 1725,
         "y": 1180,
@@ -680,13 +688,13 @@
         "id": "643d38df.03a4c8",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to /changeName",
+        "name": "Setting up response to /setName",
         "func": "msg.payload = {\n    text: \"Вкажіть, будь ласка, своє ім'я\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 670,
+        "x": 660,
         "y": 1440,
         "wires": [
             [
@@ -700,7 +708,7 @@
         "z": "4c6874fb.68b9dc",
         "name": "",
         "links": [
-            "10255fd1.dbe8"
+            "b48e521d.7a459"
         ],
         "x": 405,
         "y": 1440,
@@ -737,8 +745,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "",
         "links": [
-            "c5d3f4fc.547bb8",
             "4d10c364.bba70c",
+            "67e90bd9.a1e8c4",
             "fc83002f.8146f"
         ],
         "x": 395,
@@ -941,7 +949,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Edit username or city or nothing",
-        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
+        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -1018,7 +1026,7 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 3855,
+        "x": 3895,
         "y": 1420,
         "wires": []
     },
@@ -1044,7 +1052,7 @@
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 3855,
+        "x": 3895,
         "y": 1560,
         "wires": []
     },
@@ -1532,7 +1540,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1080,
+        "x": 1100,
         "y": 700,
         "wires": []
     },
@@ -1573,7 +1581,7 @@
         "name": "Start",
         "info": "",
         "x": 210,
-        "y": 800,
+        "y": 820,
         "wires": []
     },
     {
@@ -1759,5 +1767,37 @@
                 "da0d125b.5e9c9"
             ]
         ]
+    },
+    {
+        "id": "67e90bd9.a1e8c4",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Setting up city",
+        "links": [
+            "b0af6159.780a4"
+        ],
+        "x": 1055,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "15de1cc3.526003",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Setting city",
+        "info": "",
+        "x": 1110,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fdda8f0f.cc87c",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Start",
+        "info": "",
+        "x": 1060,
+        "y": 160,
+        "wires": []
     }
 ]
