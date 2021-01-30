@@ -117,8 +117,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 220,
-        "y": 400,
+        "x": 200,
+        "y": 520,
         "wires": [
             [
                 "8b708744.7cb6f8",
@@ -140,8 +140,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 450,
-        "y": 480,
+        "x": 430,
+        "y": 600,
         "wires": []
     },
     {
@@ -151,8 +151,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 460,
-        "y": 540,
+        "x": 440,
+        "y": 660,
         "wires": []
     },
     {
@@ -160,16 +160,19 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "if (msg.req.body.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n} else {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n}\n\nreturn msg;",
-        "outputs": 1,
+        "func": "if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n    \n    return [msg, null]\n} else {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg];\n}\n\n",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 440,
-        "y": 400,
+        "x": 420,
+        "y": 520,
         "wires": [
             [
                 "9cad4d0b.fc7ed"
+            ],
+            [
+                "cc8aeb38.8caae8"
             ]
         ]
     },
@@ -182,8 +185,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 180,
-        "y": 460,
+        "x": 160,
+        "y": 580,
         "wires": [
             [
                 "ac7f1cdc.11adc",
@@ -196,80 +199,67 @@
         "id": "9cad4d0b.fc7ed",
         "type": "switch",
         "z": "dbbd86af.74c0d8",
-        "name": "Commands",
+        "name": "CallBack_Query_Commands",
         "property": "message",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "/start",
+                "v": "setCurrentName",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setCurrentName",
+                "v": "setName",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setName",
+                "v": "setCity",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setCity",
+                "v": "setOccupationAsAnApplicant",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setOccupationAsAnApplicant",
+                "v": "setOccupationAsOneOfTheParents",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setOccupationAsOneOfTheParents",
+                "v": "setOccupationAsATeacher",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setOccupationAsATeacher",
+                "v": "setOccupationAsAStudent",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setOccupationAsAStudent",
+                "v": "setOccupationAsOther",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/setOccupationAsOther",
+                "v": "mainMenu",
                 "vt": "str"
             },
             {
                 "t": "eq",
-                "v": "/mainMenu",
+                "v": "printUsersInfo",
                 "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "/printUsersInfo",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "message",
-                "vt": "msg"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 12,
-        "x": 730,
-        "y": 400,
+        "outputs": 10,
+        "x": 800,
+        "y": 280,
         "wires": [
-            [
-                "2cfd1290.cbdfde"
-            ],
             [
                 "96e4744d.d20358"
             ],
@@ -299,9 +289,6 @@
             ],
             [
                 "7e438f2.6f8737"
-            ],
-            [
-                "51ec0c6.d7d05f4"
             ]
         ]
     },
@@ -313,8 +300,8 @@
         "links": [
             "20e0ef34.86f5"
         ],
-        "x": 1015,
-        "y": 200,
+        "x": 1275,
+        "y": 700,
         "wires": []
     },
     {
@@ -325,8 +312,8 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1015,
-        "y": 300,
+        "x": 1235,
+        "y": 60,
         "wires": []
     },
     {
@@ -337,8 +324,8 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1015,
-        "y": 340,
+        "x": 1235,
+        "y": 100,
         "wires": []
     },
     {
@@ -349,8 +336,8 @@
         "links": [
             "957981a1.8fdad"
         ],
-        "x": 1055,
-        "y": 920,
+        "x": 1275,
+        "y": 800,
         "wires": []
     },
     {
@@ -361,8 +348,8 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1045,
-        "y": 740,
+        "x": 1265,
+        "y": 500,
         "wires": []
     },
     {
@@ -373,8 +360,8 @@
         "links": [
             "ede2adae.233ef"
         ],
-        "x": 1045,
-        "y": 800,
+        "x": 1265,
+        "y": 560,
         "wires": []
     },
     {
@@ -400,7 +387,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response to '/start' (Appeling part)",
-        "func": "msg.payload = {\n    text: \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"/setCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"/setName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -872,7 +859,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up 'choose occupation' message",
-        "func": "msg.payload = {\n    text: \"Супер для кращого підбору FAQ виберіть свій вид зайнятості\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"/setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"/setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"/setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"/setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"/setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Супер для кращого підбору FAQ виберіть свій вид зайнятості\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1100,7 +1087,7 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message with main menu",
-        "func": "msg.payload = {\n    text: \"Ви в головному меню. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Найпопулярніші питання\",\n                callback_data: \"/printUsersInfo\"            \n            }], \n            [{\n                text: \"Про кафедру ICM\",\n                callback_data: \"/printUsersInfo\"            \n            },\n            {\n                text: \"Про НУЛП\",\n                callback_data: \"/printUsersInfo\"            \n            }],\n            [{\n                text: \"Як користуватися ботом\",\n                callback_data: \"/printUsersInfo\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Ви в головному меню. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Найпопулярніші питання\",\n                callback_data: \"printUsersInfo\"            \n            }], \n            [{\n                text: \"Про кафедру ICM\",\n                callback_data: \"printUsersInfo\"            \n            },\n            {\n                text: \"Про НУЛП\",\n                callback_data: \"printUsersInfo\"            \n            }],\n            [{\n                text: \"Як користуватися ботом\",\n                callback_data: \"printUsersInfo\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1263,8 +1250,8 @@
         "links": [
             "3272d461.c8fe5c"
         ],
-        "x": 1095,
-        "y": 480,
+        "x": 1315,
+        "y": 240,
         "wires": []
     },
     {
@@ -1275,8 +1262,8 @@
         "links": [
             "84f1ccf3.e8c91"
         ],
-        "x": 1095,
-        "y": 520,
+        "x": 1315,
+        "y": 280,
         "wires": []
     },
     {
@@ -1485,8 +1472,8 @@
         "links": [
             "7ed591d4.8c433"
         ],
-        "x": 1095,
-        "y": 560,
+        "x": 1315,
+        "y": 320,
         "wires": []
     },
     {
@@ -1497,8 +1484,8 @@
         "links": [
             "6ef222d3.893f0c"
         ],
-        "x": 1095,
-        "y": 600,
+        "x": 1315,
+        "y": 360,
         "wires": []
     },
     {
@@ -1509,8 +1496,8 @@
         "links": [
             "bebaf9fd.57b3d8"
         ],
-        "x": 1095,
-        "y": 640,
+        "x": 1315,
+        "y": 400,
         "wires": []
     },
     {
@@ -1535,8 +1522,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting occupation",
         "info": "# Setting occupation",
-        "x": 1180,
-        "y": 440,
+        "x": 1400,
+        "y": 200,
         "wires": []
     },
     {
@@ -1545,8 +1532,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1100,
-        "y": 700,
+        "x": 1320,
+        "y": 460,
         "wires": []
     },
     {
@@ -1555,8 +1542,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Other messages",
         "info": "",
-        "x": 1130,
-        "y": 880,
+        "x": 1340,
+        "y": 760,
         "wires": []
     },
     {
@@ -1565,8 +1552,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Editing name",
         "info": "",
-        "x": 1070,
-        "y": 260,
+        "x": 1290,
+        "y": 20,
         "wires": []
     },
     {
@@ -1781,8 +1768,8 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1055,
-        "y": 400,
+        "x": 1275,
+        "y": 160,
         "wires": []
     },
     {
@@ -1791,8 +1778,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting city",
         "info": "",
-        "x": 1110,
-        "y": 360,
+        "x": 1330,
+        "y": 120,
         "wires": []
     },
     {
@@ -1801,8 +1788,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 1060,
-        "y": 160,
+        "x": 1310,
+        "y": 660,
         "wires": []
     },
     {
@@ -1813,8 +1800,8 @@
         "language": "uk",
         "debug": false,
         "queryParamsOK": false,
-        "x": 1720,
-        "y": 740,
+        "x": 1560,
+        "y": 1220,
         "wires": [
             [
                 "fb926537.a7bc28"
@@ -1842,8 +1829,8 @@
         "topic": "",
         "payload": "керування продуктами іт - це",
         "payloadType": "str",
-        "x": 1400,
-        "y": 740,
+        "x": 1240,
+        "y": 1220,
         "wires": [
             [
                 "72e770f4.57eb7"
@@ -1863,8 +1850,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1870,
-        "y": 740,
+        "x": 1710,
+        "y": 1220,
         "wires": []
     },
     {
@@ -1873,8 +1860,41 @@
         "z": "dbbd86af.74c0d8",
         "name": "DialogFlow",
         "info": "",
-        "x": 1410,
-        "y": 700,
+        "x": 1250,
+        "y": 1180,
         "wires": []
+    },
+    {
+        "id": "cc8aeb38.8caae8",
+        "type": "switch",
+        "z": "dbbd86af.74c0d8",
+        "name": "Start or message",
+        "property": "message",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "/start",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "message",
+                "vt": "msg"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 790,
+        "y": 740,
+        "wires": [
+            [
+                "2cfd1290.cbdfde"
+            ],
+            [
+                "51ec0c6.d7d05f4"
+            ]
+        ]
     }
 ]
