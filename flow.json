@@ -107,8 +107,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 440,
-        "y": 620,
+        "x": 640,
+        "y": 740,
         "wires": [
             [
                 "8b708744.7cb6f8",
@@ -130,8 +130,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 670,
-        "y": 700,
+        "x": 870,
+        "y": 820,
         "wires": []
     },
     {
@@ -141,8 +141,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 680,
-        "y": 760,
+        "x": 880,
+        "y": 880,
         "wires": []
     },
     {
@@ -155,8 +155,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 660,
-        "y": 620,
+        "x": 860,
+        "y": 740,
         "wires": [
             [
                 "9cad4d0b.fc7ed"
@@ -175,8 +175,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 400,
-        "y": 680,
+        "x": 600,
+        "y": 800,
         "wires": [
             [
                 "ac7f1cdc.11adc",
@@ -189,7 +189,7 @@
         "id": "9cad4d0b.fc7ed",
         "type": "switch",
         "z": "dbbd86af.74c0d8",
-        "name": "CallBack_Query_Intents",
+        "name": "Callback_Query_Intents",
         "property": "message",
         "propertyType": "msg",
         "rules": [
@@ -237,18 +237,13 @@
                 "t": "eq",
                 "v": "mainMenu",
                 "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "printUsersInfo",
-                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 10,
-        "x": 1030,
-        "y": 380,
+        "outputs": 9,
+        "x": 1230,
+        "y": 500,
         "wires": [
             [
                 "96e4744d.d20358"
@@ -276,9 +271,6 @@
             ],
             [
                 "fee03af4.838098"
-            ],
-            [
-                "7e438f2.6f8737"
             ]
         ]
     },
@@ -290,68 +282,56 @@
         "links": [
             "20e0ef34.86f5"
         ],
-        "x": 1515,
-        "y": 800,
+        "x": 1715,
+        "y": 920,
         "wires": []
     },
     {
         "id": "96e4744d.d20358",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "/setCurrentName",
+        "name": "Set username to default name",
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1475,
-        "y": 160,
+        "x": 1675,
+        "y": 280,
         "wires": []
     },
     {
         "id": "b48e521d.7a459",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "/setName",
+        "name": "Set username",
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1475,
-        "y": 200,
+        "x": 1675,
+        "y": 320,
         "wires": []
     },
     {
         "id": "51ec0c6.d7d05f4",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Edit username or city or no",
+        "name": "Process message",
         "links": [
             "957981a1.8fdad"
         ],
-        "x": 1515,
-        "y": 900,
+        "x": 1715,
+        "y": 1020,
         "wires": []
     },
     {
         "id": "fee03af4.838098",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Print main menu command",
+        "name": "Print main menu",
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1505,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "7e438f2.6f8737",
-        "type": "link out",
-        "z": "dbbd86af.74c0d8",
-        "name": "Print Users data command",
-        "links": [
-            "ede2adae.233ef"
-        ],
-        "x": 1505,
-        "y": 660,
+        "x": 1705,
+        "y": 720,
         "wires": []
     },
     {
@@ -364,8 +344,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 670,
-        "y": 640,
+        "x": 1330,
+        "y": 740,
         "wires": [
             [
                 "5999f0ff.2e8d1"
@@ -382,8 +362,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1280,
-        "y": 600,
+        "x": 2230,
+        "y": 860,
         "wires": [
             [
                 "c005d39e.f0ac8",
@@ -397,8 +377,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 590,
-        "y": 780,
+        "x": 610,
+        "y": 860,
         "wires": [
             [
                 "d29b3da6.dcb2f",
@@ -419,22 +399,22 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 710,
-        "y": 920,
+        "x": 810,
+        "y": 940,
         "wires": []
     },
     {
         "id": "7587a0bf.151e4",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Checking user row",
+        "name": "Checking presence of user row",
         "func": "if (msg.payload.length) return [null, msg];\nelse return [msg, null];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 750,
-        "y": 720,
+        "x": 910,
+        "y": 860,
         "wires": [
             [
                 "7ada2dbc.12ec34",
@@ -458,8 +438,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 990,
-        "y": 740,
+        "x": 1210,
+        "y": 800,
         "wires": []
     },
     {
@@ -472,8 +452,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1610,
-        "y": 500,
+        "x": 2550,
+        "y": 740,
         "wires": [
             [
                 "6e40bda9.cffce4"
@@ -486,8 +466,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1810,
-        "y": 360,
+        "x": 2910,
+        "y": 740,
         "wires": [
             [
                 "dfd8eae3.5bcee8"
@@ -507,8 +487,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1880,
-        "y": 440,
+        "x": 3110,
+        "y": 780,
         "wires": []
     },
     {
@@ -555,8 +535,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1920,
-        "y": 1180,
+        "x": 360,
+        "y": 1360,
         "wires": [
             [
                 "573aa76b.c47f38"
@@ -567,12 +547,12 @@
         "id": "49db1ec2.c7de4",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Set username to default",
         "links": [
             "96e4744d.d20358"
         ],
-        "x": 1725,
-        "y": 1180,
+        "x": 165,
+        "y": 1360,
         "wires": [
             [
                 "83a6c20c.1b51b",
@@ -586,8 +566,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 2100,
-        "y": 1100,
+        "x": 650,
+        "y": 1360,
         "wires": [
             [
                 "f553be12.15931",
@@ -608,8 +588,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2190,
-        "y": 1160,
+        "x": 870,
+        "y": 1440,
         "wires": []
     },
     {
@@ -625,21 +605,21 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1820,
-        "y": 1260,
+        "x": 260,
+        "y": 1440,
         "wires": []
     },
     {
         "id": "643d38df.03a4c8",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to setName",
+        "name": "Setting up response",
         "func": "msg.payload = {\n    text: \"Вкажіть, будь ласка, своє ім'я\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 650,
+        "x": 1480,
         "y": 1440,
         "wires": [
             [
@@ -655,7 +635,7 @@
         "links": [
             "b48e521d.7a459"
         ],
-        "x": 405,
+        "x": 1265,
         "y": 1440,
         "wires": [
             [
@@ -667,16 +647,15 @@
         "id": "b0af6159.780a4",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Send message to set the city field",
         "links": [
             "4d10c364.bba70c",
             "67e90bd9.a1e8c4",
-            "fc83002f.8146f",
             "ce2794d2.a63448",
-            "90b3a5f3.3ee178"
+            "fc83002f.8146f"
         ],
-        "x": 395,
-        "y": 1620,
+        "x": 195,
+        "y": 1760,
         "wires": [
             [
                 "b0e558db.fd1018"
@@ -687,14 +666,14 @@
         "id": "b0e558db.fd1018",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to setCity",
+        "name": "Setting up response",
         "func": "msg.payload = {\n    text: \"З якого ви міста?\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 670,
-        "y": 1620,
+        "x": 440,
+        "y": 1760,
         "wires": [
             [
                 "6a53e132.9350f"
@@ -711,8 +690,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1210,
-        "y": 1620,
+        "x": 1330,
+        "y": 1760,
         "wires": [
             [
                 "3812e880.0bda88"
@@ -725,8 +704,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1570,
-        "y": 1620,
+        "x": 1650,
+        "y": 1760,
         "wires": [
             [
                 "d7c7aeb2.450db"
@@ -746,23 +725,21 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1770,
-        "y": 1660,
+        "x": 1850,
+        "y": 1840,
         "wires": []
     },
     {
         "id": "4b1be78d.e0a2d8",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Send message to set the occupation field",
         "links": [
-            "6db0f471.abdafc",
-            "eb6c15f.d5924e8",
             "8a07dd6e.fb122",
-            "70f50f9f.0d7e5"
+            "eb6c15f.d5924e8"
         ],
-        "x": 425,
-        "y": 1820,
+        "x": 195,
+        "y": 2240,
         "wires": [
             [
                 "7626e672.e5e418"
@@ -779,8 +756,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 740,
-        "y": 1820,
+        "x": 510,
+        "y": 2240,
         "wires": [
             [
                 "146e7f83.4f883"
@@ -791,26 +768,26 @@
         "id": "4d10c364.bba70c",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Set city",
+        "name": "Move on to setting the city field",
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 2205,
-        "y": 1020,
+        "x": 855,
+        "y": 1360,
         "wires": []
     },
     {
         "id": "22e30d81.7d4372",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Get username and city fields",
+        "name": "Getting username and city fields",
         "func": "if (msg.message != '/start') {\n    msg.topic = 'SELECT username, city FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\n    return msg;\n}\n\n\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2660,
-        "y": 1440,
+        "x": 510,
+        "y": 2760,
         "wires": [
             [
                 "bdc1a1d4.37764"
@@ -823,8 +800,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 2990,
-        "y": 1440,
+        "x": 830,
+        "y": 2760,
         "wires": [
             [
                 "85b6a435.a2d908",
@@ -836,22 +813,21 @@
         "id": "85b6a435.a2d908",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Edit username or city or nothing",
+        "name": "Editing username or city or move on to processing message",
         "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.text = \"Супер. Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 3310,
-        "y": 1440,
+        "x": 1240,
+        "y": 2760,
         "wires": [
             [
                 "17cb6e60.6123d2",
                 "25f85bfa.c72ef4"
             ],
             [
-                "5d47b509.1bbcfc",
-                "25f85bfa.c72ef4"
+                "5d47b509.1bbcfc"
             ],
             [
                 "59a40707.d376b8"
@@ -864,8 +840,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 3690,
-        "y": 1420,
+        "x": 1670,
+        "y": 2600,
         "wires": [
             [
                 "fc83002f.8146f"
@@ -885,8 +861,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3150,
-        "y": 1520,
+        "x": 990,
+        "y": 2840,
         "wires": []
     },
     {
@@ -902,20 +878,20 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3630,
-        "y": 1480,
+        "x": 1610,
+        "y": 2660,
         "wires": []
     },
     {
         "id": "fc83002f.8146f",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Change city",
+        "name": "Move on to setting the city field",
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 3895,
-        "y": 1420,
+        "x": 1875,
+        "y": 2600,
         "wires": []
     },
     {
@@ -924,8 +900,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 3690,
-        "y": 1560,
+        "x": 1670,
+        "y": 2760,
         "wires": [
             [
                 "eb6c15f.d5924e8"
@@ -936,24 +912,24 @@
         "id": "eb6c15f.d5924e8",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Set occupation",
+        "name": "Move on to choosing occupation",
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 3895,
-        "y": 1560,
+        "x": 1875,
+        "y": 2760,
         "wires": []
     },
     {
         "id": "957981a1.8fdad",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Edit username or city or process message",
         "links": [
             "51ec0c6.d7d05f4"
         ],
-        "x": 2375,
-        "y": 1440,
+        "x": 215,
+        "y": 2760,
         "wires": [
             [
                 "22e30d81.7d4372"
@@ -964,9 +940,8 @@
         "id": "f1be3b15.c41ab8",
         "type": "link in",
         "z": "276bc02d.e347",
-        "name": "",
+        "name": "Print main menu",
         "links": [
-            "36fad338.e38c0c",
             "9d38cfeb.72544",
             "fee03af4.838098"
         ],
@@ -997,72 +972,6 @@
         ]
     },
     {
-        "id": "ede2adae.233ef",
-        "type": "link in",
-        "z": "276bc02d.e347",
-        "name": "",
-        "links": [
-            "7e438f2.6f8737"
-        ],
-        "x": 235,
-        "y": 400,
-        "wires": [
-            [
-                "f04698f.feef268"
-            ]
-        ]
-    },
-    {
-        "id": "f04698f.feef268",
-        "type": "function",
-        "z": "276bc02d.e347",
-        "name": "Get Users data",
-        "func": "msg.topic = 'SELECT * FROM Users;';\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 440,
-        "y": 400,
-        "wires": [
-            [
-                "6fdbc51b.0b04cc"
-            ]
-        ]
-    },
-    {
-        "id": "6fdbc51b.0b04cc",
-        "type": "mysql",
-        "z": "276bc02d.e347",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 710,
-        "y": 400,
-        "wires": [
-            [
-                "ab111597.f201c8"
-            ]
-        ]
-    },
-    {
-        "id": "ab111597.f201c8",
-        "type": "function",
-        "z": "276bc02d.e347",
-        "name": "Setting up message with users data",
-        "func": "msg.payload = {\n    text: msg.payload,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1020,
-        "y": 400,
-        "wires": [
-            [
-                "5065649.600e19c"
-            ]
-        ]
-    },
-    {
         "id": "40e61f8e.273bb",
         "type": "debug",
         "z": "276bc02d.e347",
@@ -1075,25 +984,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "b9256fa9.4718f",
-        "type": "debug",
-        "z": "276bc02d.e347",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1450,
-        "y": 440,
+        "x": 1190,
+        "y": 260,
         "wires": []
     },
     {
@@ -1104,8 +996,8 @@
         "links": [
             "3272d461.c8fe5c"
         ],
-        "x": 1555,
-        "y": 340,
+        "x": 1755,
+        "y": 460,
         "wires": []
     },
     {
@@ -1116,8 +1008,8 @@
         "links": [
             "84f1ccf3.e8c91"
         ],
-        "x": 1555,
-        "y": 380,
+        "x": 1755,
+        "y": 500,
         "wires": []
     },
     {
@@ -1130,8 +1022,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2110,
-        "y": 1920,
+        "x": 1970,
+        "y": 2120,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1148,8 +1040,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2130,
-        "y": 1980,
+        "x": 1990,
+        "y": 2180,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1166,8 +1058,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2100,
-        "y": 2040,
+        "x": 1960,
+        "y": 2240,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1184,8 +1076,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2100,
-        "y": 2100,
+        "x": 1960,
+        "y": 2300,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1202,8 +1094,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2090,
-        "y": 2160,
+        "x": 1950,
+        "y": 2360,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1216,8 +1108,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 2560,
-        "y": 1980,
+        "x": 2420,
+        "y": 2180,
         "wires": [
             [
                 "2feb8cfa.d2af34",
@@ -1238,32 +1130,32 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2830,
-        "y": 2040,
+        "x": 2690,
+        "y": 2240,
         "wires": []
     },
     {
         "id": "9d38cfeb.72544",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Print main menu",
+        "name": "Move on to printing main menu",
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 2885,
-        "y": 1980,
+        "x": 2745,
+        "y": 2180,
         "wires": []
     },
     {
         "id": "3272d461.c8fe5c",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Set occupation as an applicant",
         "links": [
             "2b168ecb.915b02"
         ],
-        "x": 1835,
-        "y": 1920,
+        "x": 1695,
+        "y": 2120,
         "wires": [
             [
                 "98fdf016.8692a"
@@ -1274,12 +1166,12 @@
         "id": "84f1ccf3.e8c91",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Set occupation as one of the parents",
         "links": [
             "84969f23.caa1"
         ],
-        "x": 1835,
-        "y": 1980,
+        "x": 1695,
+        "y": 2180,
         "wires": [
             [
                 "d3ef359d.63c3c8"
@@ -1290,12 +1182,12 @@
         "id": "7ed591d4.8c433",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Set occupation as a teacher",
         "links": [
             "b50620a8.7515"
         ],
-        "x": 1835,
-        "y": 2040,
+        "x": 1695,
+        "y": 2240,
         "wires": [
             [
                 "3b455ae1.743046"
@@ -1306,12 +1198,12 @@
         "id": "6ef222d3.893f0c",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Set occupation as a student",
         "links": [
             "1356b19c.1cb64e"
         ],
-        "x": 1835,
-        "y": 2100,
+        "x": 1695,
+        "y": 2300,
         "wires": [
             [
                 "b51b9abb.ade798"
@@ -1326,8 +1218,8 @@
         "links": [
             "7ed591d4.8c433"
         ],
-        "x": 1555,
-        "y": 420,
+        "x": 1755,
+        "y": 540,
         "wires": []
     },
     {
@@ -1338,8 +1230,8 @@
         "links": [
             "6ef222d3.893f0c"
         ],
-        "x": 1555,
-        "y": 460,
+        "x": 1755,
+        "y": 580,
         "wires": []
     },
     {
@@ -1350,20 +1242,20 @@
         "links": [
             "bebaf9fd.57b3d8"
         ],
-        "x": 1555,
-        "y": 500,
+        "x": 1755,
+        "y": 620,
         "wires": []
     },
     {
         "id": "bebaf9fd.57b3d8",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Set occupation as other",
         "links": [
             "ce92fb67.2ac148"
         ],
-        "x": 1835,
-        "y": 2160,
+        "x": 1695,
+        "y": 2360,
         "wires": [
             [
                 "15be5938.abfe77"
@@ -1376,8 +1268,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting occupation",
         "info": "# Setting occupation",
-        "x": 1640,
-        "y": 300,
+        "x": 1840,
+        "y": 420,
         "wires": []
     },
     {
@@ -1386,8 +1278,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1560,
-        "y": 560,
+        "x": 1760,
+        "y": 680,
         "wires": []
     },
     {
@@ -1396,8 +1288,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Other messages",
         "info": "",
-        "x": 1580,
-        "y": 860,
+        "x": 1780,
+        "y": 980,
         "wires": []
     },
     {
@@ -1406,8 +1298,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Editing name",
         "info": "",
-        "x": 1530,
-        "y": 120,
+        "x": 1730,
+        "y": 240,
         "wires": []
     },
     {
@@ -1416,8 +1308,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Setting occupation",
         "info": "",
-        "x": 1910,
-        "y": 1860,
+        "x": 1770,
+        "y": 2060,
         "wires": []
     },
     {
@@ -1436,18 +1328,18 @@
         "z": "4c6874fb.68b9dc",
         "name": "Setting username to default name",
         "info": "",
-        "x": 1830,
-        "y": 1140,
+        "x": 270,
+        "y": 1320,
         "wires": []
     },
     {
         "id": "65b589a2.4e3958",
         "type": "comment",
         "z": "4c6874fb.68b9dc",
-        "name": "Processing other messages. Edit username or city or nothing",
+        "name": "Processing other messages. Edit username or city",
         "info": "",
-        "x": 2580,
-        "y": 1400,
+        "x": 390,
+        "y": 2720,
         "wires": []
     },
     {
@@ -1456,7 +1348,7 @@
         "z": "4c6874fb.68b9dc",
         "name": "Request message to enter a new username",
         "info": "",
-        "x": 560,
+        "x": 1420,
         "y": 1400,
         "wires": []
     },
@@ -1466,8 +1358,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Request message to enter a city",
         "info": "",
-        "x": 510,
-        "y": 1580,
+        "x": 310,
+        "y": 1720,
         "wires": []
     },
     {
@@ -1476,8 +1368,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Request message to choose an occupation",
         "info": "",
-        "x": 560,
-        "y": 1780,
+        "x": 340,
+        "y": 2200,
         "wires": []
     },
     {
@@ -1488,16 +1380,6 @@
         "info": "",
         "x": 310,
         "y": 160,
-        "wires": []
-    },
-    {
-        "id": "afe778d0.9c5708",
-        "type": "comment",
-        "z": "276bc02d.e347",
-        "name": "User data message",
-        "info": "",
-        "x": 310,
-        "y": 360,
         "wires": []
     },
     {
@@ -1513,8 +1395,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1750,
-        "y": 1480,
+        "x": 2870,
+        "y": 1500,
         "wires": []
     },
     {
@@ -1523,7 +1405,7 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1560,
+        "x": 2660,
         "y": 1440,
         "wires": [
             [
@@ -1541,7 +1423,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1220,
+        "x": 2320,
         "y": 1440,
         "wires": [
             [
@@ -1562,20 +1444,20 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3670,
-        "y": 1700,
+        "x": 2030,
+        "y": 2940,
         "wires": []
     },
     {
         "id": "67e90bd9.a1e8c4",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Setting up city",
+        "name": "Set city",
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1515,
-        "y": 260,
+        "x": 1715,
+        "y": 380,
         "wires": []
     },
     {
@@ -1584,8 +1466,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting city",
         "info": "",
-        "x": 1570,
-        "y": 220,
+        "x": 1770,
+        "y": 340,
         "wires": []
     },
     {
@@ -1594,8 +1476,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 1550,
-        "y": 760,
+        "x": 1750,
+        "y": 880,
         "wires": []
     },
     {
@@ -1606,8 +1488,8 @@
         "language": "uk",
         "debug": false,
         "queryParamsOK": false,
-        "x": 1160,
-        "y": 1140,
+        "x": 500,
+        "y": 1180,
         "wires": [
             [
                 "fb926537.a7bc28"
@@ -1636,8 +1518,8 @@
         "topic": "",
         "payload": "керування продуктами іт - це",
         "payloadType": "str",
-        "x": 900,
-        "y": 1140,
+        "x": 240,
+        "y": 1180,
         "wires": [
             [
                 "72e770f4.57eb7"
@@ -1657,8 +1539,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1370,
-        "y": 1140,
+        "x": 710,
+        "y": 1180,
         "wires": []
     },
     {
@@ -1667,8 +1549,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "DialogFlow",
         "info": "",
-        "x": 880,
-        "y": 1100,
+        "x": 220,
+        "y": 1140,
         "wires": []
     },
     {
@@ -1693,8 +1575,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1030,
-        "y": 840,
+        "x": 1230,
+        "y": 960,
         "wires": [
             [
                 "2cfd1290.cbdfde"
@@ -1709,13 +1591,13 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Is registration completed",
-        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == '/editingField3252346') {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\";\n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == '/editingField3252346') {\n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    return [null, null, msg];\n}\nreturn [null, null, null];",
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == '/editingField3252346') {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\";\n    \n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == '/editingField3252346') {\n    \n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    \n    return [null, null, msg];\n}\nreturn [null, null, null];",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1050,
-        "y": 820,
+        "x": 1550,
+        "y": 980,
         "wires": [
             [
                 "5faa08f6.5806b8"
@@ -1732,37 +1614,37 @@
         "id": "ce2794d2.a63448",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up city",
+        "name": "Move on to setting the username field again",
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1305,
-        "y": 820,
+        "x": 1775,
+        "y": 980,
         "wires": []
     },
     {
         "id": "8a07dd6e.fb122",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up occupation",
+        "name": "Move on to setting the occupation field again",
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 1315,
-        "y": 880,
+        "x": 1775,
+        "y": 1020,
         "wires": []
     },
     {
         "id": "3b4b92dd.73262e",
         "type": "change",
         "z": "dbbd86af.74c0d8",
-        "name": "Setting up bot parameters",
+        "name": "Setting up bot global parameters",
         "rules": [
             {
                 "t": "set",
                 "p": "ngrokUrl",
                 "pt": "global",
-                "to": "https://768b157b38a1.ngrok.io",
+                "to": "https://4b834e9ccf62.ngrok.io",
                 "tot": "str"
             },
             {
@@ -1842,8 +1724,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 990,
-        "y": 520,
+        "x": 1690,
+        "y": 740,
         "wires": [
             [
                 "8e7ab7c0.360748"
@@ -1863,8 +1745,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1210,
-        "y": 520,
+        "x": 1890,
+        "y": 740,
         "wires": [
             [
                 "5faa08f6.5806b8"
@@ -1890,8 +1772,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1270,
-        "y": 660,
+        "x": 2570,
+        "y": 860,
         "wires": [
             [
                 "68aa0b69.50b3b4"
@@ -1911,8 +1793,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1490,
-        "y": 660,
+        "x": 2770,
+        "y": 860,
         "wires": [
             []
         ]
@@ -1936,8 +1818,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 910,
-        "y": 1360,
+        "x": 1810,
+        "y": 1440,
         "wires": [
             [
                 "92637f74.5e822"
@@ -1957,8 +1839,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1130,
-        "y": 1360,
+        "x": 2030,
+        "y": 1440,
         "wires": [
             [
                 "32bc9488.39455c"
@@ -1984,8 +1866,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 870,
-        "y": 1540,
+        "x": 830,
+        "y": 1760,
         "wires": [
             [
                 "bf0c0f6b.64b0c"
@@ -2005,8 +1887,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1090,
-        "y": 1540,
+        "x": 1050,
+        "y": 1760,
         "wires": [
             [
                 "6d50e6ea.4d4118"
@@ -2032,8 +1914,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1070,
-        "y": 1820,
+        "x": 840,
+        "y": 2240,
         "wires": [
             [
                 "ce5c98ca.af1e88"
@@ -2053,8 +1935,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1290,
-        "y": 1820,
+        "x": 1060,
+        "y": 2240,
         "wires": [
             []
         ]
@@ -2078,8 +1960,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 3330,
-        "y": 1660,
+        "x": 1650,
+        "y": 2880,
         "wires": [
             [
                 "67272de2.58cc54"
@@ -2099,8 +1981,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 3550,
-        "y": 1660,
+        "x": 1870,
+        "y": 2880,
         "wires": [
             [
                 "72b075f6.de4fcc"
@@ -2126,8 +2008,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 750,
-        "y": 180,
+        "x": 810,
+        "y": 200,
         "wires": [
             [
                 "13477f2f.d7c451"
@@ -2147,59 +2029,11 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 970,
-        "y": 180,
+        "x": 1030,
+        "y": 200,
         "wires": [
             [
                 "40e61f8e.273bb"
-            ]
-        ]
-    },
-    {
-        "id": "5065649.600e19c",
-        "type": "change",
-        "z": "276bc02d.e347",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1290,
-        "y": 380,
-        "wires": [
-            [
-                "53e2b68b.f346d8"
-            ]
-        ]
-    },
-    {
-        "id": "53e2b68b.f346d8",
-        "type": "http request",
-        "z": "276bc02d.e347",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1510,
-        "y": 380,
-        "wires": [
-            [
-                "b9256fa9.4718f"
             ]
         ]
     }
