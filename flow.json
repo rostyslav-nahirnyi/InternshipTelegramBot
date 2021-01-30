@@ -48,8 +48,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 910,
-        "y": 60,
+        "x": 1050,
+        "y": 80,
         "wires": []
     },
     {
@@ -60,16 +60,6 @@
         "props": [
             {
                 "p": "payload"
-            },
-            {
-                "p": "ngrokUrl",
-                "v": "https://768b157b38a1.ngrok.io",
-                "vt": "str"
-            },
-            {
-                "p": "token",
-                "v": "1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw",
-                "vt": "str"
             }
         ],
         "repeat": "",
@@ -79,11 +69,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 250,
-        "y": 60,
+        "x": 130,
+        "y": 80,
         "wires": [
             [
-                "dd86135f.e7b04"
+                "3b4b92dd.73262e"
             ]
         ]
     },
@@ -100,8 +90,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 750,
-        "y": 60,
+        "x": 910,
+        "y": 80,
         "wires": [
             [
                 "bebef22b.2417d"
@@ -117,8 +107,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 200,
-        "y": 520,
+        "x": 440,
+        "y": 620,
         "wires": [
             [
                 "8b708744.7cb6f8",
@@ -140,8 +130,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 430,
-        "y": 600,
+        "x": 670,
+        "y": 700,
         "wires": []
     },
     {
@@ -151,8 +141,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 440,
-        "y": 660,
+        "x": 680,
+        "y": 760,
         "wires": []
     },
     {
@@ -165,8 +155,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 420,
-        "y": 520,
+        "x": 660,
+        "y": 620,
         "wires": [
             [
                 "9cad4d0b.fc7ed"
@@ -185,8 +175,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 160,
-        "y": 580,
+        "x": 400,
+        "y": 680,
         "wires": [
             [
                 "ac7f1cdc.11adc",
@@ -199,7 +189,7 @@
         "id": "9cad4d0b.fc7ed",
         "type": "switch",
         "z": "dbbd86af.74c0d8",
-        "name": "CallBack_Query_Commands",
+        "name": "CallBack_Query_Intents",
         "property": "message",
         "propertyType": "msg",
         "rules": [
@@ -257,8 +247,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 10,
-        "x": 800,
-        "y": 280,
+        "x": 1030,
+        "y": 380,
         "wires": [
             [
                 "96e4744d.d20358"
@@ -300,8 +290,8 @@
         "links": [
             "20e0ef34.86f5"
         ],
-        "x": 1275,
-        "y": 700,
+        "x": 1515,
+        "y": 800,
         "wires": []
     },
     {
@@ -312,8 +302,8 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1235,
-        "y": 60,
+        "x": 1475,
+        "y": 160,
         "wires": []
     },
     {
@@ -324,8 +314,8 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1235,
-        "y": 100,
+        "x": 1475,
+        "y": 200,
         "wires": []
     },
     {
@@ -336,8 +326,8 @@
         "links": [
             "957981a1.8fdad"
         ],
-        "x": 1275,
-        "y": 800,
+        "x": 1515,
+        "y": 900,
         "wires": []
     },
     {
@@ -348,8 +338,8 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1265,
-        "y": 500,
+        "x": 1505,
+        "y": 600,
         "wires": []
     },
     {
@@ -360,8 +350,8 @@
         "links": [
             "ede2adae.233ef"
         ],
-        "x": 1265,
-        "y": 560,
+        "x": 1505,
+        "y": 660,
         "wires": []
     },
     {
@@ -369,7 +359,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response to '/start' (Greeting part)",
-        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ. З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ. З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -378,7 +368,7 @@
         "y": 640,
         "wires": [
             [
-                "ed1ef233.79d67"
+                "5999f0ff.2e8d1"
             ]
         ]
     },
@@ -387,7 +377,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response to '/start' (Appeling part)",
-        "func": "msg.payload = {\n    text: \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -396,28 +386,9 @@
         "y": 600,
         "wires": [
             [
-                "f99540dc.a6d2a",
-                "c005d39e.f0ac8"
+                "c005d39e.f0ac8",
+                "a018aad3.00f5b8"
             ]
-        ]
-    },
-    {
-        "id": "f99540dc.a6d2a",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1250,
-        "y": 700,
-        "wires": [
-            []
         ]
     },
     {
@@ -457,17 +428,20 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Checking user row",
-        "func": "if (msg.payload.length) return null;\nelse return msg;",
-        "outputs": 1,
+        "func": "if (msg.payload.length) return [null, msg];\nelse return [msg, null];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 770,
-        "y": 740,
+        "x": 750,
+        "y": 720,
         "wires": [
             [
                 "7ada2dbc.12ec34",
                 "33134ca5.524c74"
+            ],
+            [
+                "4998b80c.ac3b18"
             ]
         ]
     },
@@ -485,7 +459,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 990,
-        "y": 760,
+        "y": 740,
         "wires": []
     },
     {
@@ -493,7 +467,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Registering new user row in db",
-        "func": "msg.topic = 'INSERT INTO Users (user_telegram_id) VALUES (' + msg.chat_id + ');';\n\nreturn msg;",
+        "func": "if (msg.register) {\n    msg.topic = 'INSERT INTO Users (user_telegram_id) VALUES (' + msg.chat_id + ');';\n\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -542,7 +516,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Getting user row",
-        "func": "msg.topic = 'SELECT user_telegram_id FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\nreturn msg;",
+        "func": "msg.register = true;\n\nmsg.topic = 'SELECT * FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -568,27 +542,6 @@
         "wires": [
             [
                 "66ebb3af.808c7c"
-            ]
-        ]
-    },
-    {
-        "id": "ed1ef233.79d67",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 970,
-        "y": 600,
-        "wires": [
-            [
-                "5faa08f6.5806b8"
             ]
         ]
     },
@@ -680,17 +633,17 @@
         "id": "643d38df.03a4c8",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to /setName",
+        "name": "Setting up response to setName",
         "func": "msg.payload = {\n    text: \"Вкажіть, будь ласка, своє ім'я\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 660,
+        "x": 650,
         "y": 1440,
         "wires": [
             [
-                "bd56f212.0323f"
+                "43311317.c47cbc"
             ]
         ]
     },
@@ -711,27 +664,6 @@
         ]
     },
     {
-        "id": "bd56f212.0323f",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 980,
-        "y": 1440,
-        "wires": [
-            [
-                "32bc9488.39455c"
-            ]
-        ]
-    },
-    {
         "id": "b0af6159.780a4",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
@@ -739,7 +671,9 @@
         "links": [
             "4d10c364.bba70c",
             "67e90bd9.a1e8c4",
-            "fc83002f.8146f"
+            "fc83002f.8146f",
+            "ce2794d2.a63448",
+            "90b3a5f3.3ee178"
         ],
         "x": 395,
         "y": 1620,
@@ -753,7 +687,7 @@
         "id": "b0e558db.fd1018",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to /setCity",
+        "name": "Setting up response to setCity",
         "func": "msg.payload = {\n    text: \"З якого ви міста?\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
@@ -763,28 +697,7 @@
         "y": 1620,
         "wires": [
             [
-                "7763c6a4.d3c748"
-            ]
-        ]
-    },
-    {
-        "id": "7763c6a4.d3c748",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 970,
-        "y": 1620,
-        "wires": [
-            [
-                "6d50e6ea.4d4118"
+                "6a53e132.9350f"
             ]
         ]
     },
@@ -844,7 +757,9 @@
         "name": "",
         "links": [
             "6db0f471.abdafc",
-            "eb6c15f.d5924e8"
+            "eb6c15f.d5924e8",
+            "8a07dd6e.fb122",
+            "70f50f9f.0d7e5"
         ],
         "x": 425,
         "y": 1820,
@@ -859,7 +774,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up 'choose occupation' message",
-        "func": "msg.payload = {\n    text: \"Супер для кращого підбору FAQ виберіть свій вид зайнятості\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -868,27 +783,8 @@
         "y": 1820,
         "wires": [
             [
-                "81ba263c.e2a388"
+                "146e7f83.4f883"
             ]
-        ]
-    },
-    {
-        "id": "81ba263c.e2a388",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1030,
-        "y": 1820,
-        "wires": [
-            []
         ]
     },
     {
@@ -908,7 +804,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Get username and city fields",
-        "func": "msg.topic = 'SELECT username, city FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\nreturn msg;",
+        "func": "if (msg.message != '/start') {\n    msg.topic = 'SELECT username, city FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\n    return msg;\n}\n\n\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -941,7 +837,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Edit username or city or nothing",
-        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
+        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.text = \"Супер. Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -958,7 +854,7 @@
                 "25f85bfa.c72ef4"
             ],
             [
-                "3ef99c74.081df4"
+                "59a40707.d376b8"
             ]
         ]
     },
@@ -1070,9 +966,9 @@
         "z": "276bc02d.e347",
         "name": "",
         "links": [
-            "81bf882c.626308",
-            "fee03af4.838098",
-            "9d38cfeb.72544"
+            "36fad338.e38c0c",
+            "9d38cfeb.72544",
+            "fee03af4.838098"
         ],
         "x": 225,
         "y": 200,
@@ -1096,28 +992,7 @@
         "y": 200,
         "wires": [
             [
-                "25605997.8377b6"
-            ]
-        ]
-    },
-    {
-        "id": "25605997.8377b6",
-        "type": "http request",
-        "z": "276bc02d.e347",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 770,
-        "y": 200,
-        "wires": [
-            [
-                "40e61f8e.273bb"
+                "3273b3c6.f9879c"
             ]
         ]
     },
@@ -1183,28 +1058,7 @@
         "y": 400,
         "wires": [
             [
-                "2d4359d3.e692c6"
-            ]
-        ]
-    },
-    {
-        "id": "2d4359d3.e692c6",
-        "type": "http request",
-        "z": "276bc02d.e347",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1290,
-        "y": 400,
-        "wires": [
-            [
-                "b9256fa9.4718f"
+                "5065649.600e19c"
             ]
         ]
     },
@@ -1250,8 +1104,8 @@
         "links": [
             "3272d461.c8fe5c"
         ],
-        "x": 1315,
-        "y": 240,
+        "x": 1555,
+        "y": 340,
         "wires": []
     },
     {
@@ -1262,8 +1116,8 @@
         "links": [
             "84f1ccf3.e8c91"
         ],
-        "x": 1315,
-        "y": 280,
+        "x": 1555,
+        "y": 380,
         "wires": []
     },
     {
@@ -1472,8 +1326,8 @@
         "links": [
             "7ed591d4.8c433"
         ],
-        "x": 1315,
-        "y": 320,
+        "x": 1555,
+        "y": 420,
         "wires": []
     },
     {
@@ -1484,8 +1338,8 @@
         "links": [
             "6ef222d3.893f0c"
         ],
-        "x": 1315,
-        "y": 360,
+        "x": 1555,
+        "y": 460,
         "wires": []
     },
     {
@@ -1496,8 +1350,8 @@
         "links": [
             "bebaf9fd.57b3d8"
         ],
-        "x": 1315,
-        "y": 400,
+        "x": 1555,
+        "y": 500,
         "wires": []
     },
     {
@@ -1522,8 +1376,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting occupation",
         "info": "# Setting occupation",
-        "x": 1400,
-        "y": 200,
+        "x": 1640,
+        "y": 300,
         "wires": []
     },
     {
@@ -1532,8 +1386,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1320,
-        "y": 460,
+        "x": 1560,
+        "y": 560,
         "wires": []
     },
     {
@@ -1542,8 +1396,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Other messages",
         "info": "",
-        "x": 1340,
-        "y": 760,
+        "x": 1580,
+        "y": 860,
         "wires": []
     },
     {
@@ -1552,8 +1406,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Editing name",
         "info": "",
-        "x": 1290,
-        "y": 20,
+        "x": 1530,
+        "y": 120,
         "wires": []
     },
     {
@@ -1696,27 +1550,6 @@
         ]
     },
     {
-        "id": "3ef99c74.081df4",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "https://api.telegram.org/bot1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw/sendMessage",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 3510,
-        "y": 1620,
-        "wires": [
-            [
-                "72b075f6.de4fcc"
-            ]
-        ]
-    },
-    {
         "id": "72b075f6.de4fcc",
         "type": "debug",
         "z": "4c6874fb.68b9dc",
@@ -1734,33 +1567,6 @@
         "wires": []
     },
     {
-        "id": "dd86135f.e7b04",
-        "type": "change",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & msg.token & \"/setWebhook?url=\" & msg.ngrokUrl & \"/bot\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 510,
-        "y": 60,
-        "wires": [
-            [
-                "da0d125b.5e9c9"
-            ]
-        ]
-    },
-    {
         "id": "67e90bd9.a1e8c4",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
@@ -1768,8 +1574,8 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1275,
-        "y": 160,
+        "x": 1515,
+        "y": 260,
         "wires": []
     },
     {
@@ -1778,8 +1584,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting city",
         "info": "",
-        "x": 1330,
-        "y": 120,
+        "x": 1570,
+        "y": 220,
         "wires": []
     },
     {
@@ -1788,8 +1594,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 1310,
-        "y": 660,
+        "x": 1550,
+        "y": 760,
         "wires": []
     },
     {
@@ -1800,8 +1606,8 @@
         "language": "uk",
         "debug": false,
         "queryParamsOK": false,
-        "x": 1560,
-        "y": 1220,
+        "x": 1160,
+        "y": 1140,
         "wires": [
             [
                 "fb926537.a7bc28"
@@ -1818,8 +1624,9 @@
                 "p": "payload"
             },
             {
-                "p": "topic",
-                "vt": "str"
+                "p": "events",
+                "v": "project_id: newagent-mjra,account_id: newagent-mjra@newagent-mjra.iam.gserviceaccount.com,privat_key: -----BEGIN PRIVATE KEY-----MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCWTMtQfEPVLWRKViG3iqLbsMY3t5yuL2BdHSB0wgXgs+oFX0zeG9Epqj200HVNijiLHe2igJBERzUnBvFXpkzQH+vss129QoKco+7o2nZCplO9V6HyXrPSnArFpAQOhpBGUTg2tU9NxVboT5BdQI5il/O5B3mQnEnIg6pCGR7HRPZvsMCc0fm+N41vVgeaPryBK2WJmyAmCe376xjT1bt1ugIUw2NAgphYdAy85eHIBQNo+0OHMPfDTWdo/TLwK0VtO34XC4Kh9smxEoNqxaAybXz+RR3f+PQNN8fMth+TjBp2/RK48hxV6OyGbhXTTjTf4SQi9CUTfsaClM4wbF/XAgMBAAECggEABjRmYky2+ip1DPKQUsTo4zvhevRcBf7TshRdPiSyXGvg+dbM1BB+6oLqKDhA13Ig0nFqWX6INiFgatuJBA7L9f2TXkKrWIBR5wiHeNpn7mlyZIslFt3c+5FQiocyWa0pcJWyxeNnQjUm2NFMCuV620wdliJeXN9u1lXFJhRmZmB8vSEFqV+AqWs0WOI0AKl0HgFH0oGvrFCS3PQQzv4QfYssN5UG2RUbcnc7HsM1I3CZQl6Zc6sOh6vVlz+0z93t/r2ltSGrP8iIGU5P1igSbAG9EycCql/IOJ1/OaMV75Wr+fQpSYJQ+MneM90j1kXMAKcfguXYgLUmvTY3YW8HDQKBgQDLaeeYbmIzVUxB1xHOjB56Xd+6hHPGi2zm8yLI5FcFQ5wjxF6MjxAZQ5TrWmZPUOhPgTvzU5T8tOIp6dTwYTiHsJDUAKnB5iyXiV/izzX9dW71iPEIzdIAme83+tkYEQjEQ5npevZ5VquXQc9TG0O0YWq2RXfWYS3os85zkS+q1QKBgQC9J8cYV5TpMN5CdJbWtVPNDAc5rtuKbclXUY23ZjXataxYNeBr8vougQH9kigmlQmeGQ8MnboleQYEYmlOkYcG6Thdp1rDGob6ZAcchKvTXdYqRBHRGItJ5bVMMxr/+KN0g+XPtqnikrklmpllPZZf5sWEhnJhqckKn8yXHl7d+wKBgQCAHZLFefiVtkqSSWAoxC3KCmgINLYqvdP4XfhxqQd6BExKZrraMp0EHIGl/kjj+eRndtEIf4Md6ttrZKA+Si1toPKG5GgG/O7m/poK41Fw8s7RDNArKF71C/8UNgUX2Fq6Ko289TpZ0BHA8a0f/dMVwCmS5YwF1S0yHFWSikYIhQKBgQCcZYZFhyy1flVW5yVMk5KdaEOVGxGkrE+cJe8h453Fnw7HxIwxVS4sQziNG0qdU/8mvBtoWAVwNFeYSnI9py/Ys/6J2PS/enB+GTSUDNIxKlYIjk2Y8E1CpW44eczqNf+YN/JMwwBGOQBiqigIwFpUIu/POobaX1K9uRClJlRT/wKBgQCeNeAMxljGtfgZ3Kx2783t8YFMqzKAHQSHZzUYCkGk64ml6hmt2o5yQ1KV/QTheNcnaOJkv5dNZwHi1PxGoRt1vmwxAIblaPTwMS8f2vzE0mGFgY5UzSJAeoreLv7dwHPaCH7NZhQ5voOON0FrdBuN8ABFJ+k4JP3d9XxPQiN2Tw==-----END PRIVATE KEY-----",
+                "vt": "json"
             }
         ],
         "repeat": "",
@@ -1829,8 +1636,8 @@
         "topic": "",
         "payload": "керування продуктами іт - це",
         "payloadType": "str",
-        "x": 1240,
-        "y": 1220,
+        "x": 900,
+        "y": 1140,
         "wires": [
             [
                 "72e770f4.57eb7"
@@ -1850,8 +1657,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1710,
-        "y": 1220,
+        "x": 1370,
+        "y": 1140,
         "wires": []
     },
     {
@@ -1860,8 +1667,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "DialogFlow",
         "info": "",
-        "x": 1250,
-        "y": 1180,
+        "x": 880,
+        "y": 1100,
         "wires": []
     },
     {
@@ -1886,14 +1693,513 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 790,
-        "y": 740,
+        "x": 1030,
+        "y": 840,
         "wires": [
             [
                 "2cfd1290.cbdfde"
             ],
             [
                 "51ec0c6.d7d05f4"
+            ]
+        ]
+    },
+    {
+        "id": "4998b80c.ac3b18",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Is registration completed",
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == '/editingField3252346') {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\";\n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == '/editingField3252346') {\n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    return [null, null, msg];\n}\nreturn [null, null, null];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1050,
+        "y": 820,
+        "wires": [
+            [
+                "5faa08f6.5806b8"
+            ],
+            [
+                "ce2794d2.a63448"
+            ],
+            [
+                "8a07dd6e.fb122"
+            ]
+        ]
+    },
+    {
+        "id": "ce2794d2.a63448",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up city",
+        "links": [
+            "b0af6159.780a4"
+        ],
+        "x": 1305,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "8a07dd6e.fb122",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up occupation",
+        "links": [
+            "4b1be78d.e0a2d8"
+        ],
+        "x": 1315,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "3b4b92dd.73262e",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Setting up bot parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ngrokUrl",
+                "pt": "global",
+                "to": "https://768b157b38a1.ngrok.io",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "global",
+                "to": "1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 80,
+        "wires": [
+            [
+                "dd86135f.e7b04"
+            ]
+        ]
+    },
+    {
+        "id": "dd86135f.e7b04",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/setWebhook?url=\" & $globalContext('ngrokUrl') & \"/bot\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 690,
+        "y": 80,
+        "wires": [
+            [
+                "da0d125b.5e9c9"
+            ]
+        ]
+    },
+    {
+        "id": "f3d823dd.652a5",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Setting up webhook",
+        "info": "",
+        "x": 110,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "5999f0ff.2e8d1",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 990,
+        "y": 520,
+        "wires": [
+            [
+                "8e7ab7c0.360748"
+            ]
+        ]
+    },
+    {
+        "id": "8e7ab7c0.360748",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1210,
+        "y": 520,
+        "wires": [
+            [
+                "5faa08f6.5806b8"
+            ]
+        ]
+    },
+    {
+        "id": "a018aad3.00f5b8",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 660,
+        "wires": [
+            [
+                "68aa0b69.50b3b4"
+            ]
+        ]
+    },
+    {
+        "id": "68aa0b69.50b3b4",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1490,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "43311317.c47cbc",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 1360,
+        "wires": [
+            [
+                "92637f74.5e822"
+            ]
+        ]
+    },
+    {
+        "id": "92637f74.5e822",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1130,
+        "y": 1360,
+        "wires": [
+            [
+                "32bc9488.39455c"
+            ]
+        ]
+    },
+    {
+        "id": "6a53e132.9350f",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 1540,
+        "wires": [
+            [
+                "bf0c0f6b.64b0c"
+            ]
+        ]
+    },
+    {
+        "id": "bf0c0f6b.64b0c",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1090,
+        "y": 1540,
+        "wires": [
+            [
+                "6d50e6ea.4d4118"
+            ]
+        ]
+    },
+    {
+        "id": "146e7f83.4f883",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1070,
+        "y": 1820,
+        "wires": [
+            [
+                "ce5c98ca.af1e88"
+            ]
+        ]
+    },
+    {
+        "id": "ce5c98ca.af1e88",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1290,
+        "y": 1820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59a40707.d376b8",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 3330,
+        "y": 1660,
+        "wires": [
+            [
+                "67272de2.58cc54"
+            ]
+        ]
+    },
+    {
+        "id": "67272de2.58cc54",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 3550,
+        "y": 1660,
+        "wires": [
+            [
+                "72b075f6.de4fcc"
+            ]
+        ]
+    },
+    {
+        "id": "3273b3c6.f9879c",
+        "type": "change",
+        "z": "276bc02d.e347",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 180,
+        "wires": [
+            [
+                "13477f2f.d7c451"
+            ]
+        ]
+    },
+    {
+        "id": "13477f2f.d7c451",
+        "type": "http request",
+        "z": "276bc02d.e347",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 970,
+        "y": 180,
+        "wires": [
+            [
+                "40e61f8e.273bb"
+            ]
+        ]
+    },
+    {
+        "id": "5065649.600e19c",
+        "type": "change",
+        "z": "276bc02d.e347",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1290,
+        "y": 380,
+        "wires": [
+            [
+                "53e2b68b.f346d8"
+            ]
+        ]
+    },
+    {
+        "id": "53e2b68b.f346d8",
+        "type": "http request",
+        "z": "276bc02d.e347",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1510,
+        "y": 380,
+        "wires": [
+            [
+                "b9256fa9.4718f"
             ]
         ]
     }
