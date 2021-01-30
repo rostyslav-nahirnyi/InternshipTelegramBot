@@ -814,8 +814,8 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.text = \"Супер. Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [null, msg, null];\n} else {\n    return [null, null, msg];\n}\n\nreturn [null, null, null];",
-        "outputs": 3,
+        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    msg.text = \"Супер. Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    \n    return [null, msg, null, null];\n} else if (msg.message == \"/editingField3252346\") {\n    return [null, null, msg, null];\n} else {\n    msg.payload = msg.message;\n}\n\nreturn [null, null, null, msg];",
+        "outputs": 4,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -831,6 +831,9 @@
             ],
             [
                 "59a40707.d376b8"
+            ],
+            [
+                "342603f5.41a37c"
             ]
         ]
     },
@@ -841,7 +844,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1670,
-        "y": 2600,
+        "y": 2540,
         "wires": [
             [
                 "fc83002f.8146f"
@@ -879,7 +882,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1610,
-        "y": 2660,
+        "y": 2600,
         "wires": []
     },
     {
@@ -891,7 +894,7 @@
             "b0af6159.780a4"
         ],
         "x": 1875,
-        "y": 2600,
+        "y": 2540,
         "wires": []
     },
     {
@@ -901,7 +904,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1670,
-        "y": 2760,
+        "y": 2700,
         "wires": [
             [
                 "eb6c15f.d5924e8"
@@ -917,7 +920,7 @@
             "4b1be78d.e0a2d8"
         ],
         "x": 1875,
-        "y": 2760,
+        "y": 2700,
         "wires": []
     },
     {
@@ -1445,7 +1448,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2030,
-        "y": 2940,
+        "y": 2880,
         "wires": []
     },
     {
@@ -1478,79 +1481,6 @@
         "info": "",
         "x": 1750,
         "y": 880,
-        "wires": []
-    },
-    {
-        "id": "72e770f4.57eb7",
-        "type": "dialogflowv2",
-        "z": "dbbd86af.74c0d8",
-        "dialogflow": "b513f9.a96b5c08",
-        "language": "uk",
-        "debug": false,
-        "queryParamsOK": false,
-        "x": 500,
-        "y": 1180,
-        "wires": [
-            [
-                "fb926537.a7bc28"
-            ]
-        ]
-    },
-    {
-        "id": "18b2d1dc.1da86e",
-        "type": "inject",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "events",
-                "v": "project_id: newagent-mjra,account_id: newagent-mjra@newagent-mjra.iam.gserviceaccount.com,privat_key: -----BEGIN PRIVATE KEY-----MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCWTMtQfEPVLWRKViG3iqLbsMY3t5yuL2BdHSB0wgXgs+oFX0zeG9Epqj200HVNijiLHe2igJBERzUnBvFXpkzQH+vss129QoKco+7o2nZCplO9V6HyXrPSnArFpAQOhpBGUTg2tU9NxVboT5BdQI5il/O5B3mQnEnIg6pCGR7HRPZvsMCc0fm+N41vVgeaPryBK2WJmyAmCe376xjT1bt1ugIUw2NAgphYdAy85eHIBQNo+0OHMPfDTWdo/TLwK0VtO34XC4Kh9smxEoNqxaAybXz+RR3f+PQNN8fMth+TjBp2/RK48hxV6OyGbhXTTjTf4SQi9CUTfsaClM4wbF/XAgMBAAECggEABjRmYky2+ip1DPKQUsTo4zvhevRcBf7TshRdPiSyXGvg+dbM1BB+6oLqKDhA13Ig0nFqWX6INiFgatuJBA7L9f2TXkKrWIBR5wiHeNpn7mlyZIslFt3c+5FQiocyWa0pcJWyxeNnQjUm2NFMCuV620wdliJeXN9u1lXFJhRmZmB8vSEFqV+AqWs0WOI0AKl0HgFH0oGvrFCS3PQQzv4QfYssN5UG2RUbcnc7HsM1I3CZQl6Zc6sOh6vVlz+0z93t/r2ltSGrP8iIGU5P1igSbAG9EycCql/IOJ1/OaMV75Wr+fQpSYJQ+MneM90j1kXMAKcfguXYgLUmvTY3YW8HDQKBgQDLaeeYbmIzVUxB1xHOjB56Xd+6hHPGi2zm8yLI5FcFQ5wjxF6MjxAZQ5TrWmZPUOhPgTvzU5T8tOIp6dTwYTiHsJDUAKnB5iyXiV/izzX9dW71iPEIzdIAme83+tkYEQjEQ5npevZ5VquXQc9TG0O0YWq2RXfWYS3os85zkS+q1QKBgQC9J8cYV5TpMN5CdJbWtVPNDAc5rtuKbclXUY23ZjXataxYNeBr8vougQH9kigmlQmeGQ8MnboleQYEYmlOkYcG6Thdp1rDGob6ZAcchKvTXdYqRBHRGItJ5bVMMxr/+KN0g+XPtqnikrklmpllPZZf5sWEhnJhqckKn8yXHl7d+wKBgQCAHZLFefiVtkqSSWAoxC3KCmgINLYqvdP4XfhxqQd6BExKZrraMp0EHIGl/kjj+eRndtEIf4Md6ttrZKA+Si1toPKG5GgG/O7m/poK41Fw8s7RDNArKF71C/8UNgUX2Fq6Ko289TpZ0BHA8a0f/dMVwCmS5YwF1S0yHFWSikYIhQKBgQCcZYZFhyy1flVW5yVMk5KdaEOVGxGkrE+cJe8h453Fnw7HxIwxVS4sQziNG0qdU/8mvBtoWAVwNFeYSnI9py/Ys/6J2PS/enB+GTSUDNIxKlYIjk2Y8E1CpW44eczqNf+YN/JMwwBGOQBiqigIwFpUIu/POobaX1K9uRClJlRT/wKBgQCeNeAMxljGtfgZ3Kx2783t8YFMqzKAHQSHZzUYCkGk64ml6hmt2o5yQ1KV/QTheNcnaOJkv5dNZwHi1PxGoRt1vmwxAIblaPTwMS8f2vzE0mGFgY5UzSJAeoreLv7dwHPaCH7NZhQ5voOON0FrdBuN8ABFJ+k4JP3d9XxPQiN2Tw==-----END PRIVATE KEY-----",
-                "vt": "json"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "керування продуктами іт - це",
-        "payloadType": "str",
-        "x": 240,
-        "y": 1180,
-        "wires": [
-            [
-                "72e770f4.57eb7"
-            ]
-        ]
-    },
-    {
-        "id": "fb926537.a7bc28",
-        "type": "debug",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 710,
-        "y": 1180,
-        "wires": []
-    },
-    {
-        "id": "e3868559.4457b8",
-        "type": "comment",
-        "z": "dbbd86af.74c0d8",
-        "name": "DialogFlow",
-        "info": "",
-        "x": 220,
-        "y": 1140,
         "wires": []
     },
     {
@@ -1961,7 +1891,7 @@
         "to": "",
         "reg": false,
         "x": 1650,
-        "y": 2880,
+        "y": 2820,
         "wires": [
             [
                 "67272de2.58cc54"
@@ -1982,7 +1912,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 1870,
-        "y": 2880,
+        "y": 2820,
         "wires": [
             [
                 "72b075f6.de4fcc"
@@ -2034,6 +1964,133 @@
         "wires": [
             [
                 "40e61f8e.273bb"
+            ]
+        ]
+    },
+    {
+        "id": "8302d8ef.4e6b08",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 3060,
+        "wires": []
+    },
+    {
+        "id": "342603f5.41a37c",
+        "type": "dialogflowv2",
+        "z": "4c6874fb.68b9dc",
+        "dialogflow": "b513f9.a96b5c08",
+        "language": "uk",
+        "debug": false,
+        "queryParamsOK": false,
+        "x": 1640,
+        "y": 2980,
+        "wires": [
+            [
+                "8302d8ef.4e6b08",
+                "cd034dd2.70a8b"
+            ]
+        ]
+    },
+    {
+        "id": "d6a9af0.a448d5",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "DialogFlow Processing Message",
+        "info": "",
+        "x": 1690,
+        "y": 2940,
+        "wires": []
+    },
+    {
+        "id": "ee8f4b17.5fe298",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2210,
+        "y": 2980,
+        "wires": [
+            [
+                "44e66b70.a485c4"
+            ]
+        ]
+    },
+    {
+        "id": "44e66b70.a485c4",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 2430,
+        "y": 2980,
+        "wires": [
+            [
+                "d9bf6889.83fa58"
+            ]
+        ]
+    },
+    {
+        "id": "d9bf6889.83fa58",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2590,
+        "y": 3060,
+        "wires": []
+    },
+    {
+        "id": "cd034dd2.70a8b",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting dialogflow response",
+        "func": "msg.payload = {\n    text: msg._dialogflow.fulfillmentText,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1900,
+        "y": 2980,
+        "wires": [
+            [
+                "ee8f4b17.5fe298"
             ]
         ]
     }
