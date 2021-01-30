@@ -31,6 +31,11 @@
         "charset": "UTF8"
     },
     {
+        "id": "b513f9.a96b5c08",
+        "type": "dialogflowv2-token",
+        "name": "Questions"
+    },
+    {
         "id": "bebef22b.2417d",
         "type": "debug",
         "z": "dbbd86af.74c0d8",
@@ -1798,6 +1803,78 @@
         "info": "",
         "x": 1060,
         "y": 160,
+        "wires": []
+    },
+    {
+        "id": "72e770f4.57eb7",
+        "type": "dialogflowv2",
+        "z": "dbbd86af.74c0d8",
+        "dialogflow": "b513f9.a96b5c08",
+        "language": "uk",
+        "debug": false,
+        "queryParamsOK": false,
+        "x": 1720,
+        "y": 740,
+        "wires": [
+            [
+                "fb926537.a7bc28"
+            ]
+        ]
+    },
+    {
+        "id": "18b2d1dc.1da86e",
+        "type": "inject",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "керування продуктами іт - це",
+        "payloadType": "str",
+        "x": 1400,
+        "y": 740,
+        "wires": [
+            [
+                "72e770f4.57eb7"
+            ]
+        ]
+    },
+    {
+        "id": "fb926537.a7bc28",
+        "type": "debug",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1870,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "e3868559.4457b8",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "DialogFlow",
+        "info": "",
+        "x": 1410,
+        "y": 700,
         "wires": []
     }
 ]
