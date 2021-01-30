@@ -107,7 +107,7 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 640,
+        "x": 540,
         "y": 740,
         "wires": [
             [
@@ -130,7 +130,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
+        "x": 770,
         "y": 820,
         "wires": []
     },
@@ -141,7 +141,7 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 880,
+        "x": 780,
         "y": 880,
         "wires": []
     },
@@ -155,7 +155,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 860,
+        "x": 760,
         "y": 740,
         "wires": [
             [
@@ -175,7 +175,7 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 600,
+        "x": 500,
         "y": 800,
         "wires": [
             [
@@ -242,14 +242,16 @@
         "checkall": "true",
         "repair": false,
         "outputs": 9,
-        "x": 1230,
+        "x": 1130,
         "y": 500,
         "wires": [
             [
-                "96e4744d.d20358"
+                "96e4744d.d20358",
+                "689e8b01.ded904"
             ],
             [
-                "b48e521d.7a459"
+                "b48e521d.7a459",
+                "689e8b01.ded904"
             ],
             [
                 "67e90bd9.a1e8c4"
@@ -282,7 +284,7 @@
         "links": [
             "20e0ef34.86f5"
         ],
-        "x": 1715,
+        "x": 1615,
         "y": 920,
         "wires": []
     },
@@ -294,7 +296,7 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1675,
+        "x": 1575,
         "y": 280,
         "wires": []
     },
@@ -306,7 +308,7 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1675,
+        "x": 1575,
         "y": 320,
         "wires": []
     },
@@ -318,7 +320,7 @@
         "links": [
             "957981a1.8fdad"
         ],
-        "x": 1715,
+        "x": 1615,
         "y": 1020,
         "wires": []
     },
@@ -330,8 +332,8 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1705,
-        "y": 720,
+        "x": 1615,
+        "y": 800,
         "wires": []
     },
     {
@@ -339,7 +341,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response to '/start' (Greeting part)",
-        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ. З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\"\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ. З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -357,12 +359,12 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response to '/start' (Appeling part)",
-        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"            \n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"\n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"\n            }]\n        ]\n    },\n    chat_id: msg.chat_id,\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2230,
+        "x": 2210,
         "y": 860,
         "wires": [
             [
@@ -447,7 +449,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Registering new user row in db",
-        "func": "if (msg.register) {\n    msg.topic = 'INSERT INTO Users (user_telegram_id) VALUES (' + msg.chat_id + ');';\n\n    return msg;\n}",
+        "func": "if (msg.register) {\n    msg.topic = \"INSERT INTO Users (user_telegram_id) VALUES (\" + msg.chat_id + \");\";\n\n    return msg;\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -496,16 +498,19 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Getting user row",
-        "func": "msg.register = true;\n\nmsg.topic = 'SELECT * FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\nreturn msg;",
-        "outputs": 1,
+        "func": "msg.register = true;\nmsg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\nmsg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n\nif (!msg.first_name && !msg.last_name) return [null, msg];\n\nmsg.topic = \"SELECT * FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn [msg, null];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 340,
-        "y": 860,
+        "y": 880,
         "wires": [
             [
                 "f859dabc.d52988"
+            ],
+            [
+                "57722993.d08fb8"
             ]
         ]
     },
@@ -518,7 +523,7 @@
             "6f6510b5.ba06a"
         ],
         "x": 175,
-        "y": 860,
+        "y": 880,
         "wires": [
             [
                 "66ebb3af.808c7c"
@@ -530,7 +535,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Updating user name",
-        "func": "if(msg.payload.callback_query) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.callback_query.from.first_name + \" \" + msg.payload.callback_query.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n} else {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.message.from.first_name + \" \" + msg.payload.message.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n}\n\n\nreturn msg;",
+        "func": "if(msg.payload.callback_query) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.callback_query.from.first_name + \" \" + msg.payload.callback_query.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n} else {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.message.from.first_name + \" \" + msg.payload.message.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -547,7 +552,7 @@
         "id": "49db1ec2.c7de4",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "Set username to default",
+        "name": "Set username to default name",
         "links": [
             "96e4744d.d20358"
         ],
@@ -619,7 +624,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1480,
+        "x": 1740,
         "y": 1440,
         "wires": [
             [
@@ -633,9 +638,10 @@
         "z": "4c6874fb.68b9dc",
         "name": "",
         "links": [
-            "b48e521d.7a459"
+            "b48e521d.7a459",
+            "57722993.d08fb8"
         ],
-        "x": 1265,
+        "x": 1525,
         "y": 1440,
         "wires": [
             [
@@ -667,12 +673,12 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response",
-        "func": "msg.payload = {\n    text: \"З якого ви міста?\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"З якого ви міста?\",    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 440,
+        "x": 460,
         "y": 1760,
         "wires": [
             [
@@ -781,7 +787,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Getting username and city fields",
-        "func": "if (msg.message != '/start') {\n    msg.topic = 'SELECT username, city FROM Users WHERE user_telegram_id = ' + msg.chat_id + ';';\n\n    return msg;\n}\n\n\nreturn null;\n",
+        "func": "if (msg.message != \"/start\") {\n    msg.topic = \"SELECT username, city FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\n    return msg;\n}\n\n\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -999,8 +1005,8 @@
         "links": [
             "3272d461.c8fe5c"
         ],
-        "x": 1755,
-        "y": 460,
+        "x": 1665,
+        "y": 540,
         "wires": []
     },
     {
@@ -1011,8 +1017,8 @@
         "links": [
             "84f1ccf3.e8c91"
         ],
-        "x": 1755,
-        "y": 500,
+        "x": 1665,
+        "y": 580,
         "wires": []
     },
     {
@@ -1026,7 +1032,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1970,
-        "y": 2120,
+        "y": 2080,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1044,7 +1050,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1990,
-        "y": 2180,
+        "y": 2140,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1062,7 +1068,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1960,
-        "y": 2240,
+        "y": 2300,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1080,7 +1086,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1960,
-        "y": 2300,
+        "y": 2360,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1098,7 +1104,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1950,
-        "y": 2360,
+        "y": 2420,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1157,11 +1163,12 @@
         "links": [
             "2b168ecb.915b02"
         ],
-        "x": 1695,
+        "x": 1515,
         "y": 2120,
         "wires": [
             [
-                "98fdf016.8692a"
+                "98fdf016.8692a",
+                "9b1ff444.8cb6f8"
             ]
         ]
     },
@@ -1173,11 +1180,12 @@
         "links": [
             "84969f23.caa1"
         ],
-        "x": 1695,
+        "x": 1515,
         "y": 2180,
         "wires": [
             [
-                "d3ef359d.63c3c8"
+                "d3ef359d.63c3c8",
+                "9b1ff444.8cb6f8"
             ]
         ]
     },
@@ -1189,11 +1197,12 @@
         "links": [
             "b50620a8.7515"
         ],
-        "x": 1695,
+        "x": 1515,
         "y": 2240,
         "wires": [
             [
-                "3b455ae1.743046"
+                "3b455ae1.743046",
+                "9b1ff444.8cb6f8"
             ]
         ]
     },
@@ -1205,11 +1214,12 @@
         "links": [
             "1356b19c.1cb64e"
         ],
-        "x": 1695,
+        "x": 1515,
         "y": 2300,
         "wires": [
             [
-                "b51b9abb.ade798"
+                "b51b9abb.ade798",
+                "9b1ff444.8cb6f8"
             ]
         ]
     },
@@ -1221,8 +1231,8 @@
         "links": [
             "7ed591d4.8c433"
         ],
-        "x": 1755,
-        "y": 540,
+        "x": 1665,
+        "y": 620,
         "wires": []
     },
     {
@@ -1233,8 +1243,8 @@
         "links": [
             "6ef222d3.893f0c"
         ],
-        "x": 1755,
-        "y": 580,
+        "x": 1665,
+        "y": 660,
         "wires": []
     },
     {
@@ -1245,8 +1255,8 @@
         "links": [
             "bebaf9fd.57b3d8"
         ],
-        "x": 1755,
-        "y": 620,
+        "x": 1665,
+        "y": 700,
         "wires": []
     },
     {
@@ -1257,11 +1267,12 @@
         "links": [
             "ce92fb67.2ac148"
         ],
-        "x": 1695,
+        "x": 1515,
         "y": 2360,
         "wires": [
             [
-                "15be5938.abfe77"
+                "15be5938.abfe77",
+                "9b1ff444.8cb6f8"
             ]
         ]
     },
@@ -1271,8 +1282,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting occupation",
         "info": "# Setting occupation",
-        "x": 1840,
-        "y": 420,
+        "x": 1750,
+        "y": 500,
         "wires": []
     },
     {
@@ -1281,8 +1292,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1760,
-        "y": 680,
+        "x": 1670,
+        "y": 760,
         "wires": []
     },
     {
@@ -1291,7 +1302,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Other messages",
         "info": "",
-        "x": 1780,
+        "x": 1680,
         "y": 980,
         "wires": []
     },
@@ -1301,7 +1312,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Editing name",
         "info": "",
-        "x": 1730,
+        "x": 1630,
         "y": 240,
         "wires": []
     },
@@ -1311,8 +1322,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Setting occupation",
         "info": "",
-        "x": 1770,
-        "y": 2060,
+        "x": 1590,
+        "y": 2080,
         "wires": []
     },
     {
@@ -1322,7 +1333,7 @@
         "name": "Start",
         "info": "",
         "x": 210,
-        "y": 820,
+        "y": 840,
         "wires": []
     },
     {
@@ -1351,7 +1362,7 @@
         "z": "4c6874fb.68b9dc",
         "name": "Request message to enter a new username",
         "info": "",
-        "x": 1420,
+        "x": 1680,
         "y": 1400,
         "wires": []
     },
@@ -1398,7 +1409,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2870,
+        "x": 3130,
         "y": 1500,
         "wires": []
     },
@@ -1408,7 +1419,7 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 2660,
+        "x": 2920,
         "y": 1440,
         "wires": [
             [
@@ -1426,7 +1437,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2320,
+        "x": 2580,
         "y": 1440,
         "wires": [
             [
@@ -1459,8 +1470,8 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1715,
-        "y": 380,
+        "x": 1625,
+        "y": 460,
         "wires": []
     },
     {
@@ -1469,8 +1480,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting city",
         "info": "",
-        "x": 1770,
-        "y": 340,
+        "x": 1680,
+        "y": 420,
         "wires": []
     },
     {
@@ -1479,7 +1490,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 1750,
+        "x": 1650,
         "y": 880,
         "wires": []
     },
@@ -1505,7 +1516,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1230,
+        "x": 1130,
         "y": 960,
         "wires": [
             [
@@ -1521,7 +1532,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Is registration completed",
-        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == '/editingField3252346') {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.req.body.message.from.first_name + \" \" + msg.req.body.message.from.last_name + \"?\";\n    \n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == '/editingField3252346') {\n    \n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    \n    return [null, null, msg];\n}\nreturn [null, null, null];",
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    \n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ виберіть свій вид зайнятості\";\n    \n    return [null, null, msg];\n}\nreturn [null, null, null];",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -1726,7 +1737,9 @@
         "x": 2770,
         "y": 860,
         "wires": [
-            []
+            [
+                "5d7b9575.20e36c"
+            ]
         ]
     },
     {
@@ -1748,7 +1761,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1810,
+        "x": 2070,
         "y": 1440,
         "wires": [
             [
@@ -1769,7 +1782,7 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 2030,
+        "x": 2290,
         "y": 1440,
         "wires": [
             [
@@ -2093,5 +2106,188 @@
                 "ee8f4b17.5fe298"
             ]
         ]
+    },
+    {
+        "id": "5d7b9575.20e36c",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2960,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "689e8b01.ded904",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Remove inline keyboard",
+        "links": [
+            "2020774d.405768"
+        ],
+        "x": 1635,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "4cc5ee02.929d7",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Removing inline keyboard",
+        "func": "//remove inline keyboard\nmsg.payload = {\n    chat_id: msg.chat_id,\n    message_id: msg.req.body.callback_query.message.message_id,\n    reply_markup: {\n        inline_keyboard: []\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 3890,
+        "y": 880,
+        "wires": [
+            [
+                "3f95b97.2f1e046"
+            ]
+        ]
+    },
+    {
+        "id": "3f95b97.2f1e046",
+        "type": "change",
+        "z": "4c6874fb.68b9dc",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/editMessageReplyMarkup\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 4210,
+        "y": 880,
+        "wires": [
+            [
+                "dbf6c129.b8af8"
+            ]
+        ]
+    },
+    {
+        "id": "dbf6c129.b8af8",
+        "type": "http request",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 4430,
+        "y": 880,
+        "wires": [
+            [
+                "100bd590.f83a5a"
+            ]
+        ]
+    },
+    {
+        "id": "100bd590.f83a5a",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4590,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "2020774d.405768",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "Remove inline keyboard",
+        "links": [
+            "689e8b01.ded904",
+            "9b1ff444.8cb6f8"
+        ],
+        "x": 3575,
+        "y": 880,
+        "wires": [
+            [
+                "4cc5ee02.929d7"
+            ]
+        ]
+    },
+    {
+        "id": "700c6996.48bca8",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Removing inline keyboard",
+        "info": "",
+        "x": 1730,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "57722993.d08fb8",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Set username",
+        "links": [
+            "407592c4.adb5ec"
+        ],
+        "x": 515,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "9b1ff444.8cb6f8",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Remove inline keyboard",
+        "links": [
+            "2020774d.405768"
+        ],
+        "x": 1735,
+        "y": 2220,
+        "wires": []
+    },
+    {
+        "id": "84fd0e13.6531c",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Removing inline keyboard",
+        "info": "",
+        "x": 1830,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "5142f46.759410c",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Removing inline keyboard",
+        "info": "",
+        "x": 3670,
+        "y": 840,
+        "wires": []
     }
 ]
