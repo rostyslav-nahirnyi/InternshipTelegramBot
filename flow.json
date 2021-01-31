@@ -9,7 +9,7 @@
     {
         "id": "4c6874fb.68b9dc",
         "type": "tab",
-        "label": "Start command Flow",
+        "label": "Start Flow",
         "disabled": false,
         "info": ""
     },
@@ -267,11 +267,11 @@
         "wires": [
             [
                 "96e4744d.d20358",
-                "689e8b01.ded904"
+                "9dae952d.b2be48"
             ],
             [
                 "b48e521d.7a459",
-                "689e8b01.ded904"
+                "9dae952d.b2be48"
             ],
             [
                 "67e90bd9.a1e8c4"
@@ -379,7 +379,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1330,
-        "y": 740,
+        "y": 80,
         "wires": [
             [
                 "5999f0ff.2e8d1"
@@ -397,10 +397,9 @@
         "initialize": "",
         "finalize": "",
         "x": 2210,
-        "y": 860,
+        "y": 200,
         "wires": [
             [
-                "c005d39e.f0ac8",
                 "a018aad3.00f5b8"
             ]
         ]
@@ -412,7 +411,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 610,
-        "y": 860,
+        "y": 200,
         "wires": [
             [
                 "d29b3da6.dcb2f",
@@ -434,7 +433,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 810,
-        "y": 940,
+        "y": 280,
         "wires": []
     },
     {
@@ -448,7 +447,7 @@
         "initialize": "",
         "finalize": "",
         "x": 910,
-        "y": 860,
+        "y": 200,
         "wires": [
             [
                 "7ada2dbc.12ec34",
@@ -473,7 +472,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1210,
-        "y": 800,
+        "y": 140,
         "wires": []
     },
     {
@@ -487,7 +486,7 @@
         "initialize": "",
         "finalize": "",
         "x": 2550,
-        "y": 740,
+        "y": 80,
         "wires": [
             [
                 "6e40bda9.cffce4"
@@ -501,7 +500,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 2910,
-        "y": 740,
+        "y": 80,
         "wires": [
             [
                 "dfd8eae3.5bcee8"
@@ -522,7 +521,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 3110,
-        "y": 780,
+        "y": 120,
         "wires": []
     },
     {
@@ -530,13 +529,13 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Getting user row",
-        "func": "msg.register = true;\nmsg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\nmsg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n\nif (!msg.first_name && !msg.last_name) return [null, msg];\n\nmsg.topic = \"SELECT * FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn [msg, null];",
+        "func": "msg.register = true;\n\nmsg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\nmsg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n\nmsg.message_id = msg.payload.message.message_id - 1;\n\nif (!msg.first_name && !msg.last_name) return [null, msg];\n\nmsg.topic = \"SELECT * FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn [msg, null];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 340,
-        "y": 880,
+        "y": 220,
         "wires": [
             [
                 "f859dabc.d52988"
@@ -555,7 +554,7 @@
             "6f6510b5.ba06a"
         ],
         "x": 175,
-        "y": 880,
+        "y": 220,
         "wires": [
             [
                 "66ebb3af.808c7c"
@@ -573,7 +572,7 @@
         "initialize": "",
         "finalize": "",
         "x": 360,
-        "y": 1360,
+        "y": 700,
         "wires": [
             [
                 "573aa76b.c47f38"
@@ -589,7 +588,7 @@
             "96e4744d.d20358"
         ],
         "x": 165,
-        "y": 1360,
+        "y": 700,
         "wires": [
             [
                 "83a6c20c.1b51b",
@@ -604,7 +603,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 650,
-        "y": 1360,
+        "y": 700,
         "wires": [
             [
                 "f553be12.15931",
@@ -626,7 +625,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 870,
-        "y": 1440,
+        "y": 780,
         "wires": []
     },
     {
@@ -643,7 +642,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 260,
-        "y": 1440,
+        "y": 780,
         "wires": []
     },
     {
@@ -657,7 +656,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1740,
-        "y": 1440,
+        "y": 780,
         "wires": [
             [
                 "43311317.c47cbc"
@@ -674,7 +673,7 @@
             "57722993.d08fb8"
         ],
         "x": 1525,
-        "y": 1440,
+        "y": 780,
         "wires": [
             [
                 "643d38df.03a4c8"
@@ -685,7 +684,7 @@
         "id": "b0af6159.780a4",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "Send message to set the city field",
+        "name": "Send message to set the location field",
         "links": [
             "4d10c364.bba70c",
             "67e90bd9.a1e8c4",
@@ -693,7 +692,7 @@
             "fc83002f.8146f"
         ],
         "x": 195,
-        "y": 1760,
+        "y": 1100,
         "wires": [
             [
                 "b0e558db.fd1018"
@@ -704,14 +703,14 @@
         "id": "b0e558db.fd1018",
         "type": "function",
         "z": "4c6874fb.68b9dc",
-        "name": "Setting up response",
-        "func": "msg.payload = {\n    text: \"З якого ви міста?\",    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "name": "Setting up question for location",
+        "func": "msg.payload = {\n    text: \"Де ви проживаєте?\",    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 460,
-        "y": 1760,
+        "x": 490,
+        "y": 1100,
         "wires": [
             [
                 "6a53e132.9350f"
@@ -729,7 +728,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1330,
-        "y": 1760,
+        "y": 1100,
         "wires": [
             [
                 "3812e880.0bda88"
@@ -743,7 +742,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1650,
-        "y": 1760,
+        "y": 1100,
         "wires": [
             [
                 "d7c7aeb2.450db"
@@ -764,7 +763,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1850,
-        "y": 1840,
+        "y": 1180,
         "wires": []
     },
     {
@@ -774,10 +773,11 @@
         "name": "Send message to set the occupation field",
         "links": [
             "8a07dd6e.fb122",
-            "eb6c15f.d5924e8"
+            "eb6c15f.d5924e8",
+            "cbb721f9.d1df5"
         ],
         "x": 195,
-        "y": 2240,
+        "y": 1580,
         "wires": [
             [
                 "7626e672.e5e418"
@@ -795,7 +795,7 @@
         "initialize": "",
         "finalize": "",
         "x": 510,
-        "y": 2240,
+        "y": 1580,
         "wires": [
             [
                 "146e7f83.4f883"
@@ -806,12 +806,12 @@
         "id": "4d10c364.bba70c",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the city field",
+        "name": "Move on to setting the location field",
         "links": [
             "b0af6159.780a4"
         ],
         "x": 855,
-        "y": 1360,
+        "y": 700,
         "wires": []
     },
     {
@@ -819,13 +819,13 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Getting username and city fields",
-        "func": "if (msg.message != \"/start\") {\n    msg.topic = \"SELECT username, city FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\n    return msg;\n}\n\n\nreturn null;\n",
+        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\n    return msg;\n}\n\n\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 510,
-        "y": 2760,
+        "y": 2160,
         "wires": [
             [
                 "bdc1a1d4.37764"
@@ -839,7 +839,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 830,
-        "y": 2760,
+        "y": 2160,
         "wires": [
             [
                 "85b6a435.a2d908",
@@ -852,13 +852,13 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.payload[0] && msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    \n    return [msg, null, null, null];\n} else if (msg.payload[0] && msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n    msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n    msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, msg, null, null];\n} else if (msg.message == \"/editingField3252346\") {\n    return [null, null, msg, null];\n} else {\n    msg.payload = msg.message;\n}\n\nreturn [null, null, null, msg];",
-        "outputs": 4,
+        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.message == \"/editingField3252346\") {\n    return [null, null, msg, null, null];\n} \n\nif (msg.payload[0]) {\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }else if (msg.payload[0].occupation) {\n        msg.payload = msg.message;\n        \n        return [null, null, null, msg, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
+        "outputs": 5,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 1240,
-        "y": 2760,
+        "y": 2160,
         "wires": [
             [
                 "17cb6e60.6123d2",
@@ -872,6 +872,9 @@
             ],
             [
                 "342603f5.41a37c"
+            ],
+            [
+                "dcec79e4.d403b8"
             ]
         ]
     },
@@ -882,7 +885,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1670,
-        "y": 2540,
+        "y": 1940,
         "wires": [
             [
                 "fc83002f.8146f"
@@ -903,7 +906,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 990,
-        "y": 2840,
+        "y": 2240,
         "wires": []
     },
     {
@@ -920,19 +923,19 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1610,
-        "y": 2600,
+        "y": 2000,
         "wires": []
     },
     {
         "id": "fc83002f.8146f",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the city field",
+        "name": "Move on to setting the location field",
         "links": [
             "b0af6159.780a4"
         ],
         "x": 1875,
-        "y": 2540,
+        "y": 1940,
         "wires": []
     },
     {
@@ -942,7 +945,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1670,
-        "y": 2700,
+        "y": 2100,
         "wires": [
             [
                 "eb6c15f.d5924e8"
@@ -958,7 +961,7 @@
             "4b1be78d.e0a2d8"
         ],
         "x": 1875,
-        "y": 2700,
+        "y": 2100,
         "wires": []
     },
     {
@@ -970,7 +973,7 @@
             "51ec0c6.d7d05f4"
         ],
         "x": 215,
-        "y": 2760,
+        "y": 2160,
         "wires": [
             [
                 "22e30d81.7d4372"
@@ -1065,7 +1068,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1970,
-        "y": 2080,
+        "y": 1420,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1083,7 +1086,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1990,
-        "y": 2140,
+        "y": 1480,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1101,7 +1104,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1960,
-        "y": 2300,
+        "y": 1640,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1119,7 +1122,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1960,
-        "y": 2360,
+        "y": 1700,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1137,7 +1140,7 @@
         "initialize": "",
         "finalize": "",
         "x": 1950,
-        "y": 2420,
+        "y": 1760,
         "wires": [
             [
                 "4754b1d0.9aef7"
@@ -1151,7 +1154,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 2420,
-        "y": 2180,
+        "y": 1520,
         "wires": [
             [
                 "2feb8cfa.d2af34",
@@ -1173,7 +1176,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2690,
-        "y": 2240,
+        "y": 1580,
         "wires": []
     },
     {
@@ -1185,7 +1188,7 @@
             "f1be3b15.c41ab8"
         ],
         "x": 2745,
-        "y": 2180,
+        "y": 1520,
         "wires": []
     },
     {
@@ -1197,11 +1200,11 @@
             "2b168ecb.915b02"
         ],
         "x": 1515,
-        "y": 2120,
+        "y": 1460,
         "wires": [
             [
                 "98fdf016.8692a",
-                "9b1ff444.8cb6f8"
+                "e65b611d.29b0f"
             ]
         ]
     },
@@ -1214,11 +1217,11 @@
             "84969f23.caa1"
         ],
         "x": 1515,
-        "y": 2180,
+        "y": 1520,
         "wires": [
             [
                 "d3ef359d.63c3c8",
-                "9b1ff444.8cb6f8"
+                "e65b611d.29b0f"
             ]
         ]
     },
@@ -1231,11 +1234,11 @@
             "b50620a8.7515"
         ],
         "x": 1515,
-        "y": 2240,
+        "y": 1580,
         "wires": [
             [
                 "3b455ae1.743046",
-                "9b1ff444.8cb6f8"
+                "e65b611d.29b0f"
             ]
         ]
     },
@@ -1248,11 +1251,11 @@
             "1356b19c.1cb64e"
         ],
         "x": 1515,
-        "y": 2300,
+        "y": 1640,
         "wires": [
             [
                 "b51b9abb.ade798",
-                "9b1ff444.8cb6f8"
+                "e65b611d.29b0f"
             ]
         ]
     },
@@ -1301,11 +1304,11 @@
             "ce92fb67.2ac148"
         ],
         "x": 1515,
-        "y": 2360,
+        "y": 1700,
         "wires": [
             [
                 "15be5938.abfe77",
-                "9b1ff444.8cb6f8"
+                "e65b611d.29b0f"
             ]
         ]
     },
@@ -1356,7 +1359,7 @@
         "name": "Setting occupation",
         "info": "",
         "x": 1590,
-        "y": 2080,
+        "y": 1420,
         "wires": []
     },
     {
@@ -1366,7 +1369,7 @@
         "name": "Start",
         "info": "",
         "x": 210,
-        "y": 840,
+        "y": 180,
         "wires": []
     },
     {
@@ -1376,7 +1379,7 @@
         "name": "Setting username to default name",
         "info": "",
         "x": 270,
-        "y": 1320,
+        "y": 660,
         "wires": []
     },
     {
@@ -1386,7 +1389,7 @@
         "name": "Processing other messages. Edit username or city",
         "info": "",
         "x": 390,
-        "y": 2720,
+        "y": 2120,
         "wires": []
     },
     {
@@ -1396,17 +1399,17 @@
         "name": "Request message to enter a new username",
         "info": "",
         "x": 1680,
-        "y": 1400,
+        "y": 740,
         "wires": []
     },
     {
         "id": "c8d9b4ad.8ef0e8",
         "type": "comment",
         "z": "4c6874fb.68b9dc",
-        "name": "Request message to enter a city",
+        "name": "Request message to enter a location",
         "info": "",
-        "x": 310,
-        "y": 1720,
+        "x": 320,
+        "y": 1060,
         "wires": []
     },
     {
@@ -1416,7 +1419,7 @@
         "name": "Request message to choose an occupation",
         "info": "",
         "x": 340,
-        "y": 2200,
+        "y": 1540,
         "wires": []
     },
     {
@@ -1443,7 +1446,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 3130,
-        "y": 1500,
+        "y": 840,
         "wires": []
     },
     {
@@ -1453,7 +1456,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 2920,
-        "y": 1440,
+        "y": 780,
         "wires": [
             [
                 "29b87cf7.8de694"
@@ -1471,7 +1474,7 @@
         "initialize": "",
         "finalize": "",
         "x": 2580,
-        "y": 1440,
+        "y": 780,
         "wires": [
             [
                 "66c7218a.a9dc1"
@@ -1492,7 +1495,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2030,
-        "y": 2880,
+        "y": 2280,
         "wires": []
     },
     {
@@ -1565,22 +1568,25 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Is registration completed",
-        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    \n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg];\n}\n\nreturn [null, null, null, msg];",
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    \n    return [null, msg, null, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg, null];\n}\n\nreturn [null, null, null, msg];",
         "outputs": 4,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 1550,
-        "y": 980,
+        "y": 320,
         "wires": [
             [
-                "5faa08f6.5806b8"
+                "5faa08f6.5806b8",
+                "f950178c.208748",
+                "68e0c66a.ee6628"
             ],
             [
                 "ce2794d2.a63448"
             ],
             [
-                "8a07dd6e.fb122"
+                "8a07dd6e.fb122",
+                "f950178c.208748"
             ],
             [
                 "cfe6162e.b07178"
@@ -1591,12 +1597,12 @@
         "id": "ce2794d2.a63448",
         "type": "link out",
         "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the username field again",
+        "name": "Move on to setting the location field again",
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1775,
-        "y": 980,
+        "x": 1855,
+        "y": 460,
         "wires": []
     },
     {
@@ -1607,8 +1613,8 @@
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 1775,
-        "y": 1020,
+        "x": 1855,
+        "y": 500,
         "wires": []
     },
     {
@@ -1702,7 +1708,7 @@
         "to": "",
         "reg": false,
         "x": 1690,
-        "y": 740,
+        "y": 80,
         "wires": [
             [
                 "8e7ab7c0.360748"
@@ -1723,9 +1729,10 @@
         "proxy": "",
         "authType": "basic",
         "x": 1890,
-        "y": 740,
+        "y": 80,
         "wires": [
             [
+                "c005d39e.f0ac8",
                 "5faa08f6.5806b8"
             ]
         ]
@@ -1750,7 +1757,7 @@
         "to": "",
         "reg": false,
         "x": 2570,
-        "y": 860,
+        "y": 200,
         "wires": [
             [
                 "68aa0b69.50b3b4"
@@ -1771,7 +1778,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 2770,
-        "y": 860,
+        "y": 200,
         "wires": [
             [
                 "5d7b9575.20e36c"
@@ -1798,7 +1805,7 @@
         "to": "",
         "reg": false,
         "x": 2070,
-        "y": 1440,
+        "y": 780,
         "wires": [
             [
                 "92637f74.5e822"
@@ -1819,7 +1826,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 2290,
-        "y": 1440,
+        "y": 780,
         "wires": [
             [
                 "32bc9488.39455c"
@@ -1846,7 +1853,7 @@
         "to": "",
         "reg": false,
         "x": 830,
-        "y": 1760,
+        "y": 1100,
         "wires": [
             [
                 "bf0c0f6b.64b0c"
@@ -1867,7 +1874,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 1050,
-        "y": 1760,
+        "y": 1100,
         "wires": [
             [
                 "6d50e6ea.4d4118"
@@ -1894,7 +1901,7 @@
         "to": "",
         "reg": false,
         "x": 840,
-        "y": 2240,
+        "y": 1580,
         "wires": [
             [
                 "ce5c98ca.af1e88"
@@ -1915,7 +1922,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 1060,
-        "y": 2240,
+        "y": 1580,
         "wires": [
             []
         ]
@@ -1940,7 +1947,7 @@
         "to": "",
         "reg": false,
         "x": 1650,
-        "y": 2820,
+        "y": 2220,
         "wires": [
             [
                 "67272de2.58cc54"
@@ -1961,7 +1968,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 1870,
-        "y": 2820,
+        "y": 2220,
         "wires": [
             [
                 "72b075f6.de4fcc"
@@ -2029,8 +2036,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1810,
-        "y": 3060,
+        "x": 1830,
+        "y": 2480,
         "wires": []
     },
     {
@@ -2041,8 +2048,8 @@
         "language": "uk",
         "debug": false,
         "queryParamsOK": false,
-        "x": 1640,
-        "y": 2980,
+        "x": 1660,
+        "y": 2400,
         "wires": [
             [
                 "8302d8ef.4e6b08",
@@ -2056,8 +2063,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "DialogFlow Processing Message",
         "info": "",
-        "x": 1690,
-        "y": 2940,
+        "x": 1710,
+        "y": 2360,
         "wires": []
     },
     {
@@ -2079,8 +2086,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2210,
-        "y": 2980,
+        "x": 2230,
+        "y": 2400,
         "wires": [
             [
                 "44e66b70.a485c4"
@@ -2100,8 +2107,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 2430,
-        "y": 2980,
+        "x": 2450,
+        "y": 2400,
         "wires": [
             [
                 "d9bf6889.83fa58"
@@ -2121,8 +2128,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2590,
-        "y": 3060,
+        "x": 2610,
+        "y": 2480,
         "wires": []
     },
     {
@@ -2135,8 +2142,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1900,
-        "y": 2980,
+        "x": 1920,
+        "y": 2400,
         "wires": [
             [
                 "ee8f4b17.5fe298"
@@ -2157,7 +2164,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2960,
-        "y": 920,
+        "y": 260,
         "wires": []
     },
     {
@@ -2168,8 +2175,8 @@
         "links": [
             "2020774d.405768"
         ],
-        "x": 1655,
-        "y": 140,
+        "x": 1815,
+        "y": 100,
         "wires": []
     },
     {
@@ -2177,13 +2184,13 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Removing inline keyboard",
-        "func": "//remove inline keyboard\nmsg.payload = {\n    chat_id: msg.chat_id,\n    message_id: msg.req.body.callback_query.message.message_id,\n    reply_markup: {\n        inline_keyboard: []\n    }\n}\n\nreturn msg;",
+        "func": "//remove inline keyboard\nmsg.payload = {\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: []\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 3890,
-        "y": 880,
+        "y": 220,
         "wires": [
             [
                 "3f95b97.2f1e046"
@@ -2210,7 +2217,7 @@
         "to": "",
         "reg": false,
         "x": 4210,
-        "y": 880,
+        "y": 220,
         "wires": [
             [
                 "dbf6c129.b8af8"
@@ -2231,7 +2238,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 4430,
-        "y": 880,
+        "y": 220,
         "wires": [
             [
                 "100bd590.f83a5a"
@@ -2252,7 +2259,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 4590,
-        "y": 960,
+        "y": 300,
         "wires": []
     },
     {
@@ -2262,10 +2269,11 @@
         "name": "Remove inline keyboard",
         "links": [
             "689e8b01.ded904",
-            "9b1ff444.8cb6f8"
+            "9b1ff444.8cb6f8",
+            "f950178c.208748"
         ],
         "x": 3575,
-        "y": 880,
+        "y": 220,
         "wires": [
             [
                 "4cc5ee02.929d7"
@@ -2278,8 +2286,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Removing inline keyboard",
         "info": "",
-        "x": 1750,
-        "y": 100,
+        "x": 1910,
+        "y": 60,
         "wires": []
     },
     {
@@ -2291,19 +2299,7 @@
             "407592c4.adb5ec"
         ],
         "x": 515,
-        "y": 920,
-        "wires": []
-    },
-    {
-        "id": "9b1ff444.8cb6f8",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Remove inline keyboard",
-        "links": [
-            "2020774d.405768"
-        ],
-        "x": 1735,
-        "y": 2220,
+        "y": 300,
         "wires": []
     },
     {
@@ -2312,8 +2308,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Removing inline keyboard",
         "info": "",
-        "x": 1830,
-        "y": 2180,
+        "x": 2010,
+        "y": 1520,
         "wires": []
     },
     {
@@ -2323,7 +2319,7 @@
         "name": "Removing inline keyboard",
         "info": "",
         "x": 3670,
-        "y": 840,
+        "y": 180,
         "wires": []
     },
     {
@@ -2628,8 +2624,8 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1775,
-        "y": 1120,
+        "x": 1855,
+        "y": 600,
         "wires": []
     },
     {
@@ -2638,8 +2634,250 @@
         "z": "4c6874fb.68b9dc",
         "name": "Send main menu message",
         "info": "",
-        "x": 1870,
+        "x": 1950,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "14c7c5a8.6f6e0a",
+        "type": "function",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "func": "msg.topic = \"UPDATE InfoPages SET content = \\\"Кафедра інформаційних систем та мереж — це навчально-науковий підрозділ Інституту комп’ютерних наук та інформаційних технологій Львівської політехніки утворений 1-го червня 1995 року.\\nКафедра «Інформаційні системи та мережі» утворена 1-го червня 1995 року наказом ректора «Львівської політехніки» після прийняття відповідної ухвали Вченою радою Університету. Колектив кафедри ІСМ на момент утворення складався з 5 викладачів, одного інженерно-технічного працівника, трьох співробітників НДЛ та групи молодих аспірантів, котрі виокремилися зі складу кафедри АСУ та були об’єднані спільною науковою проблематикою з інформаційного моделювання, систем баз даних і знань.\\\" WHERE title = 'aboutISMDepartment';\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
         "y": 1080,
+        "wires": [
+            [
+                "6912152a.abcc6c"
+            ]
+        ]
+    },
+    {
+        "id": "f7e48bb2.efc6d8",
+        "type": "inject",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 310,
+        "y": 1080,
+        "wires": [
+            [
+                "14c7c5a8.6f6e0a"
+            ]
+        ]
+    },
+    {
+        "id": "6912152a.abcc6c",
+        "type": "mysql",
+        "z": "dbbd86af.74c0d8",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 770,
+        "y": 1080,
+        "wires": [
+            [
+                "beed9727.b29778"
+            ]
+        ]
+    },
+    {
+        "id": "981f1664.6f90e8",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Move on to setting the location field",
+        "info": "",
+        "x": 980,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "5c87a19f.6f916",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Move on to printing main menu",
+        "info": "",
+        "x": 2870,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "f1ec32b1.4345d",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Move on to setting the location field",
+        "info": "",
+        "x": 2000,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "fc08cae3.076f48",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Move on to choosing occupation",
+        "info": "",
+        "x": 1990,
+        "y": 2060,
+        "wires": []
+    },
+    {
+        "id": "dcec79e4.d403b8",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Is registration completed",
+        "links": [
+            "daeb5454.268828"
+        ],
+        "x": 1455,
+        "y": 2500,
+        "wires": []
+    },
+    {
+        "id": "daeb5454.268828",
+        "type": "link in",
+        "z": "4c6874fb.68b9dc",
+        "name": "Is registration completed",
+        "links": [
+            "dcec79e4.d403b8"
+        ],
+        "x": 1175,
+        "y": 380,
+        "wires": [
+            [
+                "4998b80c.ac3b18"
+            ]
+        ]
+    },
+    {
+        "id": "b9c2a3fc.3ee44",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Is registation completed",
+        "info": "",
+        "x": 1540,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "f950178c.208748",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "links": [
+            "2020774d.405768"
+        ],
+        "x": 1935,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "9b1ff444.8cb6f8",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Remove inline keyboard",
+        "links": [
+            "2020774d.405768"
+        ],
+        "x": 1915,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "e65b611d.29b0f",
+        "type": "function",
+        "z": "4c6874fb.68b9dc",
+        "name": "Saving message_id",
+        "func": "msg.message_id = msg.payload.callback_query.message.message_id;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1770,
+        "y": 1560,
+        "wires": [
+            [
+                "9b1ff444.8cb6f8"
+            ]
+        ]
+    },
+    {
+        "id": "68e0c66a.ee6628",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1990,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9dae952d.b2be48",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Saving message_id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "message_id",
+                "pt": "msg",
+                "to": "payload.callback_query.message.message_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1670,
+        "y": 160,
+        "wires": [
+            [
+                "689e8b01.ded904"
+            ]
+        ]
+    },
+    {
+        "id": "beed9727.b29778",
+        "type": "debug",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 1160,
         "wires": []
     }
 ]
