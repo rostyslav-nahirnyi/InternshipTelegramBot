@@ -237,11 +237,31 @@
                 "t": "eq",
                 "v": "mainMenu",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "theMostPopularQuestions",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "aboutISMDepartment",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "aboutNULP",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "usingBot",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 9,
+        "outputs": 13,
         "x": 1130,
         "y": 500,
         "wires": [
@@ -273,6 +293,18 @@
             ],
             [
                 "fee03af4.838098"
+            ],
+            [
+                "19842b4d.d40f45"
+            ],
+            [
+                "feec21d1.19a71"
+            ],
+            [
+                "feec21d1.19a71"
+            ],
+            [
+                "feec21d1.19a71"
             ]
         ]
     },
@@ -285,7 +317,7 @@
             "20e0ef34.86f5"
         ],
         "x": 1615,
-        "y": 920,
+        "y": 1020,
         "wires": []
     },
     {
@@ -296,8 +328,8 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1575,
-        "y": 280,
+        "x": 1595,
+        "y": 60,
         "wires": []
     },
     {
@@ -308,8 +340,8 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1575,
-        "y": 320,
+        "x": 1595,
+        "y": 100,
         "wires": []
     },
     {
@@ -321,7 +353,7 @@
             "957981a1.8fdad"
         ],
         "x": 1615,
-        "y": 1020,
+        "y": 1120,
         "wires": []
     },
     {
@@ -332,8 +364,8 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1615,
-        "y": 800,
+        "x": 1635,
+        "y": 580,
         "wires": []
     },
     {
@@ -952,6 +984,7 @@
         "name": "Print main menu",
         "links": [
             "9d38cfeb.72544",
+            "cfe6162e.b07178",
             "fee03af4.838098"
         ],
         "x": 225,
@@ -967,7 +1000,7 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message with main menu",
-        "func": "msg.payload = {\n    text: \"✅ Ви в головному меню. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Найпопулярніші питання 🔥\",\n                callback_data: \"printUsersInfo\"            \n            }], \n            [{\n                text: \"Про кафедру ICM 😎\",\n                callback_data: \"printUsersInfo\"            \n            },\n            {\n                text: \"Про НУЛП 🚀\",\n                callback_data: \"printUsersInfo\"            \n            }],\n            [{\n                text: \"Як користуватися ботом 📁\",\n                callback_data: \"printUsersInfo\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"✅ Ви в головному меню. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Найпопулярніші питання 🔥\",\n                callback_data: \"theMostPopularQuestions\"            \n            }], \n            [{\n                text: \"Про кафедру ICM 😎\",\n                callback_data: \"aboutISMDepartment\"            \n            },\n            {\n                text: \"Про НУЛП 🚀\",\n                callback_data: \"aboutNULP\"            \n            }],\n            [{\n                text: \"Як користуватися ботом 📁\",\n                callback_data: \"usingBot\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1005,8 +1038,8 @@
         "links": [
             "3272d461.c8fe5c"
         ],
-        "x": 1665,
-        "y": 540,
+        "x": 1685,
+        "y": 320,
         "wires": []
     },
     {
@@ -1017,8 +1050,8 @@
         "links": [
             "84f1ccf3.e8c91"
         ],
-        "x": 1665,
-        "y": 580,
+        "x": 1685,
+        "y": 360,
         "wires": []
     },
     {
@@ -1231,8 +1264,8 @@
         "links": [
             "7ed591d4.8c433"
         ],
-        "x": 1665,
-        "y": 620,
+        "x": 1685,
+        "y": 400,
         "wires": []
     },
     {
@@ -1243,8 +1276,8 @@
         "links": [
             "6ef222d3.893f0c"
         ],
-        "x": 1665,
-        "y": 660,
+        "x": 1685,
+        "y": 440,
         "wires": []
     },
     {
@@ -1255,8 +1288,8 @@
         "links": [
             "bebaf9fd.57b3d8"
         ],
-        "x": 1665,
-        "y": 700,
+        "x": 1685,
+        "y": 480,
         "wires": []
     },
     {
@@ -1282,8 +1315,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting occupation",
         "info": "# Setting occupation",
-        "x": 1750,
-        "y": 500,
+        "x": 1770,
+        "y": 280,
         "wires": []
     },
     {
@@ -1292,8 +1325,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1670,
-        "y": 760,
+        "x": 1690,
+        "y": 540,
         "wires": []
     },
     {
@@ -1303,7 +1336,7 @@
         "name": "Other messages",
         "info": "",
         "x": 1680,
-        "y": 980,
+        "y": 1080,
         "wires": []
     },
     {
@@ -1312,8 +1345,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Editing name",
         "info": "",
-        "x": 1630,
-        "y": 240,
+        "x": 1650,
+        "y": 20,
         "wires": []
     },
     {
@@ -1470,8 +1503,8 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1625,
-        "y": 460,
+        "x": 1645,
+        "y": 240,
         "wires": []
     },
     {
@@ -1480,8 +1513,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Setting city",
         "info": "",
-        "x": 1680,
-        "y": 420,
+        "x": 1700,
+        "y": 200,
         "wires": []
     },
     {
@@ -1491,7 +1524,7 @@
         "name": "Start",
         "info": "",
         "x": 1650,
-        "y": 880,
+        "y": 980,
         "wires": []
     },
     {
@@ -1517,7 +1550,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1130,
-        "y": 960,
+        "y": 1060,
         "wires": [
             [
                 "2cfd1290.cbdfde"
@@ -1532,8 +1565,8 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Is registration completed",
-        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    \n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg];\n}\nreturn [null, null, null];",
-        "outputs": 3,
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    \n    return [null, msg, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg];\n}\n\nreturn [null, null, null, msg];",
+        "outputs": 4,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -1548,6 +1581,9 @@
             ],
             [
                 "8a07dd6e.fb122"
+            ],
+            [
+                "cfe6162e.b07178"
             ]
         ]
     },
@@ -2132,8 +2168,8 @@
         "links": [
             "2020774d.405768"
         ],
-        "x": 1635,
-        "y": 360,
+        "x": 1655,
+        "y": 140,
         "wires": []
     },
     {
@@ -2242,8 +2278,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Removing inline keyboard",
         "info": "",
-        "x": 1730,
-        "y": 320,
+        "x": 1750,
+        "y": 100,
         "wires": []
     },
     {
@@ -2288,6 +2324,322 @@
         "info": "",
         "x": 3670,
         "y": 840,
+        "wires": []
+    },
+    {
+        "id": "e62923c4.ab898",
+        "type": "link in",
+        "z": "276bc02d.e347",
+        "name": "Send the most popular questions",
+        "links": [
+            "19842b4d.d40f45"
+        ],
+        "x": 215,
+        "y": 440,
+        "wires": [
+            [
+                "fd706c59.243ee"
+            ]
+        ]
+    },
+    {
+        "id": "fd706c59.243ee",
+        "type": "function",
+        "z": "276bc02d.e347",
+        "name": "Setting up message with the most popular questions",
+        "func": "msg.payload = {\n    text: \"✅ Ви в головному меню. Виберіть необхідний пункт\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 520,
+        "y": 440,
+        "wires": [
+            [
+                "abcac9f1.1aa2a8"
+            ]
+        ]
+    },
+    {
+        "id": "262713da.17ad3c",
+        "type": "debug",
+        "z": "276bc02d.e347",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1270,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "758ec55e.3e202c",
+        "type": "comment",
+        "z": "276bc02d.e347",
+        "name": "Message with the most popular questions",
+        "info": "",
+        "x": 360,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "abcac9f1.1aa2a8",
+        "type": "change",
+        "z": "276bc02d.e347",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 890,
+        "y": 440,
+        "wires": [
+            [
+                "c47ab234.b9287"
+            ]
+        ]
+    },
+    {
+        "id": "c47ab234.b9287",
+        "type": "http request",
+        "z": "276bc02d.e347",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1110,
+        "y": 440,
+        "wires": [
+            [
+                "262713da.17ad3c"
+            ]
+        ]
+    },
+    {
+        "id": "19842b4d.d40f45",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Send the most popular questions",
+        "links": [
+            "e62923c4.ab898"
+        ],
+        "x": 1615,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "1b324f6e.df2211",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Sending the most popular questions",
+        "info": "",
+        "x": 1740,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "feec21d1.19a71",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Send message about ISM department",
+        "links": [
+            "b25d1f4e.85ebd"
+        ],
+        "x": 1615,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "b25d1f4e.85ebd",
+        "type": "link in",
+        "z": "276bc02d.e347",
+        "name": "Send message info",
+        "links": [
+            "feec21d1.19a71"
+        ],
+        "x": 215,
+        "y": 660,
+        "wires": [
+            [
+                "1776db31.ba8455"
+            ]
+        ]
+    },
+    {
+        "id": "1efe9538.956a1b",
+        "type": "function",
+        "z": "276bc02d.e347",
+        "name": "Setting up message info",
+        "func": "msg.payload = {\n    text: msg.payload[0].content,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1010,
+        "y": 660,
+        "wires": [
+            [
+                "d0af8713.dfe948"
+            ]
+        ]
+    },
+    {
+        "id": "2f2d55d.9f200aa",
+        "type": "debug",
+        "z": "276bc02d.e347",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1630,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "5b85328f.b7748c",
+        "type": "comment",
+        "z": "276bc02d.e347",
+        "name": "Message Info",
+        "info": "",
+        "x": 270,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "d0af8713.dfe948",
+        "type": "change",
+        "z": "276bc02d.e347",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1250,
+        "y": 660,
+        "wires": [
+            [
+                "1d173f2d.5e86e1"
+            ]
+        ]
+    },
+    {
+        "id": "1d173f2d.5e86e1",
+        "type": "http request",
+        "z": "276bc02d.e347",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1470,
+        "y": 660,
+        "wires": [
+            [
+                "2f2d55d.9f200aa"
+            ]
+        ]
+    },
+    {
+        "id": "9715f6c0.534af8",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Sending messages about ISM department, NULP, how to use the bot ",
+        "info": "",
+        "x": 1840,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "1776db31.ba8455",
+        "type": "function",
+        "z": "276bc02d.e347",
+        "name": "Getting info from InfoPages",
+        "func": "msg.topic = \"SELECT content FROM InfoPages WHERE title = '\" + msg.payload.callback_query.data + \"';\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 440,
+        "y": 660,
+        "wires": [
+            [
+                "6d12fdae.161534"
+            ]
+        ]
+    },
+    {
+        "id": "6d12fdae.161534",
+        "type": "mysql",
+        "z": "276bc02d.e347",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 690,
+        "y": 660,
+        "wires": [
+            [
+                "1efe9538.956a1b"
+            ]
+        ]
+    },
+    {
+        "id": "cfe6162e.b07178",
+        "type": "link out",
+        "z": "4c6874fb.68b9dc",
+        "name": "Send main menu message",
+        "links": [
+            "f1be3b15.c41ab8"
+        ],
+        "x": 1775,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "785ef259.f5089c",
+        "type": "comment",
+        "z": "4c6874fb.68b9dc",
+        "name": "Send main menu message",
+        "info": "",
+        "x": 1870,
+        "y": 1080,
         "wires": []
     }
 ]
