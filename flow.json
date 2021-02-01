@@ -36,6 +36,11 @@
         "name": "Questions"
     },
     {
+        "id": "95f1f9c.778f308",
+        "type": "dialogflowv2-token",
+        "name": "dialogflow_node_red"
+    },
+    {
         "id": "bebef22b.2417d",
         "type": "debug",
         "z": "dbbd86af.74c0d8",
@@ -150,7 +155,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n    \n    return [msg, null]\n} else {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg];\n}\n\n",
+        "func": "if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n    \n    return [msg, null];\n} else {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg]; \n}\n\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -549,9 +554,9 @@
         "id": "20e0ef34.86f5",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Start",
         "links": [
-            "6f6510b5.ba06a"
+            "2cfd1290.cbdfde"
         ],
         "x": 175,
         "y": 220,
@@ -566,7 +571,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Updating user name",
-        "func": "if(msg.payload.callback_query) {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.callback_query.from.first_name + \" \" + msg.payload.callback_query.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n} else {\n    msg.topic = \"UPDATE Users SET username = '\" + msg.payload.message.from.first_name + \" \" + msg.payload.message.from.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n}\n\nreturn msg;",
+        "func": "//for the next question\nmsg.text = \"Зрозуміло. Де ви проживаєте?\";\n\nif(msg.payload.callback_query) {\n    msg.first_name = msg.payload.callback_query.message.chat.first_name ? msg.payload.callback_query.message.chat.first_name : '';\n    msg.last_name = msg.payload.callback_query.message.chat.last_name ? msg.payload.callback_query.message.chat.last_name : '';\n    \n    msg.topic = \"UPDATE Users SET username = '\" + msg.first_name + \" \" + msg.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n} else {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    \n    msg.topic = \"UPDATE Users SET username = '\" + msg.first_name + \" \" + msg.last_name + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -704,7 +709,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up question for location",
-        "func": "msg.payload = {\n    text: \"Де ви проживаєте?\",    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: msg.text,    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -819,7 +824,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Getting username and city fields",
-        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\n    return msg;\n}\n\n\nreturn null;\n",
+        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = '\" + msg.chat_id + \"';\";\n\n    return msg;\n}\n\n\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -852,7 +857,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(type) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: \"Вкажіть, будь ласка, коректне \" + type,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nif (msg.message == \"/editingField3252346\") {\n    return [null, null, msg, null, null];\n} \n\nif (msg.payload[0]) {\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"ім'я\")) {\n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"місто\")) {\n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }else if (msg.payload[0].occupation) {\n        msg.payload = msg.message;\n        \n        return [null, null, null, msg, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
+        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        msg.payload = msg.message;\n        \n        return [null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
         "outputs": 5,
         "noerr": 0,
         "initialize": "",
@@ -874,7 +879,8 @@
                 "342603f5.41a37c"
             ],
             [
-                "dcec79e4.d403b8"
+                "dcec79e4.d403b8",
+                "3d156d2b.9ebb52"
             ]
         ]
     },
@@ -884,8 +890,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1670,
-        "y": 1940,
+        "x": 1850,
+        "y": 1900,
         "wires": [
             [
                 "fc83002f.8146f"
@@ -922,8 +928,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1610,
-        "y": 2000,
+        "x": 1790,
+        "y": 1960,
         "wires": []
     },
     {
@@ -934,8 +940,8 @@
         "links": [
             "b0af6159.780a4"
         ],
-        "x": 1875,
-        "y": 1940,
+        "x": 2055,
+        "y": 1900,
         "wires": []
     },
     {
@@ -944,8 +950,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 1670,
-        "y": 2100,
+        "x": 1850,
+        "y": 2060,
         "wires": [
             [
                 "eb6c15f.d5924e8"
@@ -960,8 +966,8 @@
         "links": [
             "4b1be78d.e0a2d8"
         ],
-        "x": 1875,
-        "y": 2100,
+        "x": 2055,
+        "y": 2060,
         "wires": []
     },
     {
@@ -1494,8 +1500,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2030,
-        "y": 2280,
+        "x": 2210,
+        "y": 2240,
         "wires": []
     },
     {
@@ -1568,7 +1574,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Is registration completed",
-        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    \n    return [null, msg, null, null];\n} else if (!msg.payload[0].occupation) {\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg, null];\n}\n\nreturn [null, null, null, msg];",
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    //for the next question\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    //for the next question\n    msg.text = \"Де ви проживаєте?\";\n    \n    return [null, msg, null, null];\n} else if (!msg.payload[0].occupation) {\n    //for the next message\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg, null];\n}\n\nreturn [null, null, null, msg];",
         "outputs": 4,
         "noerr": 0,
         "initialize": "",
@@ -1946,8 +1952,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1650,
-        "y": 2220,
+        "x": 1830,
+        "y": 2180,
         "wires": [
             [
                 "67272de2.58cc54"
@@ -1967,8 +1973,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1870,
-        "y": 2220,
+        "x": 2050,
+        "y": 2180,
         "wires": [
             [
                 "72b075f6.de4fcc"
@@ -2036,8 +2042,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1830,
-        "y": 2480,
+        "x": 2010,
+        "y": 2440,
         "wires": []
     },
     {
@@ -2048,8 +2054,8 @@
         "language": "uk",
         "debug": false,
         "queryParamsOK": false,
-        "x": 1660,
-        "y": 2400,
+        "x": 1840,
+        "y": 2360,
         "wires": [
             [
                 "8302d8ef.4e6b08",
@@ -2063,8 +2069,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "DialogFlow Processing Message",
         "info": "",
-        "x": 1710,
-        "y": 2360,
+        "x": 1890,
+        "y": 2320,
         "wires": []
     },
     {
@@ -2086,8 +2092,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 2230,
-        "y": 2400,
+        "x": 2410,
+        "y": 2360,
         "wires": [
             [
                 "44e66b70.a485c4"
@@ -2107,8 +2113,8 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 2450,
-        "y": 2400,
+        "x": 2630,
+        "y": 2360,
         "wires": [
             [
                 "d9bf6889.83fa58"
@@ -2128,8 +2134,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2610,
-        "y": 2480,
+        "x": 2790,
+        "y": 2440,
         "wires": []
     },
     {
@@ -2142,8 +2148,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1920,
-        "y": 2400,
+        "x": 2100,
+        "y": 2360,
         "wires": [
             [
                 "ee8f4b17.5fe298"
@@ -2486,12 +2492,12 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message info",
-        "func": "msg.payload = {\n    text: msg.payload[0].content,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: msg.payload[0].content,\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Головне меню\",\n                callback_data: \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1010,
+        "x": 1050,
         "y": 660,
         "wires": [
             [
@@ -2512,7 +2518,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1630,
+        "x": 1670,
         "y": 720,
         "wires": []
     },
@@ -2545,7 +2551,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1250,
+        "x": 1290,
         "y": 660,
         "wires": [
             [
@@ -2566,7 +2572,7 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1470,
+        "x": 1510,
         "y": 660,
         "wires": [
             [
@@ -2608,7 +2614,7 @@
         "z": "276bc02d.e347",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 690,
+        "x": 730,
         "y": 660,
         "wires": [
             [
@@ -2643,7 +2649,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "",
-        "func": "msg.topic = \"UPDATE InfoPages SET content = \\\"Кафедра інформаційних систем та мереж — це навчально-науковий підрозділ Інституту комп’ютерних наук та інформаційних технологій Львівської політехніки утворений 1-го червня 1995 року.\\nКафедра «Інформаційні системи та мережі» утворена 1-го червня 1995 року наказом ректора «Львівської політехніки» після прийняття відповідної ухвали Вченою радою Університету. Колектив кафедри ІСМ на момент утворення складався з 5 викладачів, одного інженерно-технічного працівника, трьох співробітників НДЛ та групи молодих аспірантів, котрі виокремилися зі складу кафедри АСУ та були об’єднані спільною науковою проблематикою з інформаційного моделювання, систем баз даних і знань.\\\" WHERE title = 'aboutISMDepartment';\";\n\nreturn msg;",
+        "func": "msg.topic = \"UPDATE InfoPages SET content = \\\"Задавайте мені конкретні питання\\\" WHERE title = 'usingBot';\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2725,8 +2731,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Move on to setting the location field",
         "info": "",
-        "x": 2000,
-        "y": 1900,
+        "x": 2180,
+        "y": 1860,
         "wires": []
     },
     {
@@ -2735,8 +2741,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Move on to choosing occupation",
         "info": "",
-        "x": 1990,
-        "y": 2060,
+        "x": 2170,
+        "y": 2020,
         "wires": []
     },
     {
@@ -2747,8 +2753,8 @@
         "links": [
             "daeb5454.268828"
         ],
-        "x": 1455,
-        "y": 2500,
+        "x": 1635,
+        "y": 2460,
         "wires": []
     },
     {
@@ -2773,8 +2779,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Is registation completed",
         "info": "",
-        "x": 1540,
-        "y": 2460,
+        "x": 1720,
+        "y": 2420,
         "wires": []
     },
     {
@@ -2878,6 +2884,23 @@
         "statusType": "auto",
         "x": 930,
         "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "3d156d2b.9ebb52",
+        "type": "debug",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 2400,
         "wires": []
     }
 ]
