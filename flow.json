@@ -184,7 +184,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n    \n    return [msg, null];\n} else {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg]; \n}\n\n",
+        "func": "if (msg.payload.message) {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg]; \n} else if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n}\n\nif (msg.message.startsWith(\"^\")) {\n    msg.payload.message = msg.payload.callback_query.message;\n    \n    delete msg.payload.callback_query;\n    \n    return [null, msg];\n} else {\n    return [msg, null];\n}\n\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -324,19 +324,19 @@
                 "ce92fb67.2ac148"
             ],
             [
-                "fee03af4.838098"
+                "1771062a.6b9e4a"
             ],
             [
-                "19842b4d.d40f45"
+                "fd346d51.349be"
             ],
             [
-                "feec21d1.19a71"
+                "1c95075d.3fbc99"
             ],
             [
-                "feec21d1.19a71"
+                "1c95075d.3fbc99"
             ],
             [
-                "feec21d1.19a71"
+                "1c95075d.3fbc99"
             ]
         ]
     },
@@ -361,7 +361,7 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1935,
+        "x": 1895,
         "y": 140,
         "wires": []
     },
@@ -373,7 +373,7 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1935,
+        "x": 1895,
         "y": 180,
         "wires": []
     },
@@ -399,8 +399,8 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1415,
-        "y": 620,
+        "x": 1895,
+        "y": 600,
         "wires": []
     },
     {
@@ -582,8 +582,8 @@
             "3272d461.c8fe5c",
             "ed917a17.8e5078"
         ],
-        "x": 1465,
-        "y": 360,
+        "x": 1395,
+        "y": 380,
         "wires": []
     },
     {
@@ -595,8 +595,8 @@
             "84f1ccf3.e8c91",
             "4f5ec5f6.e9838c"
         ],
-        "x": 1465,
-        "y": 400,
+        "x": 1395,
+        "y": 420,
         "wires": []
     },
     {
@@ -608,8 +608,8 @@
             "7ed591d4.8c433",
             "f2c3d2a0.25b49"
         ],
-        "x": 1465,
-        "y": 440,
+        "x": 1395,
+        "y": 460,
         "wires": []
     },
     {
@@ -621,8 +621,8 @@
             "6ef222d3.893f0c",
             "4ed757e7.456528"
         ],
-        "x": 1465,
-        "y": 480,
+        "x": 1395,
+        "y": 500,
         "wires": []
     },
     {
@@ -634,8 +634,8 @@
             "bebaf9fd.57b3d8",
             "bcbdc401.9580e8"
         ],
-        "x": 1465,
-        "y": 520,
+        "x": 1395,
+        "y": 540,
         "wires": []
     },
     {
@@ -644,8 +644,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set occupation",
         "info": "# Setting occupation",
-        "x": 1540,
-        "y": 320,
+        "x": 1460,
+        "y": 340,
         "wires": []
     },
     {
@@ -654,8 +654,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1470,
-        "y": 580,
+        "x": 1950,
+        "y": 560,
         "wires": []
     },
     {
@@ -674,7 +674,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Edit name",
         "info": "",
-        "x": 1980,
+        "x": 1940,
         "y": 100,
         "wires": []
     },
@@ -766,7 +766,7 @@
             "b0af6159.780a4",
             "1835ced7.6011d1"
         ],
-        "x": 1425,
+        "x": 1385,
         "y": 280,
         "wires": []
     },
@@ -776,7 +776,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set the city field",
         "info": "",
-        "x": 1500,
+        "x": 1460,
         "y": 240,
         "wires": []
     },
@@ -875,7 +875,7 @@
         "links": [
             "e62923c4.ab898"
         ],
-        "x": 1395,
+        "x": 1895,
         "y": 700,
         "wires": []
     },
@@ -885,7 +885,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Send the most popular questions",
         "info": "",
-        "x": 1510,
+        "x": 2010,
         "y": 660,
         "wires": []
     },
@@ -897,7 +897,7 @@
         "links": [
             "b25d1f4e.85ebd"
         ],
-        "x": 1395,
+        "x": 1895,
         "y": 800,
         "wires": []
     },
@@ -951,7 +951,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Send messages about ISM department, NULP, how to use the bot ",
         "info": "",
-        "x": 1610,
+        "x": 2110,
         "y": 760,
         "wires": []
     },
@@ -1017,7 +1017,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1510,
+        "x": 1470,
         "y": 140,
         "wires": [
             [
@@ -1694,7 +1694,7 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Getting username and city fields",
-        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = '\" + msg.chat_id + \"';\";\n\n    return msg;\n}\n\n\nreturn null;\n",
+        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = '\" + msg.chat_id + \"';\";\n\n    return msg;\n}\n\n\nreturn null;\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1727,7 +1727,7 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        msg.payload = msg.message;\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        return [null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
+        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        //sending saved contexts\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"^\")) {\n            msg.payload = msg.message.slice(1);\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
         "outputs": 5,
         "noerr": 0,
         "initialize": "",
@@ -1745,7 +1745,7 @@
                 "5b53c12b.cc56"
             ],
             [
-                "c82c545b.287d98"
+                "918b2c7e.02687"
             ],
             [
                 "452a3d2.72b81c4"
@@ -1915,8 +1915,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1910,
-        "y": 940,
+        "x": 2170,
+        "y": 860,
         "wires": []
     },
     {
@@ -1927,8 +1927,8 @@
         "language": "uk",
         "debug": false,
         "queryParamsOK": true,
-        "x": 1680,
-        "y": 860,
+        "x": 1940,
+        "y": 780,
         "wires": [
             [
                 "5d8decb2.3014e4",
@@ -1942,8 +1942,8 @@
         "z": "cbf72f33.63dd6",
         "name": "DialogFlow Processing Message",
         "info": "",
-        "x": 1730,
-        "y": 820,
+        "x": 1990,
+        "y": 740,
         "wires": []
     },
     {
@@ -1951,13 +1951,13 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Setting dialogflow response",
-        "func": "msg.payload = {\n    text: msg._dialogflow.fulfillmentText,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    chat_id: msg.chat_id\n}\n\ntry {\n    var jsonResponse = JSON.parse(msg._dialogflow.fulfillmentText.toString());\n    \n    msg.payload.text = jsonResponse.question;\n    \n    var answersArr = [];\n    jsonResponse.answers.forEach((item, i, arr) => {\n       answersArr.push({text: item.text, callback_data: \"^\" + item.callback_data});\n    });\n    \n    \n    msg.payload.reply_markup = {inline_keyboard: [answersArr]};\n    \n}catch (err) {\n    msg.payload.text = msg._dialogflow.fulfillmentText;\n}\n\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2420,
-        "y": 860,
+        "x": 2720,
+        "y": 780,
         "wires": [
             [
                 "5a2ebc6a.567e54"
@@ -1993,7 +1993,7 @@
             "6ff45d49.c66084"
         ],
         "x": 1615,
-        "y": 1140,
+        "y": 980,
         "wires": []
     },
     {
@@ -2003,7 +2003,7 @@
         "name": "Checking whether the registration is completed",
         "info": "",
         "x": 1780,
-        "y": 1100,
+        "y": 940,
         "wires": []
     },
     {
@@ -2016,8 +2016,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2030,
-        "y": 860,
+        "x": 2330,
+        "y": 780,
         "wires": [
             [
                 "63a1490b.736ab8"
@@ -2169,8 +2169,8 @@
         "z": "cbf72f33.63dd6",
         "name": "",
         "env": [],
-        "x": 2810,
-        "y": 860,
+        "x": 3110,
+        "y": 780,
         "wires": [
             []
         ]
@@ -2335,7 +2335,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "",
         "env": [],
-        "x": 1750,
+        "x": 1710,
         "y": 140,
         "wires": [
             [
@@ -2349,7 +2349,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "",
         "env": [],
-        "x": 1750,
+        "x": 1710,
         "y": 180,
         "wires": [
             [
@@ -2376,7 +2376,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1510,
+        "x": 1470,
         "y": 180,
         "wires": [
             [
@@ -2552,5 +2552,142 @@
         "x": 2630,
         "y": 280,
         "wires": []
+    },
+    {
+        "id": "918b2c7e.02687",
+        "type": "subflow:4001764a.8341f8",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "env": [],
+        "x": 1710,
+        "y": 780,
+        "wires": [
+            [
+                "c82c545b.287d98"
+            ]
+        ]
+    },
+    {
+        "id": "883596f3.f874b8",
+        "type": "subflow:4001764a.8341f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 1710,
+        "y": 800,
+        "wires": [
+            [
+                "feec21d1.19a71"
+            ]
+        ]
+    },
+    {
+        "id": "1c95075d.3fbc99",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Saving message_id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "message_id",
+                "pt": "msg",
+                "to": "payload.callback_query.message.message_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1470,
+        "y": 800,
+        "wires": [
+            [
+                "883596f3.f874b8"
+            ]
+        ]
+    },
+    {
+        "id": "4e826109.a4c38",
+        "type": "subflow:4001764a.8341f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 1710,
+        "y": 700,
+        "wires": [
+            [
+                "19842b4d.d40f45"
+            ]
+        ]
+    },
+    {
+        "id": "fd346d51.349be",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Saving message_id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "message_id",
+                "pt": "msg",
+                "to": "payload.callback_query.message.message_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1470,
+        "y": 700,
+        "wires": [
+            [
+                "4e826109.a4c38"
+            ]
+        ]
+    },
+    {
+        "id": "63f8db61.634e64",
+        "type": "subflow:4001764a.8341f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 1710,
+        "y": 600,
+        "wires": [
+            [
+                "fee03af4.838098"
+            ]
+        ]
+    },
+    {
+        "id": "1771062a.6b9e4a",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Saving message_id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "message_id",
+                "pt": "msg",
+                "to": "payload.callback_query.message.message_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1470,
+        "y": 600,
+        "wires": [
+            [
+                "63f8db61.634e64"
+            ]
+        ]
     }
 ]
