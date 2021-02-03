@@ -1060,7 +1060,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 3110,
+        "x": 3650,
         "y": 160,
         "wires": [
             [
@@ -1233,7 +1233,7 @@
         "y": 360,
         "wires": [
             [
-                "731ab835.3cca28"
+                "9ac7a5f6.6b0578"
             ],
             [
                 "d8112410.42a728"
@@ -1773,7 +1773,7 @@
         "mydb": "529c4263.aeab0c",
         "name": "",
         "x": 1710,
-        "y": 160,
+        "y": 180,
         "wires": [
             [
                 "bba92257.ecedb"
@@ -1807,7 +1807,7 @@
             "1835ced7.6011d1"
         ],
         "x": 1915,
-        "y": 160,
+        "y": 180,
         "wires": []
     },
     {
@@ -1978,7 +1978,7 @@
         "name": "Move on to setting the location field",
         "info": "",
         "x": 2040,
-        "y": 120,
+        "y": 140,
         "wires": []
     },
     {
@@ -2104,7 +2104,7 @@
                 "t": "set",
                 "p": "ngrokUrl",
                 "pt": "global",
-                "to": "https://e6980f44d77c.ngrok.io",
+                "to": "https://9771899f79ed.ngrok.io",
                 "tot": "str"
             },
             {
@@ -2163,7 +2163,7 @@
         "name": "Saving the username field",
         "info": "",
         "x": 1710,
-        "y": 120,
+        "y": 140,
         "wires": []
     },
     {
@@ -2345,7 +2345,7 @@
         "z": "96f6108e.64a37",
         "name": "",
         "env": [],
-        "x": 3490,
+        "x": 4030,
         "y": 160,
         "wires": [
             []
@@ -2371,7 +2371,7 @@
         "z": "96f6108e.64a37",
         "name": "",
         "env": [],
-        "x": 2570,
+        "x": 3290,
         "y": 320,
         "wires": [
             [
@@ -2584,5 +2584,47 @@
                 "cfe21d91.ca59b"
             ]
         ]
+    },
+    {
+        "id": "9ac7a5f6.6b0578",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Changing username field to null",
+        "func": "msg.topic = \"UPDATE Users SET username = NULL WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2590,
+        "y": 320,
+        "wires": [
+            [
+                "30367045.2e04d"
+            ]
+        ]
+    },
+    {
+        "id": "30367045.2e04d",
+        "type": "mysql",
+        "z": "96f6108e.64a37",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 2910,
+        "y": 320,
+        "wires": [
+            [
+                "731ab835.3cca28"
+            ]
+        ]
+    },
+    {
+        "id": "b9737d21.50434",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Move on to setting the username field again",
+        "info": "",
+        "x": 2630,
+        "y": 280,
+        "wires": []
     }
 ]
