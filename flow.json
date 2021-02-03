@@ -1,5 +1,12 @@
 [
     {
+        "id": "e4187b73.d0f6b8",
+        "type": "tab",
+        "label": "Setting up parameters",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "dbbd86af.74c0d8",
         "type": "tab",
         "label": "Base Flow",
@@ -7,9 +14,30 @@
         "info": ""
     },
     {
+        "id": "96f6108e.64a37",
+        "type": "tab",
+        "label": "Start command",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "4c6874fb.68b9dc",
         "type": "tab",
-        "label": "Start Flow",
+        "label": "Editing username",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3b5b98a.1c38768",
+        "type": "tab",
+        "label": "Editing location",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "68a30d94.469f94",
+        "type": "tab",
+        "label": "Editing occupation",
         "disabled": false,
         "info": ""
     },
@@ -19,6 +47,77 @@
         "label": "Info Flow",
         "disabled": false,
         "info": ""
+    },
+    {
+        "id": "cbf72f33.63dd6",
+        "type": "tab",
+        "label": "Chatting",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "411ddac8.164cb4",
+        "type": "subflow",
+        "name": "Send message to the chat",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 140,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "bd92a1fe.c5f6f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 720,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "b8d99eac.ee468",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "4001764a.8341f8",
+        "type": "subflow",
+        "name": "Remove inline keyboard",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 160,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "a46d83e7.59837"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1980,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "cfe21d91.ca59b",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
     },
     {
         "id": "529c4263.aeab0c",
@@ -41,69 +140,6 @@
         "name": "dialogflow_node_red"
     },
     {
-        "id": "bebef22b.2417d",
-        "type": "debug",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1050,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "1e1b8c80.015714",
-        "type": "inject",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 80,
-        "wires": [
-            [
-                "3b4b92dd.73262e"
-            ]
-        ]
-    },
-    {
-        "id": "da0d125b.5e9c9",
-        "type": "http request",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 910,
-        "y": 80,
-        "wires": [
-            [
-                "bebef22b.2417d"
-            ]
-        ]
-    },
-    {
         "id": "b1d13c89.82a1",
         "type": "http in",
         "z": "dbbd86af.74c0d8",
@@ -112,8 +148,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 480,
-        "y": 740,
+        "x": 180,
+        "y": 780,
         "wires": [
             [
                 "8b708744.7cb6f8",
@@ -126,7 +162,7 @@
         "id": "8b708744.7cb6f8",
         "type": "debug",
         "z": "dbbd86af.74c0d8",
-        "name": "",
+        "name": "Incoming data",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -135,8 +171,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
-        "y": 820,
+        "x": 560,
+        "y": 860,
         "wires": []
     },
     {
@@ -146,8 +182,8 @@
         "name": "",
         "statusCode": "200",
         "headers": {},
-        "x": 780,
-        "y": 880,
+        "x": 540,
+        "y": 920,
         "wires": []
     },
     {
@@ -160,8 +196,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 760,
-        "y": 740,
+        "x": 540,
+        "y": 780,
         "wires": [
             [
                 "9cad4d0b.fc7ed"
@@ -180,8 +216,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 440,
-        "y": 800,
+        "x": 140,
+        "y": 840,
         "wires": [
             [
                 "ac7f1cdc.11adc",
@@ -267,16 +303,14 @@
         "checkall": "true",
         "repair": false,
         "outputs": 13,
-        "x": 1130,
-        "y": 500,
+        "x": 910,
+        "y": 540,
         "wires": [
             [
-                "96e4744d.d20358",
                 "9dae952d.b2be48"
             ],
             [
-                "b48e521d.7a459",
-                "9dae952d.b2be48"
+                "bc2b504d.e7b25"
             ],
             [
                 "67e90bd9.a1e8c4"
@@ -319,10 +353,11 @@
         "z": "dbbd86af.74c0d8",
         "name": "/start",
         "links": [
-            "20e0ef34.86f5"
+            "20e0ef34.86f5",
+            "bb24cad3.d57618"
         ],
-        "x": 1615,
-        "y": 1020,
+        "x": 1395,
+        "y": 1060,
         "wires": []
     },
     {
@@ -333,8 +368,8 @@
         "links": [
             "49db1ec2.c7de4"
         ],
-        "x": 1595,
-        "y": 60,
+        "x": 1935,
+        "y": 140,
         "wires": []
     },
     {
@@ -345,8 +380,8 @@
         "links": [
             "407592c4.adb5ec"
         ],
-        "x": 1595,
-        "y": 100,
+        "x": 1935,
+        "y": 180,
         "wires": []
     },
     {
@@ -355,10 +390,12 @@
         "z": "dbbd86af.74c0d8",
         "name": "Process message",
         "links": [
-            "957981a1.8fdad"
+            "957981a1.8fdad",
+            "62416c5b.bd8764",
+            "5581481b.706b38"
         ],
-        "x": 1615,
-        "y": 1120,
+        "x": 1395,
+        "y": 1160,
         "wires": []
     },
     {
@@ -369,202 +406,9 @@
         "links": [
             "f1be3b15.c41ab8"
         ],
-        "x": 1635,
-        "y": 580,
+        "x": 1415,
+        "y": 620,
         "wires": []
-    },
-    {
-        "id": "33134ca5.524c74",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to '/start' (Greeting part)",
-        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ.👨‍💻З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\"\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1330,
-        "y": 80,
-        "wires": [
-            [
-                "5999f0ff.2e8d1"
-            ]
-        ]
-    },
-    {
-        "id": "5faa08f6.5806b8",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up response to '/start' (Appeling part)",
-        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"\n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"\n            }]\n        ]\n    },\n    chat_id: msg.chat_id,\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 2210,
-        "y": 200,
-        "wires": [
-            [
-                "a018aad3.00f5b8"
-            ]
-        ]
-    },
-    {
-        "id": "f859dabc.d52988",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 610,
-        "y": 200,
-        "wires": [
-            [
-                "d29b3da6.dcb2f",
-                "7587a0bf.151e4"
-            ]
-        ]
-    },
-    {
-        "id": "d29b3da6.dcb2f",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 810,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "7587a0bf.151e4",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Checking presence of user row",
-        "func": "if (msg.payload.length) return [null, msg];\nelse return [msg, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 910,
-        "y": 200,
-        "wires": [
-            [
-                "7ada2dbc.12ec34",
-                "33134ca5.524c74"
-            ],
-            [
-                "4998b80c.ac3b18"
-            ]
-        ]
-    },
-    {
-        "id": "7ada2dbc.12ec34",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1210,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "c005d39e.f0ac8",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Registering new user row in db",
-        "func": "if (msg.register) {\n    msg.topic = \"INSERT INTO Users (user_telegram_id) VALUES (\" + msg.chat_id + \");\";\n\n    return msg;\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 2550,
-        "y": 80,
-        "wires": [
-            [
-                "6e40bda9.cffce4"
-            ]
-        ]
-    },
-    {
-        "id": "6e40bda9.cffce4",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 2910,
-        "y": 80,
-        "wires": [
-            [
-                "dfd8eae3.5bcee8"
-            ]
-        ]
-    },
-    {
-        "id": "dfd8eae3.5bcee8",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3110,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "66ebb3af.808c7c",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Getting user row",
-        "func": "msg.register = true;\n\nmsg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\nmsg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n\nmsg.message_id = msg.payload.message.message_id - 1;\n\nif (!msg.first_name && !msg.last_name) return [null, msg];\n\nmsg.topic = \"SELECT * FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn [msg, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 340,
-        "y": 220,
-        "wires": [
-            [
-                "f859dabc.d52988"
-            ],
-            [
-                "57722993.d08fb8"
-            ]
-        ]
-    },
-    {
-        "id": "20e0ef34.86f5",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Start",
-        "links": [
-            "2cfd1290.cbdfde"
-        ],
-        "x": 175,
-        "y": 220,
-        "wires": [
-            [
-                "66ebb3af.808c7c"
-            ]
-        ]
     },
     {
         "id": "83a6c20c.1b51b",
@@ -576,8 +420,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 360,
-        "y": 700,
+        "x": 440,
+        "y": 160,
         "wires": [
             [
                 "573aa76b.c47f38"
@@ -592,8 +436,8 @@
         "links": [
             "96e4744d.d20358"
         ],
-        "x": 165,
-        "y": 700,
+        "x": 245,
+        "y": 160,
         "wires": [
             [
                 "83a6c20c.1b51b",
@@ -607,8 +451,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 650,
-        "y": 700,
+        "x": 730,
+        "y": 160,
         "wires": [
             [
                 "f553be12.15931",
@@ -620,7 +464,7 @@
         "id": "f553be12.15931",
         "type": "debug",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Setting username to default response from db",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -629,15 +473,15 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 870,
-        "y": 780,
+        "x": 1080,
+        "y": 240,
         "wires": []
     },
     {
         "id": "28cc6c0e.6a0174",
         "type": "debug",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Setting username to default incoming data",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -646,8 +490,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 260,
-        "y": 780,
+        "x": 450,
+        "y": 240,
         "wires": []
     },
     {
@@ -660,11 +504,11 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1740,
-        "y": 780,
+        "x": 1820,
+        "y": 160,
         "wires": [
             [
-                "43311317.c47cbc"
+                "c538e448.9052c8"
             ]
         ]
     },
@@ -672,138 +516,16 @@
         "id": "407592c4.adb5ec",
         "type": "link in",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Send request message to enter a new username",
         "links": [
             "b48e521d.7a459",
-            "57722993.d08fb8"
+            "ba2be4d7.46a368"
         ],
-        "x": 1525,
-        "y": 780,
+        "x": 1605,
+        "y": 160,
         "wires": [
             [
                 "643d38df.03a4c8"
-            ]
-        ]
-    },
-    {
-        "id": "b0af6159.780a4",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Send message to set the location field",
-        "links": [
-            "4d10c364.bba70c",
-            "67e90bd9.a1e8c4",
-            "ce2794d2.a63448",
-            "fc83002f.8146f"
-        ],
-        "x": 195,
-        "y": 1100,
-        "wires": [
-            [
-                "b0e558db.fd1018"
-            ]
-        ]
-    },
-    {
-        "id": "b0e558db.fd1018",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up question for location",
-        "func": "msg.payload = {\n    text: msg.text,    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 490,
-        "y": 1100,
-        "wires": [
-            [
-                "6a53e132.9350f"
-            ]
-        ]
-    },
-    {
-        "id": "6d50e6ea.4d4118",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Changing city field",
-        "func": "msg.topic = \"UPDATE Users SET city = '/editingField3252346' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1330,
-        "y": 1100,
-        "wires": [
-            [
-                "3812e880.0bda88"
-            ]
-        ]
-    },
-    {
-        "id": "3812e880.0bda88",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 1650,
-        "y": 1100,
-        "wires": [
-            [
-                "d7c7aeb2.450db"
-            ]
-        ]
-    },
-    {
-        "id": "d7c7aeb2.450db",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1850,
-        "y": 1180,
-        "wires": []
-    },
-    {
-        "id": "4b1be78d.e0a2d8",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Send message to set the occupation field",
-        "links": [
-            "8a07dd6e.fb122",
-            "eb6c15f.d5924e8",
-            "cbb721f9.d1df5"
-        ],
-        "x": 195,
-        "y": 1580,
-        "wires": [
-            [
-                "7626e672.e5e418"
-            ]
-        ]
-    },
-    {
-        "id": "7626e672.e5e418",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up 'choose occupation' message",
-        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 510,
-        "y": 1580,
-        "wires": [
-            [
-                "146e7f83.4f883"
             ]
         ]
     },
@@ -813,178 +535,12 @@
         "z": "4c6874fb.68b9dc",
         "name": "Move on to setting the location field",
         "links": [
-            "b0af6159.780a4"
+            "b0af6159.780a4",
+            "1835ced7.6011d1"
         ],
-        "x": 855,
-        "y": 700,
+        "x": 935,
+        "y": 160,
         "wires": []
-    },
-    {
-        "id": "22e30d81.7d4372",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Getting username and city fields",
-        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = '\" + msg.chat_id + \"';\";\n\n    return msg;\n}\n\n\nreturn null;\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 510,
-        "y": 2160,
-        "wires": [
-            [
-                "bdc1a1d4.37764"
-            ]
-        ]
-    },
-    {
-        "id": "bdc1a1d4.37764",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 830,
-        "y": 2160,
-        "wires": [
-            [
-                "85b6a435.a2d908",
-                "cec5cab9.a1ce08"
-            ]
-        ]
-    },
-    {
-        "id": "85b6a435.a2d908",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        msg.payload = msg.message;\n        \n        return [null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
-        "outputs": 5,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1240,
-        "y": 2160,
-        "wires": [
-            [
-                "17cb6e60.6123d2",
-                "25f85bfa.c72ef4"
-            ],
-            [
-                "5d47b509.1bbcfc"
-            ],
-            [
-                "59a40707.d376b8"
-            ],
-            [
-                "342603f5.41a37c"
-            ],
-            [
-                "dcec79e4.d403b8",
-                "3d156d2b.9ebb52"
-            ]
-        ]
-    },
-    {
-        "id": "17cb6e60.6123d2",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 1850,
-        "y": 1900,
-        "wires": [
-            [
-                "fc83002f.8146f"
-            ]
-        ]
-    },
-    {
-        "id": "cec5cab9.a1ce08",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 990,
-        "y": 2240,
-        "wires": []
-    },
-    {
-        "id": "25f85bfa.c72ef4",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1790,
-        "y": 1960,
-        "wires": []
-    },
-    {
-        "id": "fc83002f.8146f",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the location field",
-        "links": [
-            "b0af6159.780a4"
-        ],
-        "x": 2055,
-        "y": 1900,
-        "wires": []
-    },
-    {
-        "id": "5d47b509.1bbcfc",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 1850,
-        "y": 2060,
-        "wires": [
-            [
-                "eb6c15f.d5924e8"
-            ]
-        ]
-    },
-    {
-        "id": "eb6c15f.d5924e8",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to choosing occupation",
-        "links": [
-            "4b1be78d.e0a2d8"
-        ],
-        "x": 2055,
-        "y": 2060,
-        "wires": []
-    },
-    {
-        "id": "957981a1.8fdad",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Edit username or city or process message",
-        "links": [
-            "51ec0c6.d7d05f4"
-        ],
-        "x": 215,
-        "y": 2160,
-        "wires": [
-            [
-                "22e30d81.7d4372"
-            ]
-        ]
     },
     {
         "id": "f1be3b15.c41ab8",
@@ -994,7 +550,9 @@
         "links": [
             "9d38cfeb.72544",
             "cfe6162e.b07178",
-            "fee03af4.838098"
+            "fee03af4.838098",
+            "76361c43.ee74f4",
+            "59d394d6.305dac"
         ],
         "x": 225,
         "y": 200,
@@ -1018,26 +576,9 @@
         "y": 200,
         "wires": [
             [
-                "3273b3c6.f9879c"
+                "511ccf6f.c54f1"
             ]
         ]
-    },
-    {
-        "id": "40e61f8e.273bb",
-        "type": "debug",
-        "z": "276bc02d.e347",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1190,
-        "y": 260,
-        "wires": []
     },
     {
         "id": "2b168ecb.915b02",
@@ -1045,10 +586,11 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set occupation as an applicant",
         "links": [
-            "3272d461.c8fe5c"
+            "3272d461.c8fe5c",
+            "ed917a17.8e5078"
         ],
-        "x": 1685,
-        "y": 320,
+        "x": 1465,
+        "y": 360,
         "wires": []
     },
     {
@@ -1057,213 +599,12 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set occupation as one of the parents",
         "links": [
-            "84f1ccf3.e8c91"
+            "84f1ccf3.e8c91",
+            "4f5ec5f6.e9838c"
         ],
-        "x": 1685,
-        "y": 360,
+        "x": 1465,
+        "y": 400,
         "wires": []
-    },
-    {
-        "id": "98fdf016.8692a",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as an applicant",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Applicant' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1970,
-        "y": 1420,
-        "wires": [
-            [
-                "4754b1d0.9aef7"
-            ]
-        ]
-    },
-    {
-        "id": "d3ef359d.63c3c8",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as one of the parents",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'One of the parents' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1990,
-        "y": 1480,
-        "wires": [
-            [
-                "4754b1d0.9aef7"
-            ]
-        ]
-    },
-    {
-        "id": "3b455ae1.743046",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as a teacher",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Teacher' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1960,
-        "y": 1640,
-        "wires": [
-            [
-                "4754b1d0.9aef7"
-            ]
-        ]
-    },
-    {
-        "id": "b51b9abb.ade798",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as a student",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Student' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1960,
-        "y": 1700,
-        "wires": [
-            [
-                "4754b1d0.9aef7"
-            ]
-        ]
-    },
-    {
-        "id": "15be5938.abfe77",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as other",
-        "func": "msg.topic = \"UPDATE Users SET occupation = 'Other' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1950,
-        "y": 1760,
-        "wires": [
-            [
-                "4754b1d0.9aef7"
-            ]
-        ]
-    },
-    {
-        "id": "4754b1d0.9aef7",
-        "type": "mysql",
-        "z": "4c6874fb.68b9dc",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 2420,
-        "y": 1520,
-        "wires": [
-            [
-                "2feb8cfa.d2af34",
-                "9d38cfeb.72544"
-            ]
-        ]
-    },
-    {
-        "id": "2feb8cfa.d2af34",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2690,
-        "y": 1580,
-        "wires": []
-    },
-    {
-        "id": "9d38cfeb.72544",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to printing main menu",
-        "links": [
-            "f1be3b15.c41ab8"
-        ],
-        "x": 2745,
-        "y": 1520,
-        "wires": []
-    },
-    {
-        "id": "3272d461.c8fe5c",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as an applicant",
-        "links": [
-            "2b168ecb.915b02"
-        ],
-        "x": 1515,
-        "y": 1460,
-        "wires": [
-            [
-                "98fdf016.8692a",
-                "e65b611d.29b0f"
-            ]
-        ]
-    },
-    {
-        "id": "84f1ccf3.e8c91",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as one of the parents",
-        "links": [
-            "84969f23.caa1"
-        ],
-        "x": 1515,
-        "y": 1520,
-        "wires": [
-            [
-                "d3ef359d.63c3c8",
-                "e65b611d.29b0f"
-            ]
-        ]
-    },
-    {
-        "id": "7ed591d4.8c433",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as a teacher",
-        "links": [
-            "b50620a8.7515"
-        ],
-        "x": 1515,
-        "y": 1580,
-        "wires": [
-            [
-                "3b455ae1.743046",
-                "e65b611d.29b0f"
-            ]
-        ]
-    },
-    {
-        "id": "6ef222d3.893f0c",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as a student",
-        "links": [
-            "1356b19c.1cb64e"
-        ],
-        "x": 1515,
-        "y": 1640,
-        "wires": [
-            [
-                "b51b9abb.ade798",
-                "e65b611d.29b0f"
-            ]
-        ]
     },
     {
         "id": "b50620a8.7515",
@@ -1271,10 +612,11 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set occupation as a teacher",
         "links": [
-            "7ed591d4.8c433"
+            "7ed591d4.8c433",
+            "f2c3d2a0.25b49"
         ],
-        "x": 1685,
-        "y": 400,
+        "x": 1465,
+        "y": 440,
         "wires": []
     },
     {
@@ -1283,10 +625,11 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set occupation as a student",
         "links": [
-            "6ef222d3.893f0c"
+            "6ef222d3.893f0c",
+            "4ed757e7.456528"
         ],
-        "x": 1685,
-        "y": 440,
+        "x": 1465,
+        "y": 480,
         "wires": []
     },
     {
@@ -1295,37 +638,21 @@
         "z": "dbbd86af.74c0d8",
         "name": "Set occupation as other",
         "links": [
-            "bebaf9fd.57b3d8"
+            "bebaf9fd.57b3d8",
+            "bcbdc401.9580e8"
         ],
-        "x": 1685,
-        "y": 480,
+        "x": 1465,
+        "y": 520,
         "wires": []
-    },
-    {
-        "id": "bebaf9fd.57b3d8",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set occupation as other",
-        "links": [
-            "ce92fb67.2ac148"
-        ],
-        "x": 1515,
-        "y": 1700,
-        "wires": [
-            [
-                "15be5938.abfe77",
-                "e65b611d.29b0f"
-            ]
-        ]
     },
     {
         "id": "3e335eba.efe392",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Setting occupation",
+        "name": "Set occupation",
         "info": "# Setting occupation",
-        "x": 1770,
-        "y": 280,
+        "x": 1540,
+        "y": 320,
         "wires": []
     },
     {
@@ -1334,8 +661,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1690,
-        "y": 540,
+        "x": 1470,
+        "y": 580,
         "wires": []
     },
     {
@@ -1344,38 +671,18 @@
         "z": "dbbd86af.74c0d8",
         "name": "Other messages",
         "info": "",
-        "x": 1680,
-        "y": 1080,
+        "x": 1460,
+        "y": 1120,
         "wires": []
     },
     {
         "id": "2debe527.475a1a",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Editing name",
+        "name": "Edit name",
         "info": "",
-        "x": 1650,
-        "y": 20,
-        "wires": []
-    },
-    {
-        "id": "dc891e8a.73ae6",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting occupation",
-        "info": "",
-        "x": 1590,
-        "y": 1420,
-        "wires": []
-    },
-    {
-        "id": "8a6485ef.e1fd08",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Start",
-        "info": "",
-        "x": 210,
-        "y": 180,
+        "x": 1980,
+        "y": 100,
         "wires": []
     },
     {
@@ -1384,18 +691,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Setting username to default name",
         "info": "",
-        "x": 270,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "65b589a2.4e3958",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Processing other messages. Edit username or city",
-        "info": "",
-        "x": 390,
-        "y": 2120,
+        "x": 350,
+        "y": 120,
         "wires": []
     },
     {
@@ -1404,28 +701,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Request message to enter a new username",
         "info": "",
-        "x": 1680,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "c8d9b4ad.8ef0e8",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Request message to enter a location",
-        "info": "",
-        "x": 320,
-        "y": 1060,
-        "wires": []
-    },
-    {
-        "id": "8b77eb06.056ff8",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Request message to choose an occupation",
-        "info": "",
-        "x": 340,
-        "y": 1540,
+        "x": 1760,
+        "y": 120,
         "wires": []
     },
     {
@@ -1442,7 +719,7 @@
         "id": "29b87cf7.8de694",
         "type": "debug",
         "z": "4c6874fb.68b9dc",
-        "name": "",
+        "name": "Setting username field to 'editing' response from db",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -1451,8 +728,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3130,
-        "y": 840,
+        "x": 3170,
+        "y": 220,
         "wires": []
     },
     {
@@ -1461,8 +738,8 @@
         "z": "4c6874fb.68b9dc",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 2920,
-        "y": 780,
+        "x": 2820,
+        "y": 160,
         "wires": [
             [
                 "29b87cf7.8de694"
@@ -1479,8 +756,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2580,
-        "y": 780,
+        "x": 2480,
+        "y": 160,
         "wires": [
             [
                 "66c7218a.a9dc1"
@@ -1488,42 +765,26 @@
         ]
     },
     {
-        "id": "72b075f6.de4fcc",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2210,
-        "y": 2240,
-        "wires": []
-    },
-    {
         "id": "67e90bd9.a1e8c4",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
         "name": "Set city",
         "links": [
-            "b0af6159.780a4"
+            "b0af6159.780a4",
+            "1835ced7.6011d1"
         ],
-        "x": 1645,
-        "y": 240,
+        "x": 1425,
+        "y": 280,
         "wires": []
     },
     {
         "id": "15de1cc3.526003",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Setting city",
+        "name": "Set the city field",
         "info": "",
-        "x": 1700,
-        "y": 200,
+        "x": 1500,
+        "y": 240,
         "wires": []
     },
     {
@@ -1532,8 +793,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 1650,
-        "y": 980,
+        "x": 1430,
+        "y": 1020,
         "wires": []
     },
     {
@@ -1558,8 +819,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1130,
-        "y": 1060,
+        "x": 910,
+        "y": 1100,
         "wires": [
             [
                 "2cfd1290.cbdfde"
@@ -1568,765 +829,6 @@
                 "51ec0c6.d7d05f4"
             ]
         ]
-    },
-    {
-        "id": "4998b80c.ac3b18",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Is registration completed",
-        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    //for the next question\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    //for the next question\n    msg.text = \"Де ви проживаєте?\";\n    \n    return [null, msg, null, null];\n} else if (!msg.payload[0].occupation) {\n    //for the next message\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg, null];\n}\n\nreturn [null, null, null, msg];",
-        "outputs": 4,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1550,
-        "y": 320,
-        "wires": [
-            [
-                "5faa08f6.5806b8",
-                "f950178c.208748",
-                "68e0c66a.ee6628"
-            ],
-            [
-                "ce2794d2.a63448"
-            ],
-            [
-                "8a07dd6e.fb122",
-                "f950178c.208748"
-            ],
-            [
-                "cfe6162e.b07178"
-            ]
-        ]
-    },
-    {
-        "id": "ce2794d2.a63448",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the location field again",
-        "links": [
-            "b0af6159.780a4"
-        ],
-        "x": 1855,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "8a07dd6e.fb122",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the occupation field again",
-        "links": [
-            "4b1be78d.e0a2d8"
-        ],
-        "x": 1855,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "3b4b92dd.73262e",
-        "type": "change",
-        "z": "dbbd86af.74c0d8",
-        "name": "Setting up bot global parameters",
-        "rules": [
-            {
-                "t": "set",
-                "p": "ngrokUrl",
-                "pt": "global",
-                "to": "https://4b834e9ccf62.ngrok.io",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "token",
-                "pt": "global",
-                "to": "1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 390,
-        "y": 80,
-        "wires": [
-            [
-                "dd86135f.e7b04"
-            ]
-        ]
-    },
-    {
-        "id": "dd86135f.e7b04",
-        "type": "change",
-        "z": "dbbd86af.74c0d8",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/setWebhook?url=\" & $globalContext('ngrokUrl') & \"/bot\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 690,
-        "y": 80,
-        "wires": [
-            [
-                "da0d125b.5e9c9"
-            ]
-        ]
-    },
-    {
-        "id": "f3d823dd.652a5",
-        "type": "comment",
-        "z": "dbbd86af.74c0d8",
-        "name": "Setting up webhook",
-        "info": "",
-        "x": 110,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "5999f0ff.2e8d1",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1690,
-        "y": 80,
-        "wires": [
-            [
-                "8e7ab7c0.360748"
-            ]
-        ]
-    },
-    {
-        "id": "8e7ab7c0.360748",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1890,
-        "y": 80,
-        "wires": [
-            [
-                "c005d39e.f0ac8",
-                "5faa08f6.5806b8"
-            ]
-        ]
-    },
-    {
-        "id": "a018aad3.00f5b8",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 2570,
-        "y": 200,
-        "wires": [
-            [
-                "68aa0b69.50b3b4"
-            ]
-        ]
-    },
-    {
-        "id": "68aa0b69.50b3b4",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2770,
-        "y": 200,
-        "wires": [
-            [
-                "5d7b9575.20e36c"
-            ]
-        ]
-    },
-    {
-        "id": "43311317.c47cbc",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 2070,
-        "y": 780,
-        "wires": [
-            [
-                "92637f74.5e822"
-            ]
-        ]
-    },
-    {
-        "id": "92637f74.5e822",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2290,
-        "y": 780,
-        "wires": [
-            [
-                "32bc9488.39455c"
-            ]
-        ]
-    },
-    {
-        "id": "6a53e132.9350f",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 830,
-        "y": 1100,
-        "wires": [
-            [
-                "bf0c0f6b.64b0c"
-            ]
-        ]
-    },
-    {
-        "id": "bf0c0f6b.64b0c",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1050,
-        "y": 1100,
-        "wires": [
-            [
-                "6d50e6ea.4d4118"
-            ]
-        ]
-    },
-    {
-        "id": "146e7f83.4f883",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 840,
-        "y": 1580,
-        "wires": [
-            [
-                "ce5c98ca.af1e88"
-            ]
-        ]
-    },
-    {
-        "id": "ce5c98ca.af1e88",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1060,
-        "y": 1580,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "59a40707.d376b8",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1830,
-        "y": 2180,
-        "wires": [
-            [
-                "67272de2.58cc54"
-            ]
-        ]
-    },
-    {
-        "id": "67272de2.58cc54",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2050,
-        "y": 2180,
-        "wires": [
-            [
-                "72b075f6.de4fcc"
-            ]
-        ]
-    },
-    {
-        "id": "3273b3c6.f9879c",
-        "type": "change",
-        "z": "276bc02d.e347",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 810,
-        "y": 200,
-        "wires": [
-            [
-                "13477f2f.d7c451"
-            ]
-        ]
-    },
-    {
-        "id": "13477f2f.d7c451",
-        "type": "http request",
-        "z": "276bc02d.e347",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1030,
-        "y": 200,
-        "wires": [
-            [
-                "40e61f8e.273bb"
-            ]
-        ]
-    },
-    {
-        "id": "8302d8ef.4e6b08",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2010,
-        "y": 2440,
-        "wires": []
-    },
-    {
-        "id": "342603f5.41a37c",
-        "type": "dialogflowv2",
-        "z": "4c6874fb.68b9dc",
-        "dialogflow": "b513f9.a96b5c08",
-        "language": "uk",
-        "debug": false,
-        "queryParamsOK": false,
-        "x": 1840,
-        "y": 2360,
-        "wires": [
-            [
-                "8302d8ef.4e6b08",
-                "cd034dd2.70a8b"
-            ]
-        ]
-    },
-    {
-        "id": "d6a9af0.a448d5",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "DialogFlow Processing Message",
-        "info": "",
-        "x": 1890,
-        "y": 2320,
-        "wires": []
-    },
-    {
-        "id": "ee8f4b17.5fe298",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 2410,
-        "y": 2360,
-        "wires": [
-            [
-                "44e66b70.a485c4"
-            ]
-        ]
-    },
-    {
-        "id": "44e66b70.a485c4",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2630,
-        "y": 2360,
-        "wires": [
-            [
-                "d9bf6889.83fa58"
-            ]
-        ]
-    },
-    {
-        "id": "d9bf6889.83fa58",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2790,
-        "y": 2440,
-        "wires": []
-    },
-    {
-        "id": "cd034dd2.70a8b",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting dialogflow response",
-        "func": "msg.payload = {\n    text: msg._dialogflow.fulfillmentText,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 2100,
-        "y": 2360,
-        "wires": [
-            [
-                "ee8f4b17.5fe298"
-            ]
-        ]
-    },
-    {
-        "id": "5d7b9575.20e36c",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2960,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "689e8b01.ded904",
-        "type": "link out",
-        "z": "dbbd86af.74c0d8",
-        "name": "Remove inline keyboard",
-        "links": [
-            "2020774d.405768"
-        ],
-        "x": 1815,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "4cc5ee02.929d7",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Removing inline keyboard",
-        "func": "//remove inline keyboard\nmsg.payload = {\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: []\n    }\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 3890,
-        "y": 220,
-        "wires": [
-            [
-                "3f95b97.2f1e046"
-            ]
-        ]
-    },
-    {
-        "id": "3f95b97.2f1e046",
-        "type": "change",
-        "z": "4c6874fb.68b9dc",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/editMessageReplyMarkup\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 4210,
-        "y": 220,
-        "wires": [
-            [
-                "dbf6c129.b8af8"
-            ]
-        ]
-    },
-    {
-        "id": "dbf6c129.b8af8",
-        "type": "http request",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 4430,
-        "y": 220,
-        "wires": [
-            [
-                "100bd590.f83a5a"
-            ]
-        ]
-    },
-    {
-        "id": "100bd590.f83a5a",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 4590,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "2020774d.405768",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Remove inline keyboard",
-        "links": [
-            "689e8b01.ded904",
-            "9b1ff444.8cb6f8",
-            "f950178c.208748"
-        ],
-        "x": 3575,
-        "y": 220,
-        "wires": [
-            [
-                "4cc5ee02.929d7"
-            ]
-        ]
-    },
-    {
-        "id": "700c6996.48bca8",
-        "type": "comment",
-        "z": "dbbd86af.74c0d8",
-        "name": "Removing inline keyboard",
-        "info": "",
-        "x": 1910,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "57722993.d08fb8",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Set username",
-        "links": [
-            "407592c4.adb5ec"
-        ],
-        "x": 515,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "84fd0e13.6531c",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Removing inline keyboard",
-        "info": "",
-        "x": 2010,
-        "y": 1520,
-        "wires": []
-    },
-    {
-        "id": "5142f46.759410c",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Removing inline keyboard",
-        "info": "",
-        "x": 3670,
-        "y": 180,
-        "wires": []
     },
     {
         "id": "e62923c4.ab898",
@@ -2358,26 +860,9 @@
         "y": 440,
         "wires": [
             [
-                "abcac9f1.1aa2a8"
+                "774ff602.a99368"
             ]
         ]
-    },
-    {
-        "id": "262713da.17ad3c",
-        "type": "debug",
-        "z": "276bc02d.e347",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1270,
-        "y": 500,
-        "wires": []
     },
     {
         "id": "758ec55e.3e202c",
@@ -2390,54 +875,6 @@
         "wires": []
     },
     {
-        "id": "abcac9f1.1aa2a8",
-        "type": "change",
-        "z": "276bc02d.e347",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 890,
-        "y": 440,
-        "wires": [
-            [
-                "c47ab234.b9287"
-            ]
-        ]
-    },
-    {
-        "id": "c47ab234.b9287",
-        "type": "http request",
-        "z": "276bc02d.e347",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1110,
-        "y": 440,
-        "wires": [
-            [
-                "262713da.17ad3c"
-            ]
-        ]
-    },
-    {
         "id": "19842b4d.d40f45",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
@@ -2445,18 +882,18 @@
         "links": [
             "e62923c4.ab898"
         ],
-        "x": 1615,
-        "y": 660,
+        "x": 1395,
+        "y": 700,
         "wires": []
     },
     {
         "id": "1b324f6e.df2211",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Sending the most popular questions",
+        "name": "Send the most popular questions",
         "info": "",
-        "x": 1740,
-        "y": 620,
+        "x": 1510,
+        "y": 660,
         "wires": []
     },
     {
@@ -2467,8 +904,8 @@
         "links": [
             "b25d1f4e.85ebd"
         ],
-        "x": 1615,
-        "y": 760,
+        "x": 1395,
+        "y": 800,
         "wires": []
     },
     {
@@ -2501,26 +938,9 @@
         "y": 660,
         "wires": [
             [
-                "d0af8713.dfe948"
+                "12dbdc86.9c06e3"
             ]
         ]
-    },
-    {
-        "id": "2f2d55d.9f200aa",
-        "type": "debug",
-        "z": "276bc02d.e347",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1670,
-        "y": 720,
-        "wires": []
     },
     {
         "id": "5b85328f.b7748c",
@@ -2533,61 +953,13 @@
         "wires": []
     },
     {
-        "id": "d0af8713.dfe948",
-        "type": "change",
-        "z": "276bc02d.e347",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1290,
-        "y": 660,
-        "wires": [
-            [
-                "1d173f2d.5e86e1"
-            ]
-        ]
-    },
-    {
-        "id": "1d173f2d.5e86e1",
-        "type": "http request",
-        "z": "276bc02d.e347",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1510,
-        "y": 660,
-        "wires": [
-            [
-                "2f2d55d.9f200aa"
-            ]
-        ]
-    },
-    {
         "id": "9715f6c0.534af8",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Sending messages about ISM department, NULP, how to use the bot ",
+        "name": "Send messages about ISM department, NULP, how to use the bot ",
         "info": "",
-        "x": 1840,
-        "y": 720,
+        "x": 1610,
+        "y": 760,
         "wires": []
     },
     {
@@ -2618,90 +990,8 @@
         "y": 660,
         "wires": [
             [
-                "1efe9538.956a1b"
-            ]
-        ]
-    },
-    {
-        "id": "cfe6162e.b07178",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Send main menu message",
-        "links": [
-            "f1be3b15.c41ab8"
-        ],
-        "x": 1855,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "785ef259.f5089c",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Send main menu message",
-        "info": "",
-        "x": 1950,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "14c7c5a8.6f6e0a",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "func": "msg.topic = \"UPDATE InfoPages SET content = \\\"Задавайте мені конкретні питання\\\" WHERE title = 'usingBot';\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 530,
-        "y": 1080,
-        "wires": [
-            [
-                "6912152a.abcc6c"
-            ]
-        ]
-    },
-    {
-        "id": "f7e48bb2.efc6d8",
-        "type": "inject",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 310,
-        "y": 1080,
-        "wires": [
-            [
-                "14c7c5a8.6f6e0a"
-            ]
-        ]
-    },
-    {
-        "id": "6912152a.abcc6c",
-        "type": "mysql",
-        "z": "dbbd86af.74c0d8",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 770,
-        "y": 1080,
-        "wires": [
-            [
-                "beed9727.b29778"
+                "1efe9538.956a1b",
+                "edb7746b.1cfc58"
             ]
         ]
     },
@@ -2711,135 +1001,8 @@
         "z": "4c6874fb.68b9dc",
         "name": "Move on to setting the location field",
         "info": "",
-        "x": 980,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "5c87a19f.6f916",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to printing main menu",
-        "info": "",
-        "x": 2870,
-        "y": 1480,
-        "wires": []
-    },
-    {
-        "id": "f1ec32b1.4345d",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to setting the location field",
-        "info": "",
-        "x": 2180,
-        "y": 1860,
-        "wires": []
-    },
-    {
-        "id": "fc08cae3.076f48",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Move on to choosing occupation",
-        "info": "",
-        "x": 2170,
-        "y": 2020,
-        "wires": []
-    },
-    {
-        "id": "dcec79e4.d403b8",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Is registration completed",
-        "links": [
-            "daeb5454.268828"
-        ],
-        "x": 1635,
-        "y": 2460,
-        "wires": []
-    },
-    {
-        "id": "daeb5454.268828",
-        "type": "link in",
-        "z": "4c6874fb.68b9dc",
-        "name": "Is registration completed",
-        "links": [
-            "dcec79e4.d403b8"
-        ],
-        "x": 1175,
-        "y": 380,
-        "wires": [
-            [
-                "4998b80c.ac3b18"
-            ]
-        ]
-    },
-    {
-        "id": "b9c2a3fc.3ee44",
-        "type": "comment",
-        "z": "4c6874fb.68b9dc",
-        "name": "Is registation completed",
-        "info": "",
-        "x": 1720,
-        "y": 2420,
-        "wires": []
-    },
-    {
-        "id": "f950178c.208748",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "links": [
-            "2020774d.405768"
-        ],
-        "x": 1935,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "9b1ff444.8cb6f8",
-        "type": "link out",
-        "z": "4c6874fb.68b9dc",
-        "name": "Remove inline keyboard",
-        "links": [
-            "2020774d.405768"
-        ],
-        "x": 1915,
-        "y": 1560,
-        "wires": []
-    },
-    {
-        "id": "e65b611d.29b0f",
-        "type": "function",
-        "z": "4c6874fb.68b9dc",
-        "name": "Saving message_id",
-        "func": "msg.message_id = msg.payload.callback_query.message.message_id;\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1770,
-        "y": 1560,
-        "wires": [
-            [
-                "9b1ff444.8cb6f8"
-            ]
-        ]
-    },
-    {
-        "id": "68e0c66a.ee6628",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1990,
-        "y": 380,
+        "x": 1060,
+        "y": 120,
         "wires": []
     },
     {
@@ -2861,19 +1024,70 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1670,
-        "y": 160,
+        "x": 1510,
+        "y": 140,
         "wires": [
             [
-                "689e8b01.ded904"
+                "b7e1f0b9.548a"
             ]
         ]
     },
     {
-        "id": "beed9727.b29778",
-        "type": "debug",
-        "z": "dbbd86af.74c0d8",
+        "id": "cab5fa05.8972f8",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Setting up response to '/start' (Greeting part)",
+        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ.👨‍💻З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1590,
+        "y": 160,
+        "wires": [
+            [
+                "c965d10e.f8642"
+            ]
+        ]
+    },
+    {
+        "id": "20d295e5.2aa6ca",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Setting up response to '/start' (Appeling part)",
+        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"\n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"\n            }]\n        ]\n    },\n    chat_id: msg.chat_id,\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 3110,
+        "y": 160,
+        "wires": [
+            [
+                "cece57bc.ae7278"
+            ]
+        ]
+    },
+    {
+        "id": "e897d605.f901d8",
+        "type": "mysql",
+        "z": "96f6108e.64a37",
+        "mydb": "529c4263.aeab0c",
         "name": "",
+        "x": 870,
+        "y": 220,
+        "wires": [
+            [
+                "41e89314.19813c",
+                "776fd5bc.aa182c"
+            ]
+        ]
+    },
+    {
+        "id": "41e89314.19813c",
+        "type": "debug",
+        "z": "96f6108e.64a37",
+        "name": "Getting username field in 'start command flow' response from db",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -2882,15 +1096,69 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 930,
-        "y": 1160,
+        "x": 1250,
+        "y": 300,
         "wires": []
     },
     {
-        "id": "3d156d2b.9ebb52",
-        "type": "debug",
-        "z": "4c6874fb.68b9dc",
+        "id": "776fd5bc.aa182c",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Checking presence of user row",
+        "func": "if (msg.payload.length) return [null, msg];\nelse return [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1170,
+        "y": 220,
+        "wires": [
+            [
+                "cab5fa05.8972f8"
+            ],
+            [
+                "dfdde4d6.912358"
+            ]
+        ]
+    },
+    {
+        "id": "af301238.403c5",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Registering new user row in db",
+        "func": "if (msg.register) {\n    msg.topic = \"INSERT INTO Users (user_telegram_id) VALUES (\" + msg.chat_id + \");\";\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2310,
+        "y": 160,
+        "wires": [
+            [
+                "c96c634c.1f6d8"
+            ]
+        ]
+    },
+    {
+        "id": "c96c634c.1f6d8",
+        "type": "mysql",
+        "z": "96f6108e.64a37",
+        "mydb": "529c4263.aeab0c",
         "name": "",
+        "x": 2670,
+        "y": 160,
+        "wires": [
+            [
+                "cf2ccd6.502a93",
+                "20d295e5.2aa6ca"
+            ]
+        ]
+    },
+    {
+        "id": "cf2ccd6.502a93",
+        "type": "debug",
+        "z": "96f6108e.64a37",
+        "name": "Registering new user response from db",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -2899,8 +1167,1422 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1440,
-        "y": 2400,
+        "x": 3000,
+        "y": 80,
         "wires": []
+    },
+    {
+        "id": "de1e2237.23c0a",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Getting user row",
+        "func": "msg.register = true;\n\nmsg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\nmsg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n\nmsg.message_id = msg.payload.message.message_id - 1;\n\nif (!msg.first_name && !msg.last_name) return [null, msg];\n\nmsg.topic = \"SELECT * FROM Users WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 460,
+        "y": 340,
+        "wires": [
+            [
+                "e897d605.f901d8"
+            ],
+            [
+                "ba2be4d7.46a368"
+            ]
+        ]
+    },
+    {
+        "id": "bb24cad3.d57618",
+        "type": "link in",
+        "z": "96f6108e.64a37",
+        "name": "Start",
+        "links": [
+            "2cfd1290.cbdfde"
+        ],
+        "x": 235,
+        "y": 340,
+        "wires": [
+            [
+                "de1e2237.23c0a",
+                "954a6c74.4f585"
+            ]
+        ]
+    },
+    {
+        "id": "fc1f4d6.e69b0b",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Start",
+        "info": "",
+        "x": 270,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "dfdde4d6.912358",
+        "type": "function",
+        "z": "96f6108e.64a37",
+        "name": "Is registration completed",
+        "func": "msg.register = false;\n\nif (!msg.payload[0].username || msg.payload[0].username == \"/editingField3252346\") {\n    //for the next question\n    msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n    \n    return [msg, null, null, null];\n} else if (!msg.payload[0].city || msg.payload[0].city == \"/editingField3252346\") {\n    //for the next question\n    msg.text = \"Де ви проживаєте?\";\n    \n    return [null, msg, null, null];\n} else if (!msg.payload[0].occupation) {\n    //for the next message\n    msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n    \n    return [null, null, msg, null];\n}\n\nreturn [null, null, null, msg];",
+        "outputs": 4,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2170,
+        "y": 360,
+        "wires": [
+            [
+                "731ab835.3cca28"
+            ],
+            [
+                "d8112410.42a728"
+            ],
+            [
+                "62f11abc.785b54"
+            ],
+            [
+                "76361c43.ee74f4"
+            ]
+        ],
+        "inputLabels": [
+            "Checking whether the registration is completed"
+        ],
+        "outputLabels": [
+            "Move on to setting the username field again",
+            "Move on to setting the location field again",
+            "Move on to setting the occupation field again",
+            "Send main menu message"
+        ]
+    },
+    {
+        "id": "d8112410.42a728",
+        "type": "link out",
+        "z": "96f6108e.64a37",
+        "name": "Move on to setting the location field again",
+        "links": [
+            "1835ced7.6011d1"
+        ],
+        "x": 2475,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4984be9d.47765",
+        "type": "link out",
+        "z": "96f6108e.64a37",
+        "name": "Move on to setting the occupation field again",
+        "links": [
+            "62bdcfd6.d166e"
+        ],
+        "x": 2735,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "ba2be4d7.46a368",
+        "type": "link out",
+        "z": "96f6108e.64a37",
+        "name": "Set username",
+        "links": [
+            "407592c4.adb5ec"
+        ],
+        "x": 775,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "76361c43.ee74f4",
+        "type": "link out",
+        "z": "96f6108e.64a37",
+        "name": "Send main menu message",
+        "links": [
+            "f1be3b15.c41ab8"
+        ],
+        "x": 2475,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "bd590ee2.cbc7b",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Send main menu message",
+        "info": "",
+        "x": 2570,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "6ff45d49.c66084",
+        "type": "link in",
+        "z": "96f6108e.64a37",
+        "name": "Is registration completed",
+        "links": [
+            "452a3d2.72b81c4"
+        ],
+        "x": 1755,
+        "y": 460,
+        "wires": [
+            [
+                "dfdde4d6.912358"
+            ]
+        ]
+    },
+    {
+        "id": "1835ced7.6011d1",
+        "type": "link in",
+        "z": "3b5b98a.1c38768",
+        "name": "Send message to set the location field",
+        "links": [
+            "4d10c364.bba70c",
+            "67e90bd9.a1e8c4",
+            "ce2794d2.a63448",
+            "fc83002f.8146f",
+            "6f605b10.5004f4",
+            "d8112410.42a728",
+            "bba92257.ecedb"
+        ],
+        "x": 175,
+        "y": 140,
+        "wires": [
+            [
+                "d2a126cb.79b0c8"
+            ]
+        ]
+    },
+    {
+        "id": "d2a126cb.79b0c8",
+        "type": "function",
+        "z": "3b5b98a.1c38768",
+        "name": "Setting up question for location",
+        "func": "msg.payload = {\n    text: msg.text,    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 470,
+        "y": 140,
+        "wires": [
+            [
+                "bcaa2825.03ec98"
+            ]
+        ]
+    },
+    {
+        "id": "f83bba65.663248",
+        "type": "function",
+        "z": "3b5b98a.1c38768",
+        "name": "Changing city field",
+        "func": "msg.topic = \"UPDATE Users SET city = '/editingField3252346' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1170,
+        "y": 140,
+        "wires": [
+            [
+                "35525640.5c6d6a"
+            ]
+        ]
+    },
+    {
+        "id": "35525640.5c6d6a",
+        "type": "mysql",
+        "z": "3b5b98a.1c38768",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 1490,
+        "y": 140,
+        "wires": [
+            [
+                "c6df9017.a5565"
+            ]
+        ]
+    },
+    {
+        "id": "c6df9017.a5565",
+        "type": "debug",
+        "z": "3b5b98a.1c38768",
+        "name": "Changing city field to 'editing' response from db",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1820,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "64fc7f2f.7e856",
+        "type": "comment",
+        "z": "3b5b98a.1c38768",
+        "name": "Request message to enter a location",
+        "info": "",
+        "x": 300,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "62bdcfd6.d166e",
+        "type": "link in",
+        "z": "68a30d94.469f94",
+        "name": "Send message to set the occupation field",
+        "links": [
+            "8a07dd6e.fb122",
+            "eb6c15f.d5924e8",
+            "cbb721f9.d1df5",
+            "99c3c041.c38d3",
+            "4984be9d.47765",
+            "76dc39c7.1f1908"
+        ],
+        "x": 95,
+        "y": 300,
+        "wires": [
+            [
+                "c54069b2.59d4f8"
+            ]
+        ]
+    },
+    {
+        "id": "c54069b2.59d4f8",
+        "type": "function",
+        "z": "68a30d94.469f94",
+        "name": "Setting up 'choose occupation' message",
+        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 360,
+        "y": 300,
+        "wires": [
+            [
+                "6a938578.b8740c"
+            ]
+        ]
+    },
+    {
+        "id": "efb68a90.a747e8",
+        "type": "function",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as an applicant",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Applicant' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1870,
+        "y": 180,
+        "wires": [
+            [
+                "b39d786c.8e4128"
+            ]
+        ]
+    },
+    {
+        "id": "35734a3f.d60566",
+        "type": "function",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as one of the parents",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'One of the parents' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1890,
+        "y": 240,
+        "wires": [
+            [
+                "b39d786c.8e4128"
+            ]
+        ]
+    },
+    {
+        "id": "28c9f7e4.efea48",
+        "type": "function",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as a teacher",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Teacher' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1860,
+        "y": 300,
+        "wires": [
+            [
+                "b39d786c.8e4128"
+            ]
+        ]
+    },
+    {
+        "id": "564c6898.976ac8",
+        "type": "function",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as a student",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Student' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1860,
+        "y": 360,
+        "wires": [
+            [
+                "b39d786c.8e4128"
+            ]
+        ]
+    },
+    {
+        "id": "acac65a4.a6de98",
+        "type": "function",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as other",
+        "func": "msg.topic = \"UPDATE Users SET occupation = 'Other' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1850,
+        "y": 420,
+        "wires": [
+            [
+                "b39d786c.8e4128"
+            ]
+        ]
+    },
+    {
+        "id": "bfff6d3f.b5c17",
+        "type": "debug",
+        "z": "68a30d94.469f94",
+        "name": "Editing occupation field response from db",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 3160,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "59d394d6.305dac",
+        "type": "link out",
+        "z": "68a30d94.469f94",
+        "name": "Move on to printing main menu",
+        "links": [
+            "f1be3b15.c41ab8"
+        ],
+        "x": 3095,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ed917a17.8e5078",
+        "type": "link in",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as an applicant",
+        "links": [
+            "2b168ecb.915b02"
+        ],
+        "x": 1415,
+        "y": 180,
+        "wires": [
+            [
+                "efb68a90.a747e8"
+            ]
+        ]
+    },
+    {
+        "id": "4f5ec5f6.e9838c",
+        "type": "link in",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as one of the parents",
+        "links": [
+            "84969f23.caa1"
+        ],
+        "x": 1415,
+        "y": 240,
+        "wires": [
+            [
+                "35734a3f.d60566"
+            ]
+        ]
+    },
+    {
+        "id": "f2c3d2a0.25b49",
+        "type": "link in",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as a teacher",
+        "links": [
+            "b50620a8.7515"
+        ],
+        "x": 1415,
+        "y": 300,
+        "wires": [
+            [
+                "28c9f7e4.efea48"
+            ]
+        ]
+    },
+    {
+        "id": "4ed757e7.456528",
+        "type": "link in",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as a student",
+        "links": [
+            "1356b19c.1cb64e"
+        ],
+        "x": 1415,
+        "y": 360,
+        "wires": [
+            [
+                "564c6898.976ac8"
+            ]
+        ]
+    },
+    {
+        "id": "bcbdc401.9580e8",
+        "type": "link in",
+        "z": "68a30d94.469f94",
+        "name": "Set occupation as other",
+        "links": [
+            "ce92fb67.2ac148"
+        ],
+        "x": 1415,
+        "y": 420,
+        "wires": [
+            [
+                "acac65a4.a6de98"
+            ]
+        ]
+    },
+    {
+        "id": "f1632c06.222ac",
+        "type": "comment",
+        "z": "68a30d94.469f94",
+        "name": "Setting occupation",
+        "info": "",
+        "x": 1490,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ba8647ee.f68c28",
+        "type": "comment",
+        "z": "68a30d94.469f94",
+        "name": "Request message to choose an occupation",
+        "info": "",
+        "x": 240,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ea5c7390.3d1a9",
+        "type": "comment",
+        "z": "68a30d94.469f94",
+        "name": "Move on to printing main menu",
+        "info": "",
+        "x": 3210,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "65f1945a.2f170c",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Getting username and city fields",
+        "func": "if (msg.message != \"/start\") {\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    msg.topic = \"SELECT username, city, occupation FROM Users WHERE user_telegram_id = '\" + msg.chat_id + \"';\";\n\n    return msg;\n}\n\n\nreturn null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 600,
+        "wires": [
+            [
+                "99e2c09e.30ba3"
+            ]
+        ]
+    },
+    {
+        "id": "99e2c09e.30ba3",
+        "type": "mysql",
+        "z": "cbf72f33.63dd6",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 670,
+        "y": 600,
+        "wires": [
+            [
+                "e0bc4239.7e156",
+                "feea9eea.8f9fd"
+            ]
+        ]
+    },
+    {
+        "id": "e0bc4239.7e156",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Editing username or city or move on to processing message",
+        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        msg.payload = msg.message;\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        return [null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
+        "outputs": 5,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1080,
+        "y": 600,
+        "wires": [
+            [
+                "6b11dc25.33b244"
+            ],
+            [
+                "2e3fabf6.d47a14"
+            ],
+            [
+                "5b53c12b.cc56"
+            ],
+            [
+                "c82c545b.287d98"
+            ],
+            [
+                "452a3d2.72b81c4"
+            ]
+        ],
+        "outputLabels": [
+            "Saving the username field",
+            "Saving the city field",
+            "Sending an error message",
+            "DialogFlow Processing Message",
+            "Checking whether the registration is completed"
+        ]
+    },
+    {
+        "id": "6b11dc25.33b244",
+        "type": "mysql",
+        "z": "cbf72f33.63dd6",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 1710,
+        "y": 160,
+        "wires": [
+            [
+                "bba92257.ecedb"
+            ]
+        ]
+    },
+    {
+        "id": "feea9eea.8f9fd",
+        "type": "debug",
+        "z": "cbf72f33.63dd6",
+        "name": "Getting username and city fields 'Chatting flow' response from db",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "bba92257.ecedb",
+        "type": "link out",
+        "z": "cbf72f33.63dd6",
+        "name": "Move on to setting the location field",
+        "links": [
+            "b0af6159.780a4",
+            "1835ced7.6011d1"
+        ],
+        "x": 1915,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "2e3fabf6.d47a14",
+        "type": "mysql",
+        "z": "cbf72f33.63dd6",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 1710,
+        "y": 380,
+        "wires": [
+            [
+                "76dc39c7.1f1908"
+            ]
+        ]
+    },
+    {
+        "id": "76dc39c7.1f1908",
+        "type": "link out",
+        "z": "cbf72f33.63dd6",
+        "name": "Move on to choosing occupation",
+        "links": [
+            "4b1be78d.e0a2d8",
+            "62bdcfd6.d166e"
+        ],
+        "x": 1915,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5581481b.706b38",
+        "type": "link in",
+        "z": "cbf72f33.63dd6",
+        "name": "Edit username or city or process message",
+        "links": [
+            "51ec0c6.d7d05f4"
+        ],
+        "x": 55,
+        "y": 600,
+        "wires": [
+            [
+                "65f1945a.2f170c"
+            ]
+        ]
+    },
+    {
+        "id": "11cb9c66.1c2c64",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Processing other messages. Edit username or city",
+        "info": "",
+        "x": 230,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "bd92a1fe.c5f6f",
+        "type": "change",
+        "z": "411ddac8.164cb4",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 330,
+        "y": 80,
+        "wires": [
+            [
+                "b8d99eac.ee468"
+            ]
+        ]
+    },
+    {
+        "id": "b8d99eac.ee468",
+        "type": "http request",
+        "z": "411ddac8.164cb4",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 550,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5d8decb2.3014e4",
+        "type": "debug",
+        "z": "cbf72f33.63dd6",
+        "name": "Response from dialogflow",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1910,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "c82c545b.287d98",
+        "type": "dialogflowv2",
+        "z": "cbf72f33.63dd6",
+        "dialogflow": "b513f9.a96b5c08",
+        "language": "uk",
+        "debug": false,
+        "queryParamsOK": true,
+        "x": 1680,
+        "y": 860,
+        "wires": [
+            [
+                "5d8decb2.3014e4",
+                "8c22d5f5.4223e8"
+            ]
+        ]
+    },
+    {
+        "id": "2c767f74.82a47",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "DialogFlow Processing Message",
+        "info": "",
+        "x": 1730,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "63a1490b.736ab8",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Setting dialogflow response",
+        "func": "msg.payload = {\n    text: msg._dialogflow.fulfillmentText,\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2420,
+        "y": 860,
+        "wires": [
+            [
+                "5a2ebc6a.567e54"
+            ]
+        ]
+    },
+    {
+        "id": "985d37c2.3d2328",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Move on to setting the location field",
+        "info": "",
+        "x": 2040,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "74b4671f.1c13a8",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Move on to choosing occupation",
+        "info": "",
+        "x": 2030,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "452a3d2.72b81c4",
+        "type": "link out",
+        "z": "cbf72f33.63dd6",
+        "name": "Is registration completed",
+        "links": [
+            "6ff45d49.c66084"
+        ],
+        "x": 1615,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "1795e6cf.ce9ef9",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Checking whether the registration is completed",
+        "info": "",
+        "x": 1780,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "8c22d5f5.4223e8",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Saving dialogflow context",
+        "func": "global.set(msg.chat_id.toString(), msg._dialogflow.outputContexts);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2030,
+        "y": 860,
+        "wires": [
+            [
+                "63a1490b.736ab8"
+            ]
+        ]
+    },
+    {
+        "id": "1f4926d2.d54c49",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Move on to setting the location field again",
+        "info": "",
+        "x": 2620,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "68d4e0a4.e71e1",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Move on to setting the occupation field again",
+        "info": "",
+        "x": 2890,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "319d5b6f.be2d74",
+        "type": "function",
+        "z": "4001764a.8341f8",
+        "name": "Removing inline keyboard",
+        "func": "//remove inline keyboard\nmsg.payload = {\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: []\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 730,
+        "y": 80,
+        "wires": [
+            [
+                "ac12e929.bfded8"
+            ]
+        ]
+    },
+    {
+        "id": "1c72fdd1.bbc5c2",
+        "type": "inject",
+        "z": "e4187b73.d0f6b8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "74e6d9b1.24d6a8"
+            ]
+        ]
+    },
+    {
+        "id": "74e6d9b1.24d6a8",
+        "type": "change",
+        "z": "e4187b73.d0f6b8",
+        "name": "Setting up bot global parameters",
+        "rules": [
+            {
+                "t": "set",
+                "p": "ngrokUrl",
+                "pt": "global",
+                "to": "https://e6980f44d77c.ngrok.io",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "token",
+                "pt": "global",
+                "to": "1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5790847e.b1980c",
+        "type": "comment",
+        "z": "e4187b73.d0f6b8",
+        "name": "Setting up params of bot",
+        "info": "",
+        "x": 150,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "4a6d9a4d.b3d5b4",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Sending an error message",
+        "info": "",
+        "x": 1710,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "a64a08f7.365978",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Saving the city field",
+        "info": "",
+        "x": 1690,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "b908221a.202f7",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Saving the username field",
+        "info": "",
+        "x": 1710,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "954a6c74.4f585",
+        "type": "debug",
+        "z": "96f6108e.64a37",
+        "name": "Start command incoming data",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "edb7746b.1cfc58",
+        "type": "debug",
+        "z": "276bc02d.e347",
+        "name": "Getting info from InfoPage response from db",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "8ce9f8ec.862708",
+        "type": "mysql",
+        "z": "68a30d94.469f94",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 2850,
+        "y": 280,
+        "wires": [
+            [
+                "bfff6d3f.b5c17",
+                "59d394d6.305dac"
+            ]
+        ]
+    },
+    {
+        "id": "e23ca452.8c77d8",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Checking whether the registration is completed",
+        "info": "",
+        "x": 1660,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "5b53c12b.cc56",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "env": [],
+        "x": 1710,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5a2ebc6a.567e54",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "env": [],
+        "x": 2810,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "511ccf6f.c54f1",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "276bc02d.e347",
+        "name": "",
+        "env": [],
+        "x": 870,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "774ff602.a99368",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "276bc02d.e347",
+        "name": "",
+        "env": [],
+        "x": 970,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "12dbdc86.9c06e3",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "276bc02d.e347",
+        "name": "",
+        "env": [],
+        "x": 1370,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6a938578.b8740c",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "68a30d94.469f94",
+        "name": "",
+        "env": [],
+        "x": 720,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bcaa2825.03ec98",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "3b5b98a.1c38768",
+        "name": "",
+        "env": [],
+        "x": 850,
+        "y": 140,
+        "wires": [
+            [
+                "f83bba65.663248"
+            ]
+        ]
+    },
+    {
+        "id": "c538e448.9052c8",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "env": [],
+        "x": 2130,
+        "y": 160,
+        "wires": [
+            [
+                "32bc9488.39455c"
+            ]
+        ]
+    },
+    {
+        "id": "c965d10e.f8642",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "96f6108e.64a37",
+        "name": "",
+        "env": [],
+        "x": 1950,
+        "y": 160,
+        "wires": [
+            [
+                "af301238.403c5"
+            ]
+        ]
+    },
+    {
+        "id": "cece57bc.ae7278",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "96f6108e.64a37",
+        "name": "",
+        "env": [],
+        "x": 3490,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5cb0519f.6a6eb",
+        "type": "subflow:4001764a.8341f8",
+        "z": "68a30d94.469f94",
+        "name": "",
+        "env": [],
+        "x": 2550,
+        "y": 280,
+        "wires": [
+            [
+                "8ce9f8ec.862708"
+            ]
+        ]
+    },
+    {
+        "id": "731ab835.3cca28",
+        "type": "subflow:4001764a.8341f8",
+        "z": "96f6108e.64a37",
+        "name": "",
+        "env": [],
+        "x": 2570,
+        "y": 320,
+        "wires": [
+            [
+                "20d295e5.2aa6ca"
+            ]
+        ]
+    },
+    {
+        "id": "62f11abc.785b54",
+        "type": "subflow:4001764a.8341f8",
+        "z": "96f6108e.64a37",
+        "name": "",
+        "env": [],
+        "x": 2570,
+        "y": 480,
+        "wires": [
+            [
+                "4984be9d.47765"
+            ]
+        ]
+    },
+    {
+        "id": "fc1ff122.bdedf",
+        "type": "comment",
+        "z": "96f6108e.64a37",
+        "name": "Move on to setting the username field",
+        "info": "",
+        "x": 910,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "b7e1f0b9.548a",
+        "type": "subflow:4001764a.8341f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 1750,
+        "y": 140,
+        "wires": [
+            [
+                "96e4744d.d20358"
+            ]
+        ]
+    },
+    {
+        "id": "d404fa4c.e63ca8",
+        "type": "subflow:4001764a.8341f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 1750,
+        "y": 180,
+        "wires": [
+            [
+                "b48e521d.7a459"
+            ]
+        ]
+    },
+    {
+        "id": "bc2b504d.e7b25",
+        "type": "change",
+        "z": "dbbd86af.74c0d8",
+        "name": "Saving message_id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "message_id",
+                "pt": "msg",
+                "to": "payload.callback_query.message.message_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1510,
+        "y": 180,
+        "wires": [
+            [
+                "d404fa4c.e63ca8"
+            ]
+        ]
+    },
+    {
+        "id": "a46d83e7.59837",
+        "type": "change",
+        "z": "4001764a.8341f8",
+        "name": "Saving msg.payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload_copy",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "319d5b6f.be2d74"
+            ]
+        ]
+    },
+    {
+        "id": "cfe21d91.ca59b",
+        "type": "change",
+        "z": "4001764a.8341f8",
+        "name": "Setting saved payload to msg.payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload_copy",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1730,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b39d786c.8e4128",
+        "type": "change",
+        "z": "68a30d94.469f94",
+        "name": "Saving message_id",
+        "rules": [
+            {
+                "t": "set",
+                "p": "message_id",
+                "pt": "msg",
+                "to": "payload.callback_query.message.message_id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2290,
+        "y": 280,
+        "wires": [
+            [
+                "5cb0519f.6a6eb"
+            ]
+        ]
+    },
+    {
+        "id": "ac12e929.bfded8",
+        "type": "change",
+        "z": "4001764a.8341f8",
+        "name": "Setting up editMessageReplyMarkup url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/editMessageReplyMarkup\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 80,
+        "wires": [
+            [
+                "a41f75cf.a711d8"
+            ]
+        ]
+    },
+    {
+        "id": "a41f75cf.a711d8",
+        "type": "http request",
+        "z": "4001764a.8341f8",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 1350,
+        "y": 80,
+        "wires": [
+            [
+                "cfe21d91.ca59b"
+            ]
+        ]
     }
 ]
