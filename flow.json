@@ -1,12 +1,5 @@
 [
     {
-        "id": "e4187b73.d0f6b8",
-        "type": "tab",
-        "label": "Setting up parameters",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "dbbd86af.74c0d8",
         "type": "tab",
         "label": "Base Flow",
@@ -220,9 +213,9 @@
         "y": 840,
         "wires": [
             [
-                "ac7f1cdc.11adc",
                 "8b708744.7cb6f8",
-                "98632046.faae7"
+                "98632046.faae7",
+                "ac7f1cdc.11adc"
             ]
         ]
     },
@@ -1873,7 +1866,7 @@
                 "t": "set",
                 "p": "url",
                 "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/sendMessage\"",
+                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/sendMessage\"",
                 "tot": "jsonata"
             }
         ],
@@ -2068,73 +2061,6 @@
                 "ac12e929.bfded8"
             ]
         ]
-    },
-    {
-        "id": "1c72fdd1.bbc5c2",
-        "type": "inject",
-        "z": "e4187b73.d0f6b8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 150,
-        "y": 80,
-        "wires": [
-            [
-                "74e6d9b1.24d6a8"
-            ]
-        ]
-    },
-    {
-        "id": "74e6d9b1.24d6a8",
-        "type": "change",
-        "z": "e4187b73.d0f6b8",
-        "name": "Setting up bot global parameters",
-        "rules": [
-            {
-                "t": "set",
-                "p": "ngrokUrl",
-                "pt": "global",
-                "to": "https://9771899f79ed.ngrok.io",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "token",
-                "pt": "global",
-                "to": "1627203627:AAFFocOTNWGlOcC2ZFncWr6qRF01t8U63Uw",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 410,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5790847e.b1980c",
-        "type": "comment",
-        "z": "e4187b73.d0f6b8",
-        "name": "Setting up params of bot",
-        "info": "",
-        "x": 150,
-        "y": 40,
-        "wires": []
     },
     {
         "id": "4a6d9a4d.b3d5b4",
@@ -2547,7 +2473,7 @@
                 "t": "set",
                 "p": "url",
                 "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $globalContext('token') & \"/editMessageReplyMarkup\"",
+                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageReplyMarkup\"",
                 "tot": "jsonata"
             }
         ],
