@@ -184,7 +184,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "if (msg.payload.message) {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg]; \n} else if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n}\n\nif (msg.message.startsWith(\"^\")) {\n    msg.payload.message = msg.payload.callback_query.message;\n    \n    delete msg.payload.callback_query;\n    \n    return [null, msg];\n} else {\n    return [msg, null];\n}\n\n",
+        "func": "if (msg.payload.message) {\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    return [null, msg]; \n} else if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n    \n    msg.chat_id = msg.payload.callback_query.from.id\n}\n\nif (msg.message.startsWith(\"^\") || msg.message.startsWith(\"answerIntent_\")) {\n    msg.payload.message = msg.payload.callback_query.message;\n    \n    delete msg.payload.callback_query;\n    \n    return [null, msg];\n} else {\n    return [msg, null];\n}\n\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -844,7 +844,7 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message with the most popular questions",
-        "func": "var messageText = \"\";\nmsg.payload.forEach((item, i, v) => {\n    messageText += (i + 1) + \". \" + item.question + \"\\n\\nВідповідь:\\n\" + item.answer + \"\\n\\n\";\n});\n\nmsg.payload = {\n    text: messageText,\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Головне меню\",\n                callback_data: \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
+        "func": "var messageText = \"\";\nvar time = 100;\n\nmsg.payload.forEach((item, i, v) => {\n    \n    //send message with question one by one\n    setTimeout(() => {\n        messageText = (i + 1) + \". \" + item.question;\n    \n        msg.payload = {\n            text: messageText,\n            chat_id: msg.chat_id,\n            reply_markup: {\n                inline_keyboard: [[\n                    {\n                        text: \"Відповідь\",\n                        callback_data: \"answerIntent_\" + (msg.message_id + i + 1) + \"_\" + item.intent\n                    }]\n                ]\n            },\n        }\n        \n        node.send(msg);\n        \n    }, time);\n    \n    time += 100;\n});\n\n//send main menu button\nsetTimeout(() => {\n    msg.payload = {\n        text: \"👇👇👇\",\n        chat_id: msg.chat_id,\n        reply_markup: {\n            inline_keyboard: [[\n                {\n                    text: \"Головне меню\",\n                    callback_data: \"mainMenu\"\n                }]\n            ]\n        },\n    }\n    \n    node.send(msg);\n    \n}, (time + 100));\n\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1727,8 +1727,8 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        //sending saved contexts\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"^\")) {\n            msg.payload = msg.message.slice(1);\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, msg];",
-        "outputs": 5,
+        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        if (msg.message.startsWith(\"answerIntent_\")) {\n            msg.message = msg.message.split(\"_\");\n            \n            msg.topic = \"SELECT question, answer FROM questions WHERE intent = '\" + msg.message[2] + \"';\"\n\n            return [null, null, null, msg, null, null];\n        }\n        //sending saved contexts\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"^\")) {\n            msg.payload = msg.message.slice(1);\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, null, msg];",
+        "outputs": 6,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -1745,6 +1745,10 @@
                 "5b53c12b.cc56"
             ],
             [
+                "efd7997c.80cb68",
+                "7cf8643b.b6237c"
+            ],
+            [
                 "918b2c7e.02687"
             ],
             [
@@ -1754,7 +1758,8 @@
         "outputLabels": [
             "Saving the username field",
             "Saving the city field",
-            "Sending an error message",
+            "Sending a message",
+            "Send answer to one of the most popular questions",
             "DialogFlow Processing Message",
             "Checking whether the registration is completed"
         ]
@@ -2066,10 +2071,10 @@
         "id": "4a6d9a4d.b3d5b4",
         "type": "comment",
         "z": "cbf72f33.63dd6",
-        "name": "Sending an error message",
+        "name": "Sending a message",
         "info": "",
-        "x": 1710,
-        "y": 560,
+        "x": 1690,
+        "y": 480,
         "wires": []
     },
     {
@@ -2158,7 +2163,7 @@
         "name": "",
         "env": [],
         "x": 1710,
-        "y": 600,
+        "y": 520,
         "wires": [
             []
         ]
@@ -2195,7 +2200,7 @@
         "z": "276bc02d.e347",
         "name": "",
         "env": [],
-        "x": 1690,
+        "x": 1730,
         "y": 440,
         "wires": [
             []
@@ -2802,6 +2807,111 @@
         "statusType": "auto",
         "x": 4480,
         "y": 860,
+        "wires": []
+    },
+    {
+        "id": "efd7997c.80cb68",
+        "type": "mysql",
+        "z": "cbf72f33.63dd6",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 1710,
+        "y": 660,
+        "wires": [
+            [
+                "4acd18d8.de0f78"
+            ]
+        ]
+    },
+    {
+        "id": "4acd18d8.de0f78",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Setting the response message",
+        "func": "if (msg.payload[0].answer) {\n    msg.payload = {\n        text: msg.payload[0].question + \"\\n\\n\" + msg.payload[0].answer,\n        chat_id: msg.chat_id,\n        message_id: parseInt(msg.message[1]),\n        reply_markup: {\n            inline_keyboard: []\n        }\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2010,
+        "y": 660,
+        "wires": [
+            [
+                "a6c1c00d.5a857"
+            ]
+        ]
+    },
+    {
+        "id": "b25769e.45eb198",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Send answer to one of the most popular questions",
+        "info": "",
+        "x": 1790,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "a6c1c00d.5a857",
+        "type": "change",
+        "z": "cbf72f33.63dd6",
+        "name": "Setting up editMessageText url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 2410,
+        "y": 660,
+        "wires": [
+            [
+                "51bfc638.f29ee8"
+            ]
+        ]
+    },
+    {
+        "id": "51bfc638.f29ee8",
+        "type": "http request",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 2690,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7cf8643b.b6237c",
+        "type": "debug",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 820,
         "wires": []
     }
 ]
