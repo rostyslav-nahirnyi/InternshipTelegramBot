@@ -350,7 +350,7 @@
             "bb24cad3.d57618"
         ],
         "x": 1395,
-        "y": 1060,
+        "y": 1000,
         "wires": []
     },
     {
@@ -388,7 +388,7 @@
             "5581481b.706b38"
         ],
         "x": 1395,
-        "y": 1160,
+        "y": 1100,
         "wires": []
     },
     {
@@ -429,7 +429,7 @@
         "links": [
             "96e4744d.d20358"
         ],
-        "x": 245,
+        "x": 235,
         "y": 160,
         "wires": [
             [
@@ -547,7 +547,7 @@
             "76361c43.ee74f4",
             "59d394d6.305dac"
         ],
-        "x": 225,
+        "x": 215,
         "y": 200,
         "wires": [
             [
@@ -654,7 +654,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Main menu",
         "info": "",
-        "x": 1950,
+        "x": 1940,
         "y": 560,
         "wires": []
     },
@@ -665,7 +665,7 @@
         "name": "Other messages",
         "info": "",
         "x": 1460,
-        "y": 1120,
+        "y": 1060,
         "wires": []
     },
     {
@@ -766,7 +766,7 @@
             "b0af6159.780a4",
             "1835ced7.6011d1"
         ],
-        "x": 1385,
+        "x": 1395,
         "y": 280,
         "wires": []
     },
@@ -787,7 +787,7 @@
         "name": "Start",
         "info": "",
         "x": 1430,
-        "y": 1020,
+        "y": 960,
         "wires": []
     },
     {
@@ -813,7 +813,7 @@
         "repair": false,
         "outputs": 2,
         "x": 910,
-        "y": 1100,
+        "y": 1040,
         "wires": [
             [
                 "2cfd1290.cbdfde"
@@ -835,7 +835,7 @@
         "y": 440,
         "wires": [
             [
-                "fd706c59.243ee"
+                "ed557bc6.5bffa8"
             ]
         ]
     },
@@ -844,12 +844,12 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message with the most popular questions",
-        "func": "msg.payload = {\n    text: \"✅ Ви в головному меню. Виберіть необхідний пункт\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "var messageText = \"\";\nmsg.payload.forEach((item, i, v) => {\n    messageText += (i + 1) + \". \" + item.question + \"\\n\\nВідповідь:\\n\" + item.answer + \"\\n\\n\";\n});\n\nmsg.payload = {\n    text: messageText,\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Головне меню\",\n                callback_data: \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 520,
+        "x": 1240,
         "y": 440,
         "wires": [
             [
@@ -2172,7 +2172,9 @@
         "x": 3110,
         "y": 780,
         "wires": [
-            []
+            [
+                "bd895bb.3ba4ea8"
+            ]
         ]
     },
     {
@@ -2193,7 +2195,7 @@
         "z": "276bc02d.e347",
         "name": "",
         "env": [],
-        "x": 970,
+        "x": 1690,
         "y": 440,
         "wires": [
             []
@@ -2689,5 +2691,117 @@
                 "63f8db61.634e64"
             ]
         ]
+    },
+    {
+        "id": "f9f65b6d.4cfe88",
+        "type": "mysql",
+        "z": "276bc02d.e347",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 730,
+        "y": 440,
+        "wires": [
+            [
+                "fd706c59.243ee"
+            ]
+        ]
+    },
+    {
+        "id": "ed557bc6.5bffa8",
+        "type": "function",
+        "z": "276bc02d.e347",
+        "name": "Getting info from InfoPages",
+        "func": "msg.topic = \"SELECT * FROM questions ORDER BY calls DESC LIMIT 5;\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 440,
+        "y": 440,
+        "wires": [
+            [
+                "f9f65b6d.4cfe88"
+            ]
+        ]
+    },
+    {
+        "id": "bd895bb.3ba4ea8",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Getting info from Questions",
+        "func": "msg.topic = \"SELECT * FROM questions WHERE intent = '\" + msg._dialogflow.intent.displayName.split(\" \").join(\"\") + \"';\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 3540,
+        "y": 780,
+        "wires": [
+            [
+                "348f6b3c.e36434"
+            ]
+        ]
+    },
+    {
+        "id": "348f6b3c.e36434",
+        "type": "mysql",
+        "z": "cbf72f33.63dd6",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 3870,
+        "y": 780,
+        "wires": [
+            [
+                "a8d398a0.9fa888"
+            ]
+        ]
+    },
+    {
+        "id": "a8d398a0.9fa888",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Updating calls field of question",
+        "func": "if (msg.payload.length) {\n    msg.topic = \"UPDATE questions SET calls = \" + (msg.payload[0].calls + 1) + \" WHERE intent = '\" + msg._dialogflow.intent.displayName.split(\" \").join(\"\") + \"';\"\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 4210,
+        "y": 780,
+        "wires": [
+            [
+                "1ac5f422.4e36ac",
+                "c5e98fde.d258e"
+            ]
+        ]
+    },
+    {
+        "id": "1ac5f422.4e36ac",
+        "type": "mysql",
+        "z": "cbf72f33.63dd6",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 4550,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c5e98fde.d258e",
+        "type": "debug",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 4480,
+        "y": 860,
+        "wires": []
     }
 ]
