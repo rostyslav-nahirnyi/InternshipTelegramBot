@@ -844,7 +844,7 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message with the most popular questions",
-        "func": "var messageText = \"\";\nvar time = 100;\n\nmsg.payload.forEach((item, i, v) => {\n    \n    //send message with question one by one\n    setTimeout(() => {\n        messageText = (i + 1) + \". \" + item.question;\n    \n        msg.payload = {\n            text: messageText,\n            chat_id: msg.chat_id,\n            reply_markup: {\n                inline_keyboard: [[\n                    {\n                        text: \"Відповідь\",\n                        callback_data: \"answerIntent_\" + (msg.message_id + i + 1) + \"_\" + item.intent\n                    }]\n                ]\n            },\n        }\n        \n        node.send(msg);\n        \n    }, time);\n    \n    time += 100;\n});\n\n//send main menu button\nsetTimeout(() => {\n    msg.payload = {\n        text: \"👇👇👇\",\n        chat_id: msg.chat_id,\n        reply_markup: {\n            inline_keyboard: [[\n                {\n                    text: \"Головне меню\",\n                    callback_data: \"mainMenu\"\n                }]\n            ]\n        },\n    }\n    \n    node.send(msg);\n    \n}, (time + 100));\n\nreturn null;",
+        "func": "var messageText = \"\";\nvar time = 0;\n\nmsg.payload.forEach((item, i, v) => {\n    \n    //send message with question one by one\n    setTimeout(() => {\n        messageText = (i + 1) + \". \" + item.question;\n    \n        msg.payload = {\n            text: messageText,\n            chat_id: msg.chat_id,\n            reply_markup: {\n                inline_keyboard: [[\n                    {\n                        text: \"Відповідь\",\n                        callback_data: \"answerIntent_\" + item.intent\n                    }]\n                ]\n            },\n        }\n        \n        node.send(msg);\n        \n    }, time);\n    \n    time += 100;\n});\n\n//send main menu button\nsetTimeout(() => {\n    msg.payload = {\n        text: \"👇👇👇\",\n        chat_id: msg.chat_id,\n        reply_markup: {\n            inline_keyboard: [[\n                {\n                    text: \"◀ Головне меню\",\n                    callback_data: \"mainMenu\"\n                }]\n            ]\n        },\n    }\n    \n    node.send(msg);\n    \n}, (time + 150));\n\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -922,7 +922,7 @@
         "type": "function",
         "z": "276bc02d.e347",
         "name": "Setting up message info",
-        "func": "msg.payload = {\n    text: msg.payload[0].content,\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Головне меню\",\n                callback_data: \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    parse_mode: \"html\",\n    text: msg.payload[0].content,\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"◀ Головне меню\",\n                callback_data: \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1727,7 +1727,7 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Editing username or city or move on to processing message",
-        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        if (msg.message.startsWith(\"answerIntent_\")) {\n            msg.message = msg.message.split(\"_\");\n            \n            msg.topic = \"SELECT question, answer FROM questions WHERE intent = '\" + msg.message[2] + \"';\"\n\n            return [null, null, null, msg, null, null];\n        }\n        //sending saved contexts\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"^\")) {\n            msg.payload = msg.message.slice(1);\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, null, msg];",
+        "func": "function setErrorMessage(text) {\n    if (msg.message == \"/editingField3252346\") {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return false;\n    }\n    \n    return true;\n}\n\nfunction isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            text: text,\n            chat_id: msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nif (msg.payload[0]) {\n    if (msg.payload[0].occupation) {\n        if (msg.message.startsWith(\"answerIntent_\")) {\n            msg.message = msg.message.split(\"_\");\n            \n            msg.topic = \"SELECT question, answer FROM questions WHERE intent = '\" + msg.message[1] + \"';\"\n\n            return [null, null, null, msg, null, null];\n        }\n        //sending saved contexts\n        msg.queryParams = {\n            contexts: global.get(msg.chat_id.toString())\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"^\")) {\n            msg.payload = msg.message.slice(1);\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, null, null, msg, null];\n    }\n    if (msg.payload[0].username && msg.payload[0].username == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне ім'я\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null, null];\n        \n        msg.topic = \"UPDATE Users SET username = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null, null];\n    } else if (msg.payload[0].city && msg.payload[0].city == \"/editingField3252346\" && setErrorMessage(\"Вкажіть, будь ласка, коректне місто\")) {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null, null];\n        \n        msg.topic = \"UPDATE Users SET city = '\" + msg.message + \"' WHERE user_telegram_id = \" + msg.chat_id + \";\";\n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, null, msg];",
         "outputs": 6,
         "noerr": 0,
         "initialize": "",
@@ -1745,8 +1745,7 @@
                 "5b53c12b.cc56"
             ],
             [
-                "efd7997c.80cb68",
-                "7cf8643b.b6237c"
+                "efd7997c.80cb68"
             ],
             [
                 "918b2c7e.02687"
@@ -2775,8 +2774,7 @@
         "y": 780,
         "wires": [
             [
-                "1ac5f422.4e36ac",
-                "c5e98fde.d258e"
+                "1ac5f422.4e36ac"
             ]
         ]
     },
@@ -2791,23 +2789,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "c5e98fde.d258e",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 4480,
-        "y": 860,
-        "wires": []
     },
     {
         "id": "efd7997c.80cb68",
@@ -2828,7 +2809,7 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Setting the response message",
-        "func": "if (msg.payload[0].answer) {\n    msg.payload = {\n        text: msg.payload[0].question + \"\\n\\n\" + msg.payload[0].answer,\n        chat_id: msg.chat_id,\n        message_id: parseInt(msg.message[1]),\n        reply_markup: {\n            inline_keyboard: []\n        }\n    }\n}\n\nreturn msg;",
+        "func": "if (msg.payload[0].answer) {\n    msg.payload = {\n        text: msg.payload[0].question + \"\\n\\n\" + msg.payload[0].answer,\n        chat_id: msg.chat_id,\n        message_id: msg.message_id,\n        reply_markup: {\n            inline_keyboard: []\n        }\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2898,20 +2879,62 @@
         ]
     },
     {
-        "id": "7cf8643b.b6237c",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
+        "id": "d5e164fb.cf8c38",
+        "type": "function",
+        "z": "dbbd86af.74c0d8",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1380,
-        "y": 820,
-        "wires": []
+        "func": "msg.topic = \"UPDATE infopages SET content = \\\"Національний університет «Львівська політехніка» — найстаріший вищий технічний навчальний заклад України та Східної Європи, заснований 1816 року як Цісарсько-королівська реальна школа. Університет складається з 16 інститутів, 114 кафедр, відокремлених навчальних закладів, громадських організацій та загальних підрозділів.\\n\\n<b>Адреса:</b> м.Львів 79013, вул. С. Бандери 12\\n<b>Email:</b> coffice@lp.edu.ua\\n<b>Номер телефону:</b> +38 032 258-21-11\\\" WHERE title = 'aboutNULP';\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 320,
+        "y": 1320,
+        "wires": [
+            [
+                "88df73cf.da78b"
+            ]
+        ]
+    },
+    {
+        "id": "9449d8c5.acd698",
+        "type": "inject",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1300,
+        "wires": [
+            [
+                "d5e164fb.cf8c38"
+            ]
+        ]
+    },
+    {
+        "id": "88df73cf.da78b",
+        "type": "mysql",
+        "z": "dbbd86af.74c0d8",
+        "mydb": "529c4263.aeab0c",
+        "name": "",
+        "x": 550,
+        "y": 1360,
+        "wires": [
+            []
+        ]
     }
 ]
