@@ -1894,7 +1894,8 @@
         "name": "Send the most popular questions",
         "links": [
             "e62923c4.ab898",
-            "819d9f36.a05c9"
+            "819d9f36.a05c9",
+            "db785c0e.a93d6"
         ],
         "x": 1775,
         "y": 700,
@@ -1955,8 +1956,7 @@
         "y": 1060,
         "wires": [
             [
-                "17a4ed75.37c813",
-                "7567fe48.acbc"
+                "17a4ed75.37c813"
             ]
         ]
     },
@@ -1988,20 +1988,20 @@
         "id": "db142eec.63a9b",
         "type": "switch",
         "z": "dbbd86af.74c0d8",
-        "name": "Set answer to the most popular question",
+        "name": "Set answer to popular question(pagination)",
         "property": "$split(msg.message, \"_\", 1)",
         "propertyType": "jsonata",
         "rules": [
             {
                 "t": "eq",
-                "v": "answerIntent",
+                "v": "theMostPopularQPagination",
                 "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1340,
+        "x": 1350,
         "y": 920,
         "wires": [
             [
@@ -2013,9 +2013,8 @@
         "id": "44ca7e7d.f7226",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Send answer to one of the most popular questions",
+        "name": "Set answer to popular question(pagination)",
         "links": [
-            "527caa29.043594",
             "db785c0e.a93d6"
         ],
         "x": 1775,
@@ -2026,9 +2025,9 @@
         "id": "695523ed.ad23dc",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Set answer to one of the most popular questions",
+        "name": "Set answer to popular question(pagination)",
         "info": "",
-        "x": 1940,
+        "x": 1920,
         "y": 880,
         "wires": []
     },
@@ -2467,103 +2466,13 @@
         ]
     },
     {
-        "id": "819d9f36.a05c9",
-        "type": "link in",
-        "z": "d3d080fa.62628",
-        "name": "Send the most popular questions",
-        "links": [
-            "19842b4d.d40f45",
-            "615bb499.d9ee6c",
-            "d7b8d232.f7981"
-        ],
-        "x": 215,
-        "y": 100,
-        "wires": [
-            [
-                "912b2cf.12df4d"
-            ]
-        ]
-    },
-    {
-        "id": "2be8ee43.3302f2",
-        "type": "function",
-        "z": "d3d080fa.62628",
-        "name": "Setting up message with the most popular questions",
-        "func": "var messageText = \"\";\nvar time = 0;\n\nmsg.payload.forEach((item, i, v) => {\n    \n    //send message with question one by one\n    setTimeout(() => {\n        messageText = (i + 1) + \". \" + item.question;\n    \n        msg.payload = {\n            text: messageText,\n            chat_id: msg.chat_id,\n            reply_markup: {\n                inline_keyboard: [[\n                    {\n                        text: \"Відповідь\",\n                        callback_data: \"answerIntent_\" + item.intent\n                    }]\n                ]\n            },\n        }\n        \n        node.send(msg);\n        \n    }, time);\n    \n    time += 100;\n});\n\n//send main menu button\nsetTimeout(() => {\n    msg.payload = {\n        text: \"👇👇👇\",\n        chat_id: msg.chat_id,\n        reply_markup: {\n            inline_keyboard: [[\n                {\n                    text: \"◀ Головне меню\",\n                    callback_data: \"mainMenu\"\n                }]\n            ]\n        },\n    }\n    \n    node.send(msg);\n    \n}, (time + 150));\n\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1220,
-        "y": 100,
-        "wires": [
-            [
-                "2dee4898.e89df8"
-            ]
-        ]
-    },
-    {
-        "id": "985ae064.c72d6",
-        "type": "comment",
-        "z": "d3d080fa.62628",
-        "name": "Message with the most popular questions",
-        "info": "",
-        "x": 360,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "2dee4898.e89df8",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "d3d080fa.62628",
-        "name": "",
-        "env": [],
-        "x": 1630,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "55635088.8d1ac",
-        "type": "mysql",
-        "z": "d3d080fa.62628",
-        "mydb": "529c4263.aeab0c",
-        "name": "",
-        "x": 730,
-        "y": 100,
-        "wires": [
-            [
-                "2be8ee43.3302f2"
-            ]
-        ]
-    },
-    {
-        "id": "912b2cf.12df4d",
-        "type": "function",
-        "z": "d3d080fa.62628",
-        "name": "Getting info from questions",
-        "func": "msg.topic = \"SELECT * FROM questions ORDER BY calls DESC LIMIT 5;\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 440,
-        "y": 100,
-        "wires": [
-            [
-                "55635088.8d1ac"
-            ]
-        ]
-    },
-    {
         "id": "27d280f8.1ec68",
         "type": "mysql",
         "z": "d3d080fa.62628",
         "mydb": "529c4263.aeab0c",
         "name": "",
-        "x": 690,
-        "y": 300,
+        "x": 730,
+        "y": 180,
         "wires": [
             [
                 "5c5914e5.d60a4c"
@@ -2574,15 +2483,18 @@
         "id": "5c5914e5.d60a4c",
         "type": "function",
         "z": "d3d080fa.62628",
-        "name": "Setting up answer to one of the most popular questions",
-        "func": "if (msg.payload[0].answer) {\n    msg.payload = {\n        text: msg.payload[0].question + \"\\n\\n\" + msg.payload[0].answer,\n        chat_id: msg.chat_id,\n        message_id: msg.message_id,\n        reply_markup: {\n            inline_keyboard: []\n        }\n    }\n}\n\nreturn msg;",
-        "outputs": 1,
+        "name": "Setting up next or last question",
+        "func": " msg.payload = {\n    text: msg.message + \". \" + msg.payload[(msg.message - 1)].question + \"\\n\\nВідповідь:\\n\" + msg.payload[(msg.message - 1)].answer,\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: [[]]\n    },\n}\n\nif (msg.message > 1) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"◀ Минуле\",\n                callback_data: \"theMostPopularQPagination_\" + (msg.message - 1)\n            });\n}\n\nif (msg.message < 5) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"Наступне ▶\",\n                callback_data: \"theMostPopularQPagination_\" + (msg.message + 1)\n            });\n}\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1180,
-        "y": 300,
+        "x": 1150,
+        "y": 180,
         "wires": [
+            [
+                "d5c114ce.369d48"
+            ],
             [
                 "9fc24cee.822f5"
             ]
@@ -2592,10 +2504,10 @@
         "id": "5b820640.b7dcf8",
         "type": "comment",
         "z": "d3d080fa.62628",
-        "name": "Setting answer to one of the most popular questions",
+        "name": "Setting up answer to next or last or first question(pagination)",
         "info": "",
-        "x": 390,
-        "y": 260,
+        "x": 420,
+        "y": 140,
         "wires": []
     },
     {
@@ -2617,7 +2529,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1590,
+        "x": 1490,
         "y": 300,
         "wires": [
             [
@@ -2638,7 +2550,7 @@
         "persist": false,
         "proxy": "",
         "authType": "basic",
-        "x": 1870,
+        "x": 1770,
         "y": 300,
         "wires": [
             []
@@ -2648,12 +2560,13 @@
         "id": "db785c0e.a93d6",
         "type": "link in",
         "z": "d3d080fa.62628",
-        "name": "Set answer to one of the most popular questions",
+        "name": "Set answer to question(pagination)",
         "links": [
-            "44ca7e7d.f7226"
+            "44ca7e7d.f7226",
+            "d7b8d232.f7981"
         ],
         "x": 215,
-        "y": 300,
+        "y": 180,
         "wires": [
             [
                 "393aa544.3be7ba"
@@ -2664,14 +2577,14 @@
         "id": "393aa544.3be7ba",
         "type": "function",
         "z": "d3d080fa.62628",
-        "name": "Getting question row",
-        "func": "msg.message = msg.message.split(\"_\");\n\nmsg.topic = \"SELECT question, answer FROM questions WHERE intent = '\" + msg.message[1] + \"';\"\n\nreturn msg;",
+        "name": "Getting info from questions",
+        "func": "msg.sendAsASimpleMessage = false;\n\nif (msg.message.startsWith(\"theMostPopularQPagination_\")) {\n    msg.message = parseInt(msg.message.split(\"_\")[1]);\n} else {\n    msg.message = 1;\n    \n    msg.sendAsASimpleMessage = true;\n}\n\nmsg.topic = \"SELECT * FROM questions ORDER BY calls DESC LIMIT \" + msg.message + \";\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 420,
-        "y": 300,
+        "x": 440,
+        "y": 180,
         "wires": [
             [
                 "27d280f8.1ec68"
@@ -2815,20 +2728,15 @@
         ]
     },
     {
-        "id": "7567fe48.acbc",
-        "type": "debug",
-        "z": "dbbd86af.74c0d8",
+        "id": "d5c114ce.369d48",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "d3d080fa.62628",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1500,
-        "y": 1140,
-        "wires": []
+        "env": [],
+        "x": 1490,
+        "y": 80,
+        "wires": [
+            []
+        ]
     }
 ]
