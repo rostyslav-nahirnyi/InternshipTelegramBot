@@ -119,6 +119,13 @@
         "info": ""
     },
     {
+        "id": "76bd89c2.eace48",
+        "type": "tab",
+        "label": "Admin editing info",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "411ddac8.164cb4",
         "type": "subflow",
         "name": "Send message to the chat",
@@ -1880,7 +1887,7 @@
             "bb24cad3.d57618"
         ],
         "x": 1775,
-        "y": 1940,
+        "y": 2160,
         "wires": []
     },
     {
@@ -1892,7 +1899,7 @@
             "5581481b.706b38"
         ],
         "x": 1915,
-        "y": 2160,
+        "y": 2380,
         "wires": []
     },
     {
@@ -1902,7 +1909,7 @@
         "name": "Other user messages",
         "info": "",
         "x": 2000,
-        "y": 2120,
+        "y": 2340,
         "wires": []
     },
     {
@@ -1912,7 +1919,7 @@
         "name": "Start",
         "info": "",
         "x": 1810,
-        "y": 1900,
+        "y": 2120,
         "wires": []
     },
     {
@@ -1941,7 +1948,7 @@
         "repair": false,
         "outputs": 3,
         "x": 1300,
-        "y": 2020,
+        "y": 2240,
         "wires": [
             [
                 "712534ba.03dabc"
@@ -2065,7 +2072,7 @@
         "z": "df5e43cb.b674f",
         "name": "",
         "env": [],
-        "x": 810,
+        "x": 790,
         "y": 160,
         "wires": [
             []
@@ -2474,7 +2481,7 @@
         "name": "",
         "env": [],
         "x": 870,
-        "y": 2020,
+        "y": 2240,
         "wires": [
             [
                 "c255e784.8ab028"
@@ -2494,9 +2501,10 @@
                 "d4173cf4.07cab",
                 "db142eec.63a9b",
                 "59c1267b.ca3c98",
-                "500b8046.0202",
                 "4acba4db.21b67c",
-                "a525eef0.3d2fc"
+                "a525eef0.3d2fc",
+                "d33c08a3.3f1148",
+                "63b0881b.a8f938"
             ]
         ]
     },
@@ -2870,7 +2878,7 @@
             "10bc7ce3.c92493"
         ],
         "x": 1775,
-        "y": 2020,
+        "y": 2240,
         "wires": []
     },
     {
@@ -2880,7 +2888,7 @@
         "name": "Admin",
         "info": "",
         "x": 1810,
-        "y": 1980,
+        "y": 2200,
         "wires": []
     },
     {
@@ -2895,7 +2903,7 @@
         "y": 320,
         "wires": [
             [
-                "c5b5d78d.28c2f8"
+                "8c9e9c4.0aacb6"
             ]
         ]
     },
@@ -2910,7 +2918,7 @@
         "initialize": "",
         "finalize": "",
         "x": 630,
-        "y": 260,
+        "y": 400,
         "wires": [
             [
                 "23355ee4.42e6b2"
@@ -2924,7 +2932,7 @@
         "name": "Admin telegram id",
         "info": "",
         "x": 630,
-        "y": 220,
+        "y": 360,
         "wires": []
     },
     {
@@ -2941,7 +2949,7 @@
         "proxy": "",
         "authType": "",
         "x": 890,
-        "y": 260,
+        "y": 400,
         "wires": [
             [
                 "dc2b53c3.deda4"
@@ -2967,7 +2975,7 @@
         "repair": false,
         "outputs": 2,
         "x": 1100,
-        "y": 260,
+        "y": 400,
         "wires": [
             [
                 "94a275bf.bc4bf8"
@@ -2986,7 +2994,7 @@
             "bb24cad3.d57618"
         ],
         "x": 1255,
-        "y": 360,
+        "y": 500,
         "wires": []
     },
     {
@@ -2996,7 +3004,7 @@
         "name": "Move on to simple /start",
         "info": "",
         "x": 1340,
-        "y": 320,
+        "y": 460,
         "wires": []
     },
     {
@@ -3008,7 +3016,7 @@
             "d5cd829c.4da0d"
         ],
         "x": 1255,
-        "y": 160,
+        "y": 300,
         "wires": []
     },
     {
@@ -3018,7 +3026,7 @@
         "name": "Move on to authentication",
         "info": "",
         "x": 1350,
-        "y": 120,
+        "y": 260,
         "wires": []
     },
     {
@@ -3052,7 +3060,7 @@
         "type": "function",
         "z": "27a4d84f.90dc58",
         "name": "Setting up message with main menu",
-        "func": "msg.payload = {\n    text: \"Введіть пароль\",\n    chat_id: msg.chat_id\n}\n\n//means admin authentication process\narr = global.get(\"admin_auth\");\narr.push(msg.chat_id.toString());\nglobal.set(\"admin_auth\", arr);\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Введіть пароль\",\n    chat_id: msg.chat_id\n}\n\n//means admin authentication process\nglobal.set((\"admins.\" + msg.chat_id), \"authentication\");\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3082,13 +3090,13 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Admin message or user message",
-        "func": "if (global.get(\"admin_auth\").includes(msg.chat_id.toString()) || global.get(\"admin_message\").includes(msg.chat_id.toString())) return [msg, null]\n\nreturn [null, msg];",
+        "func": "if (global.get(\"admins.\" + msg.chat_id)) return [msg, null];\n\nreturn [null, msg];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 1700,
-        "y": 2120,
+        "y": 2340,
         "wires": [
             [
                 "5aa25e4d.afa2f"
@@ -3111,7 +3119,7 @@
             "dae42a0e.30b798"
         ],
         "x": 1915,
-        "y": 2080,
+        "y": 2300,
         "wires": []
     },
     {
@@ -3121,7 +3129,7 @@
         "name": "Other admin messages",
         "info": "",
         "x": 2000,
-        "y": 2040,
+        "y": 2260,
         "wires": []
     },
     {
@@ -3136,7 +3144,7 @@
         "y": 280,
         "wires": [
             [
-                "bc131d5d.f24c7"
+                "84224ec9.c9393"
             ]
         ]
     },
@@ -3149,29 +3157,6 @@
         "x": 270,
         "y": 240,
         "wires": []
-    },
-    {
-        "id": "bc131d5d.f24c7",
-        "type": "function",
-        "z": "741a84b0.eaaafc",
-        "name": "if authentication",
-        "func": "if (global.get(\"admin_auth\").includes(msg.chat_id.toString())) return [msg, null];\n\nreturn [null, msg];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 360,
-        "y": 280,
-        "wires": [
-            [
-                "16824839.79df98"
-            ],
-            []
-        ],
-        "outputLabels": [
-            "Authentication process",
-            "Admin message"
-        ]
     },
     {
         "id": "1557dc1a.094de4",
@@ -3207,7 +3192,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "",
-        "func": "global.set(\"admin_message\", []);\nglobal.set(\"admin_auth\", []);\nreturn msg;",
+        "func": "global.set(\"admins\", {});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4093,7 +4078,7 @@
         "type": "function",
         "z": "3d74a532.309a9a",
         "name": "Setting up message about successful auth",
-        "func": "msg.payload = {\n    text: \"Успішний вхід\",\n    chat_id: msg.chat_id\n}\n\nvar arr = global.get(\"admin_message\");\narr.push(msg.chat_id.toString());\nglobal.set(\"admin_message\", arr);\n\n//admin authentication process was ended\narr = global.get(\"admin_auth\");\narr.pop(arr.indexOf(msg.chat_id.toString()));\nglobal.set(\"admin_auth\", arr);\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Успішний вхід\",\n    chat_id: msg.chat_id\n};\n\nglobal.set((\"admins.\" + msg.chat_id), \"authenticated\");\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4232,8 +4217,8 @@
         "links": [
             "fcdda474.e64398"
         ],
-        "x": 515,
-        "y": 180,
+        "x": 535,
+        "y": 220,
         "wires": []
     },
     {
@@ -4242,8 +4227,8 @@
         "z": "741a84b0.eaaafc",
         "name": "Admin authentication process",
         "info": "",
-        "x": 620,
-        "y": 140,
+        "x": 640,
+        "y": 180,
         "wires": []
     },
     {
@@ -4340,7 +4325,7 @@
         "type": "function",
         "z": "74e0bd75.30b964",
         "name": "Setting up message with admin menu",
-        "func": "msg.payload = {\n    text: \"Ви в адмін-панелі. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Статистика\",\n                callback_data: \"statistics\"            \n            }], \n            [{\n                text: \"Редагування інформації про ICM 😎\",\n                callback_data: \"editAboutISMDepartment\"            \n            }],\n            [{\n                text: \"Редагування інформації про НУЛП 🚀\",\n                callback_data: \"editAboutNULP\"            \n            }],\n            [{\n                text: \"Масова розсилка 📩\",\n                callback_data: \"distribution\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    text: \"Ви в адмін-панелі. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Статистика\",\n                callback_data: \"statistics\"            \n            }], \n            [{\n                text: \"Редагування інформації про ICM 😎\",\n                callback_data: \"editingInfo_aboutISMDepartment\"            \n            }],\n            [{\n                text: \"Редагування інформації про НУЛП 🚀\",\n                callback_data: \"editingInfo_aboutNULP\"            \n            }],\n            [{\n                text: \"Як користуватися ботом 📁\",\n                callback_data: \"editingInfo_usingBot\"            \n            }],\n            [{\n                text: \"Масова розсилка 📩\",\n                callback_data: \"distribution\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4350,27 +4335,6 @@
         "wires": [
             [
                 "ee6a100.26f8bf"
-            ]
-        ]
-    },
-    {
-        "id": "c5b5d78d.28c2f8",
-        "type": "function",
-        "z": "14785f2b.3d2341",
-        "name": "if admin",
-        "func": "if (global.get(\"admin_message\").includes(msg.chat_id.toString())) return [null, msg];\n\nreturn [msg, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 360,
-        "y": 320,
-        "wires": [
-            [
-                "27ffd58.392ce2a"
-            ],
-            [
-                "a0263de3.c8c3d"
             ]
         ]
     },
@@ -4393,7 +4357,7 @@
             "174b2f09.720ee1"
         ],
         "x": 555,
-        "y": 380,
+        "y": 240,
         "wires": []
     },
     {
@@ -4403,7 +4367,7 @@
         "name": "Send admin menu",
         "info": "",
         "x": 630,
-        "y": 340,
+        "y": 200,
         "wires": []
     },
     {
@@ -4553,24 +4517,6 @@
             ],
             [
                 "88664c92.b9374"
-            ]
-        ]
-    },
-    {
-        "id": "500b8046.0202",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "If admin",
-        "func": "if(global.get(\"admin_message\").includes(msg.chat_id.toString())) return msg;\n\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1250,
-        "y": 1280,
-        "wires": [
-            [
-                "a5af100c.3c9e6"
             ]
         ]
     },
@@ -5012,7 +4958,7 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Setting up next or last question",
-        "func": " msg.payload = {\n    text: msg.message + \". \" + msg.payload.question + \"\\n\\nЗадано: \" + msg.payload.calls + \"\\n\\nВідповідь:\\n\" + msg.payload.answer,\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: [[]]\n    },\n}\n\nif (msg.message > 1) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"◀ Назад\",\n                callback_data: \"theMostPopularQPaginationForAdmin_\" + (msg.message - 1)\n            });\n}\n\nif (msg.message < 5) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"Далі ▶\",\n                callback_data: \"theMostPopularQPaginationForAdmin_\" + (msg.message + 1)\n            });\n}\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Головне меню\",\n        callback_data: \"adminMenu\"\n    }]);\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
+        "func": " msg.payload = {\n    text: msg.message + \". \" + msg.payload.question + \"\\n\\nЗадано: \" + msg.payload.calls + \"\\n\\nВідповідь:\\n\" + msg.payload.answer,\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: [[]]\n    },\n}\n\nif (msg.message > 1) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"◀ Назад\",\n                callback_data: \"theMostPopularQPaginationForAdmin_\" + (msg.message - 1)\n            });\n}\n\nif (msg.message < 5) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"Далі ▶\",\n                callback_data: \"theMostPopularQPaginationForAdmin_\" + (msg.message + 1)\n            });\n}\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Назад\",\n        callback_data: \"statistics\"            \n    }])\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Головне меню\",\n        callback_data: \"adminMenu\"\n    }]);\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -5238,5 +5184,373 @@
         "x": 1920,
         "y": 1680,
         "wires": []
+    },
+    {
+        "id": "d33c08a3.3f1148",
+        "type": "switch",
+        "z": "dbbd86af.74c0d8",
+        "name": "Is admin",
+        "property": "admins",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "msg.chat_id",
+                "vt": "jsonata"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1260,
+        "y": 1280,
+        "wires": [
+            [
+                "a5af100c.3c9e6"
+            ]
+        ]
+    },
+    {
+        "id": "8c9e9c4.0aacb6",
+        "type": "switch",
+        "z": "14785f2b.3d2341",
+        "name": "Is admin",
+        "property": "admins",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "hask",
+                "v": "msg.chat_id",
+                "vt": "jsonata"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "a0263de3.c8c3d"
+            ],
+            [
+                "27ffd58.392ce2a"
+            ]
+        ]
+    },
+    {
+        "id": "84224ec9.c9393",
+        "type": "switch",
+        "z": "741a84b0.eaaafc",
+        "name": "",
+        "property": "$globalContext(('admins.' & msg.chat_id))",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "authentication",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "editingInfo",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 370,
+        "y": 280,
+        "wires": [
+            [
+                "16824839.79df98"
+            ],
+            [
+                "537142d8.31be7c"
+            ]
+        ]
+    },
+    {
+        "id": "e06e2c86.59eb2",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Start editing info",
+        "info": "",
+        "x": 1840,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "63b0881b.a8f938",
+        "type": "switch",
+        "z": "dbbd86af.74c0d8",
+        "name": "Start editing info",
+        "property": "$split(msg.message, \"_\", 1)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "editingInfo",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1260,
+        "y": 1820,
+        "wires": [
+            [
+                "b634643e.b6e4a8"
+            ]
+        ]
+    },
+    {
+        "id": "b634643e.b6e4a8",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Start editing info",
+        "links": [
+            "6eb3f60a.d73ba8"
+        ],
+        "x": 1775,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "6eb3f60a.d73ba8",
+        "type": "link in",
+        "z": "76bd89c2.eace48",
+        "name": "Start editing info",
+        "links": [
+            "b634643e.b6e4a8"
+        ],
+        "x": 155,
+        "y": 100,
+        "wires": [
+            [
+                "52968a19.95efe4"
+            ]
+        ]
+    },
+    {
+        "id": "a04c29.fed883d8",
+        "type": "comment",
+        "z": "76bd89c2.eace48",
+        "name": "Start editing info",
+        "info": "",
+        "x": 220,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "52968a19.95efe4",
+        "type": "function",
+        "z": "76bd89c2.eace48",
+        "name": "Setting up message to write new text",
+        "func": "msg.payload = {\n    text: \"Вкажіть новий текст для використання\",\n    chat_id: msg.chat_id\n}\n\nglobal.set((\"admins.\" + msg.chat_id), (\"editingInfo_\" + msg.message.split('_')[1]));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 430,
+        "y": 100,
+        "wires": [
+            [
+                "a840a40f.812458"
+            ]
+        ]
+    },
+    {
+        "id": "a840a40f.812458",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "env": [],
+        "x": 810,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "537142d8.31be7c",
+        "type": "link out",
+        "z": "741a84b0.eaaafc",
+        "name": "Edit info",
+        "links": [
+            "d609159f.a9e588"
+        ],
+        "x": 535,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "50e18887.cf9af8",
+        "type": "comment",
+        "z": "741a84b0.eaaafc",
+        "name": "Edit info",
+        "info": "",
+        "x": 580,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "d609159f.a9e588",
+        "type": "link in",
+        "z": "76bd89c2.eace48",
+        "name": "Edit info",
+        "links": [
+            "537142d8.31be7c"
+        ],
+        "x": 155,
+        "y": 240,
+        "wires": [
+            [
+                "31e9048a.92614c"
+            ]
+        ]
+    },
+    {
+        "id": "35e49a63.cf1266",
+        "type": "comment",
+        "z": "76bd89c2.eace48",
+        "name": "Edit info",
+        "info": "",
+        "x": 200,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "31e9048a.92614c",
+        "type": "function",
+        "z": "76bd89c2.eace48",
+        "name": "Editing info",
+        "func": "msg.method = \"PATCH\";\nmsg.url = \"http://localhost:8000/api/v1/admins/infopages/editInfoPage/\" + global.get((\"admins.\" + msg.chat_id)).split('_')[1];\nmsg.headers = {\n    \"Content-Type\": \"application/json\",\n    \"Authorization\": \"Token 3a02264c98f37be1a907f23ed9fb10de5fc11aec\"\n};\nmsg.payload = {\n    \"content\": msg.message\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 240,
+        "wires": [
+            [
+                "ca8a8ab0.459f08"
+            ]
+        ]
+    },
+    {
+        "id": "ca8a8ab0.459f08",
+        "type": "http request",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "8ef6a097.3e4e9"
+            ]
+        ]
+    },
+    {
+        "id": "8ef6a097.3e4e9",
+        "type": "switch",
+        "z": "76bd89c2.eace48",
+        "name": "If successful",
+        "property": "payload.success",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 870,
+        "y": 240,
+        "wires": [
+            [
+                "86b37728.c9ce98"
+            ],
+            [
+                "7957d706.e73268"
+            ]
+        ]
+    },
+    {
+        "id": "86b37728.c9ce98",
+        "type": "function",
+        "z": "76bd89c2.eace48",
+        "name": "Setting up message about successful editing",
+        "func": "msg.payload = {\n    text: \"Текст успішно змінено\",\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [\n            [{\n                text: \"◀ Головне меню\",\n                callback_data: \"adminMenu\"\n            }]\n        ]\n    }\n}\n\nglobal.set((\"admins.\" + msg.chat_id), \"authenticated\");\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1270,
+        "y": 180,
+        "wires": [
+            [
+                "a5df2520.fa5008"
+            ]
+        ]
+    },
+    {
+        "id": "a5df2520.fa5008",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "env": [],
+        "x": 1630,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7957d706.e73268",
+        "type": "function",
+        "z": "76bd89c2.eace48",
+        "name": "Setting up message about failed editing",
+        "func": "msg.payload = {\n    text: \"Сталася помилка\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1260,
+        "y": 300,
+        "wires": [
+            [
+                "e6ea5ac9.012de8"
+            ]
+        ]
+    },
+    {
+        "id": "e6ea5ac9.012de8",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "env": [],
+        "x": 1630,
+        "y": 300,
+        "wires": [
+            []
+        ]
     }
 ]
