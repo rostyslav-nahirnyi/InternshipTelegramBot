@@ -77,20 +77,6 @@
         "info": ""
     },
     {
-        "id": "741a84b0.eaaafc",
-        "type": "tab",
-        "label": "Admin messages",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "27a4d84f.90dc58",
-        "type": "tab",
-        "label": "Admin auth message",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "74e0bd75.30b964",
         "type": "tab",
         "label": "Admin menu",
@@ -112,6 +98,20 @@
         "info": ""
     },
     {
+        "id": "54742aae.b4a584",
+        "type": "tab",
+        "label": "Unanswered Questions Menu",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f0c759b9.ab1e08",
+        "type": "tab",
+        "label": "Sync Questions",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "59350fd8.5c52c",
         "type": "tab",
         "label": "Admin distribution",
@@ -122,13 +122,6 @@
         "id": "4000ac09.8509f4",
         "type": "tab",
         "label": "Admin management",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "54742aae.b4a584",
-        "type": "tab",
-        "label": "Sync FAQ",
         "disabled": false,
         "info": ""
     },
@@ -197,6 +190,48 @@
         "color": "#DDAA99"
     },
     {
+        "id": "b72c2b01.aad3f8",
+        "type": "subflow",
+        "name": "Get user",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 140,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "4ee311e.188f1f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1320,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "965ff527.75b118",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1320,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "bb8c001e.ffd0e",
+                        "port": 1
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
         "id": "529c4263.aeab0c",
         "type": "MySQLdatabase",
         "name": "",
@@ -221,7 +256,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Updating user name",
-        "func": "msg.first_name = msg.payload_from_hook.callback_query.message.chat.first_name ? msg.payload_from_hook.callback_query.message.chat.first_name : '';\nmsg.last_name = msg.payload_from_hook.callback_query.message.chat.last_name ? msg.payload_from_hook.callback_query.message.chat.last_name : '';\n\nmsg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"name\": msg.first_name + \" \" + msg.last_name,\n    \"state\": {\"state\": \"location\"}\n}\n\n//for the next question\nmsg.text = \"Зрозуміло. Де ви проживаєте?\";\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"name\": msg.first_name + \" \" + msg.last_name,\n    \"state\": {\"state\": \"location\"}\n}\n\n//for the next question\nmsg.text = \"Зрозуміло. Виберіть свій регіон\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -292,7 +327,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Setting up response",
-        "func": "msg.payload = {\n    text: \"Вкажіть, будь ласка, своє ім'я👇\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Вкажіть, будь ласка, своє ім'я👇\",\n    \"chat_id\": msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -380,7 +415,7 @@
         "type": "function",
         "z": "4c6874fb.68b9dc",
         "name": "Changing state to 'username'",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"state\": {\"state\": \"username\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"state\": {\"state\": \"username\"}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -408,7 +443,7 @@
         "type": "function",
         "z": "96f6108e.64a37",
         "name": "Setting up response greeting to '/start'",
-        "func": "msg.payload = {\n    text: \"Привіт! Я бот кафедри ІСМ.👨‍💻З радістю допоможу знайти відповідь на всі ваші питання\",\n    chat_id: msg.chat_id\n}\n\n//for the next question\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\"\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Привіт! Я бот кафедри ІСМ 👨‍💻. З радістю допоможу знайти відповідь на всі ваші питання\",\n    \"chat_id\": msg.chat_id\n}\n\n//for the next question\nmsg.text = \"Давайте знайомитись ближче. Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\"\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -426,7 +461,7 @@
         "type": "function",
         "z": "96f6108e.64a37",
         "name": "Setting up request message to set username",
-        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"\n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"\n            }]\n        ]\n    },\n    chat_id: msg.chat_id,\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": msg.text,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Так, звісно\",\n                \"callback_data\": \"setCurrentName\"\n            }, \n            {\n                \"text\": \"Я хочу змінити\",\n                \"callback_data\": \"setName\"\n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id,\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -436,44 +471,6 @@
         "wires": [
             [
                 "cece57bc.ae7278"
-            ]
-        ]
-    },
-    {
-        "id": "41e89314.19813c",
-        "type": "debug",
-        "z": "96f6108e.64a37",
-        "name": "Getting user row in 'start command flow' response from api",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1160,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "776fd5bc.aa182c",
-        "type": "function",
-        "z": "96f6108e.64a37",
-        "name": "Checking presence of user row",
-        "func": "if (msg.payload.status && msg.payload.status == \"success\") return [null, msg];\nelse return [msg, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1170,
-        "y": 220,
-        "wires": [
-            [
-                "58ada314.42903c"
-            ],
-            [
-                "65f19cea.cc3ef4"
             ]
         ]
     },
@@ -488,14 +485,16 @@
             "a30c38e0.20a148",
             "712534ba.03dabc",
             "3df9c3f8.76229c",
-            "ea1a539f.fff1a"
+            "ea1a539f.fff1a",
+            "deed1fc2.cbf0e",
+            "8dcc1de3.974b7"
         ],
-        "x": 415,
+        "x": 855,
         "y": 220,
         "wires": [
             [
                 "954a6c74.4f585",
-                "de1e2237.23c0a"
+                "a75bccca.68779"
             ]
         ]
     },
@@ -505,7 +504,7 @@
         "z": "96f6108e.64a37",
         "name": "Start",
         "info": "",
-        "x": 450,
+        "x": 890,
         "y": 180,
         "wires": []
     },
@@ -541,7 +540,7 @@
         "type": "function",
         "z": "3b5b98a.1c38768",
         "name": "Setting up question for location",
-        "func": "msg.payload = {\n    text: msg.text,    \n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "var cities = ['Львів', 'Київ', 'Дніпро', 'Харків', 'Донецьк', 'Одеса', 'Запоріжжя',\n    'Вінниця', 'Луцьк', 'Житомир', 'Ужгород', 'Івано-Франківськ', 'Кропивницький',\n    'Луганськ', 'Миколаїв', 'Полтава', 'Рівне', 'Суми', 'Тернопіль', 'Херсон',\n    'Хмельницький', 'Черкаси', 'Чернівці', 'Чернігів', 'АР Крим', 'за межами України'];\n\n\n\nmsg.payload = {\n    \"text\": msg.text,    \n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id,\n    \n}\n\n\nvar buttonsRow = [];\ncities.forEach((item, index) => {\n    buttonsRow.push({\"text\": (item), \"callback_data\": (\"setLocation_\" + item)});\n    \n    if ((((index+1)%3) == 0) || (index == (cities.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n});\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -559,7 +558,7 @@
         "type": "function",
         "z": "3b5b98a.1c38768",
         "name": "Changing state filed to 'location'",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"state\": {\"state\": \"location\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"state\": {\"state\": \"location\"}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -613,7 +612,8 @@
             "76dc39c7.1f1908",
             "1b5b2acd.749c85",
             "533ced35.8e30a4",
-            "57b8c25.ed8713c"
+            "57b8c25.ed8713c",
+            "76e09347.1a3e1c"
         ],
         "x": 195,
         "y": 300,
@@ -628,7 +628,7 @@
         "type": "function",
         "z": "68a30d94.469f94",
         "name": "Setting up 'choose occupation' message",
-        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"setOccupationAsATeacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"setOccupationAsAStudent\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": msg.text,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Абітурієнт\",\n                \"callback_data\": \"setOccupationAsAnApplicant\"            \n            }, \n            {\n                \"text\": \"Один з батьків\",\n                \"callback_data\": \"setOccupationAsOneOfTheParents\"            \n            }],\n            [{\n                \"text\": \"Викладач\",\n                \"callback_data\": \"setOccupationAsATeacher\"            \n            },\n            {\n                \"text\": \"Студент\",\n                \"callback_data\": \"setOccupationAsAStudent\"            \n            }],\n            [{\n                \"text\": \"Інше\",\n                \"callback_data\": \"setOccupationAsOther\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -886,8 +886,8 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Editing username or city or move on to processing message",
-        "func": "function isTooLongAnswer(text) {\n    if (msg.message.length > 120) {\n        msg.payload = {\n            \"text\": text,\n            \"chat_id\": msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\nmsg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nif (msg.payload.status && msg.payload.status == \"success\") {\n    //for admins\n    if (msg.payload.user.role_name.includes(\"admin\")) {\n        if (msg.payload.user.state.state.startsWith(\"editingInfo\")) {\n        \n            return [null, null, null, null, msg, null, null, null];\n        } else if (msg.payload.user.state.state == \"writingTextForDistribution\") {\n            \n            return [null, null, null, null, null, msg, null, null];\n        } else if (msg.payload.user.state.state == \"addingAdmin\") {\n            \n            return [null, null, null, null, null, null, msg, null];\n        }\n    }\n    \n    \n    //registrations and dialogflow\n    if (msg.payload.user.state.state == \"username\") {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, null, msg, null, null, null, null, null];\n        \n        msg.payload = {\n            \"name\": msg.message\n        }\n        \n        //for the next question\n        msg.text = \"Зрозуміло. Де ви проживаєте?\";\n        \n        return [msg, null, null, null, null, null, null];\n    } else if (msg.payload.user.state.state == \"location\") {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, null, msg, null, null, null, null, null];\n        \n        msg.payload = {\n            \"city\": msg.message\n        }\n        \n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, msg, null, null, null, null, null, null];\n    } else if (msg.payload.user.state.state == \"registered\") {\n        \n        //sending saved contexts\n        msg.queryParams = {\n            \"contexts\": global.get(msg.chat_id.toString())\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"answerToDFQuestion_\")) {\n            msg.payload = msg.message.slice(19);\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, null, msg, null, null, null, null];\n    }\n}\n\nreturn [null, null, null, null, null, null, null, msg];",
-        "outputs": 8,
+        "func": "function isTooLongAnswer(text) {\n    if (msg.message.length > 254) {\n        msg.payload = {\n            \"text\": text,\n            \"chat_id\": msg.chat_id\n        }\n        \n        return true;\n    }\n    \n    return false;\n}\n\n\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nif (msg.statusCode == 200) {\n    //for admins\n    if (msg.user_payload.role_name.includes(\"admin\")) {\n        if (msg.user_payload.state.state.startsWith(\"editingInfo\")) {\n        \n            return [null, null, null, msg, null, null, null];\n        } else if (msg.user_payload.state.state == \"writingTextForDistribution\") {\n            \n            return [null, null, null, null, msg, null, null];\n        } else if (msg.user_payload.state.state == \"addingAdmin\") {\n            \n            return [null, null, null, null, null, msg, null];\n        }\n    }\n    \n    \n    //registrations and dialogflow\n    if (msg.user_payload.state.state == \"username\") {\n        if (isTooLongAnswer(\"Ви ввели задуже довге ім'я\")) return [null, msg, null, null, null, null, null];\n        \n        msg.payload = {\n            \"name\": msg.message\n        }\n        \n        //for the next question\n        msg.text = \"Зрозуміло. Виберіть свій регіон\";\n        \n        return [msg, null, null, null, null, null];\n    } else if (msg.user_payload.state.state == \"location\") {\n        if (isTooLongAnswer(\"Ви ввели задуже довгу відповідь\")) return [null, msg, null, null, null, null, null];\n        \n        msg.queryParams = {\n            \"contexts\": [\n                {\n                    \"name\": \"projects/ismbot-irio/agent/sessions/656534563445/contexts/enterCity\",\n                    \"lifespanCount\": 1\n                }\n            ]\n        };\n        \n        msg.payload = msg.message\n        \n        //for the next message\n        msg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, null, msg, null, null, null, null];\n    } else if (msg.user_payload.state.state == \"registered\") {\n        \n        //sending saved contexts\n        msg.queryParams = {\n            \"contexts\": msg.user_payload.state.df_contexts\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"answerToDFQuestion_\")) {\n            msg.payload = msg.message.slice(19);\n            \n            msg.intentName = msg.payload;\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        return [null, null, msg, null, null, null, null];\n    }\n}\n\n\n\nreturn [null, null, null, null, null, null, msg];",
+        "outputs": 7,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -896,9 +896,6 @@
         "wires": [
             [
                 "858f85dd.43b438"
-            ],
-            [
-                "2d8d4f52.fd9d1"
             ],
             [
                 "5b53c12b.cc56"
@@ -926,7 +923,6 @@
             "Send answer to one of the most popular questions",
             "DialogFlow Processing Message",
             "",
-            "",
             ""
         ]
     },
@@ -941,20 +937,7 @@
             "2afdb4a1.ffb67c"
         ],
         "x": 1975,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "76dc39c7.1f1908",
-        "type": "link out",
-        "z": "cbf72f33.63dd6",
-        "name": "Move on to choosing occupation",
-        "links": [
-            "4b1be78d.e0a2d8",
-            "62bdcfd6.d166e"
-        ],
-        "x": 1975,
-        "y": 380,
+        "y": 200,
         "wires": []
     },
     {
@@ -1045,7 +1028,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 2030,
-        "y": 860,
+        "y": 640,
         "wires": []
     },
     {
@@ -1057,11 +1040,11 @@
         "debug": false,
         "queryParamsOK": true,
         "x": 1800,
-        "y": 780,
+        "y": 560,
         "wires": [
             [
                 "5d8decb2.3014e4",
-                "8c22d5f5.4223e8"
+                "b0119f00.7210b"
             ]
         ]
     },
@@ -1072,7 +1055,7 @@
         "name": "DialogFlow Processing Message",
         "info": "",
         "x": 1850,
-        "y": 740,
+        "y": 520,
         "wires": []
     },
     {
@@ -1080,13 +1063,13 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Setting up dialogflow response",
-        "func": "msg.intent = msg.payload;\n\nmsg.payload = {\n    chat_id: msg.chat_id,\n    text: msg._dialogflow.fulfillmentText,\n    reply_markup: {\n        inline_keyboard: [[{\n            text: \"◀ Головне меню\",\n            callback_data: \"mainMenu\"\n        }]]\n    }\n}\n\nif (msg._dialogflow.fulfillmentMessages[0].platform == \"TELEGRAM\") {\n    msg.payload.text = msg._dialogflow.fulfillmentMessages[0].payload.fields.telegram.structValue.fields.text.stringValue;\n    \n    var inlineKeyboardAnswers = [];\n    msg._dialogflow.fulfillmentMessages[0].payload.fields.telegram.structValue\n        .fields.reply_markup.structValue.fields.inline_keyboard.listValue.values[0]\n        .listValue.values.forEach((value) => {\n            inlineKeyboardAnswers.push(\n                    {\n                        text: value.structValue.fields.text.stringValue,\n                        callback_data: \"answerToDFQuestion_\" + value.structValue.fields.callback_data.stringValue\n                        \n                    }\n                );\n        });\n    \n    msg.payload.reply_markup.inline_keyboard.unshift(inlineKeyboardAnswers)\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"chat_id\": msg.chat_id,\n    \"text\": msg._dialogflow.fulfillmentText,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[{\n            \"text\": \"↩ Головне меню\",\n            \"callback_data\": \"mainMenu\"\n        }]]\n    }\n}\n\n\n//if message is question from dialogflow, it sets buttons with answers for this question\nfor(var i = 0; i < msg._dialogflow.fulfillmentMessages.length; i++) {\n    if (msg._dialogflow.fulfillmentMessages[i].platform == \"TELEGRAM\") {\n        msg.payload.text = msg._dialogflow.fulfillmentMessages[i].payload.fields.telegram.structValue.fields.text.stringValue;\n        \n        var inlineKeyboardAnswers = [];\n        msg._dialogflow.fulfillmentMessages[i].payload.fields.telegram.structValue\n            .fields.reply_markup.structValue.fields.inline_keyboard.listValue.values[0]\n            .listValue.values.forEach((value) => {\n                inlineKeyboardAnswers.push(\n                        {\n                            \"text\": value.structValue.fields.text.stringValue,\n                            \"callback_data\": \"answerToDFQuestion_\" + value.structValue.fields.callback_data.stringValue\n                            \n                        }\n                    );\n            });\n        \n        msg.payload.reply_markup.inline_keyboard.unshift(inlineKeyboardAnswers);\n        break;\n    }\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2590,
-        "y": 780,
+        "x": 3370,
+        "y": 560,
         "wires": [
             [
                 "5a2ebc6a.567e54"
@@ -1100,17 +1083,7 @@
         "name": "Move on to setting the location field",
         "info": "",
         "x": 2100,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "74b4671f.1c13a8",
-        "type": "comment",
-        "z": "cbf72f33.63dd6",
-        "name": "Move on to choosing occupation",
-        "info": "",
-        "x": 2090,
-        "y": 340,
+        "y": 160,
         "wires": []
     },
     {
@@ -1123,7 +1096,7 @@
             "4d1e8f79.27d3c"
         ],
         "x": 1735,
-        "y": 1320,
+        "y": 1100,
         "wires": []
     },
     {
@@ -1133,7 +1106,7 @@
         "name": "Checking whether the registration is completed",
         "info": "",
         "x": 1900,
-        "y": 1280,
+        "y": 1060,
         "wires": []
     },
     {
@@ -1141,16 +1114,16 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Saving dialogflow context",
-        "func": "global.set(msg.chat_id.toString(), msg._dialogflow.outputContexts);\n\nreturn msg;",
+        "func": "msg.intentName = msg.payload;\n\n\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.df_contexts = msg._dialogflow.outputContexts;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2190,
-        "y": 780,
+        "x": 2470,
+        "y": 560,
         "wires": [
             [
-                "63a1490b.736ab8"
+                "72384851.df5ad8"
             ]
         ]
     },
@@ -1159,7 +1132,7 @@
         "type": "function",
         "z": "4001764a.8341f8",
         "name": "Removing inline keyboard",
-        "func": "//remove inline keyboard\nmsg.payload = {\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: []\n    }\n}\n\nreturn msg;",
+        "func": "//remove inline keyboard\nmsg.payload = {\n    \"chat_id\": msg.chat_id,\n    \"message_id\": msg.message_id,\n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1179,16 +1152,6 @@
         "name": "Sending a message",
         "info": "",
         "x": 1810,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "a64a08f7.365978",
-        "type": "comment",
-        "z": "cbf72f33.63dd6",
-        "name": "Saving the city field",
-        "info": "",
-        "x": 1810,
         "y": 340,
         "wires": []
     },
@@ -1199,7 +1162,7 @@
         "name": "Saving the username field",
         "info": "",
         "x": 1830,
-        "y": 140,
+        "y": 160,
         "wires": []
     },
     {
@@ -1215,7 +1178,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 610,
+        "x": 1050,
         "y": 300,
         "wires": []
     },
@@ -1226,7 +1189,7 @@
         "name": "",
         "env": [],
         "x": 1830,
-        "y": 600,
+        "y": 380,
         "wires": [
             []
         ]
@@ -1237,12 +1200,12 @@
         "z": "cbf72f33.63dd6",
         "name": "",
         "env": [],
-        "x": 2930,
-        "y": 780,
+        "x": 3710,
+        "y": 560,
         "wires": [
             [
-                "a8d398a0.9fa888",
-                "173d0a39.c80376"
+                "44bde95d.ab5328",
+                "5c02823e.dbdd4c"
             ]
         ]
     },
@@ -1419,17 +1382,16 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Updating calls field of question",
-        "func": "msg.method = \"PUT\";\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq/increment?name=\" + msg.intent;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq/increment?name=\" + msg.intentName;\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 3290,
-        "y": 780,
+        "x": 4450,
+        "y": 620,
         "wires": [
             [
-                "bb4c4877.8d7198",
-                "492e5f50.8b03c"
+                "bb4c4877.8d7198"
             ]
         ]
     },
@@ -1466,7 +1428,7 @@
         "type": "function",
         "z": "dbbd86af.74c0d8",
         "name": "Formatting data",
-        "func": "if (msg.payload.callback_query) {\n    msg.message = msg.payload.callback_query.data;\n        \n    msg.chat_id = msg.payload.callback_query.from.id\n    \n    msg.message_id = msg.payload.callback_query.message.message_id;\n    \n    return [msg, null];\n} else if (msg.payload.message) {\n    //saving firstname and lastname of user\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    \n    msg.username = msg.payload.message.chat.username;\n\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    return [null, msg];\n}\n\nreturn [null, null]",
+        "func": "//headers for api\nmsg.apiHeaders = {\n    \"Content-Type\": \"application/json\",\n    \"pass-hash\": env.get('API_HASH_KEY')\n}\n\nif (msg.payload.callback_query) {\n    //saving firstname and lastname of user\n    msg.first_name = msg.payload.callback_query.message.chat.first_name ? msg.payload.callback_query.message.chat.first_name : '';\n    msg.last_name = msg.payload.callback_query.message.chat.last_name ? msg.payload.callback_query.message.chat.last_name : '';\n    \n    msg.message = msg.payload.callback_query.data;\n        \n    msg.chat_id = msg.payload.callback_query.from.id\n    \n    msg.message_id = msg.payload.callback_query.message.message_id;\n    \n    return [msg, null];\n} else if (msg.payload.message) {\n    //saving firstname and lastname of user\n    msg.first_name = msg.payload.message.chat.first_name ? msg.payload.message.chat.first_name : '';\n    msg.last_name = msg.payload.message.chat.last_name ? msg.payload.message.chat.last_name : '';\n    \n    msg.username = msg.payload.message.chat.username;\n\n    msg.message = msg.payload.message.text;\n    \n    msg.chat_id = msg.payload.message.from.id\n    \n    msg.message_id = msg.payload.message.message_id - 1;\n    \n    return [null, msg];\n}\n\nreturn [null, null]",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1629,7 +1591,7 @@
             "502c79bf.c60c68"
         ],
         "x": 1775,
-        "y": 440,
+        "y": 460,
         "wires": []
     },
     {
@@ -1642,7 +1604,7 @@
             "ed917a17.8e5078"
         ],
         "x": 1775,
-        "y": 180,
+        "y": 200,
         "wires": []
     },
     {
@@ -1655,7 +1617,7 @@
             "4f5ec5f6.e9838c"
         ],
         "x": 1775,
-        "y": 220,
+        "y": 240,
         "wires": []
     },
     {
@@ -1668,7 +1630,7 @@
             "f2c3d2a0.25b49"
         ],
         "x": 1775,
-        "y": 260,
+        "y": 280,
         "wires": []
     },
     {
@@ -1681,7 +1643,7 @@
             "4ed757e7.456528"
         ],
         "x": 1775,
-        "y": 300,
+        "y": 320,
         "wires": []
     },
     {
@@ -1694,7 +1656,7 @@
             "bcbdc401.9580e8"
         ],
         "x": 1775,
-        "y": 340,
+        "y": 360,
         "wires": []
     },
     {
@@ -1704,7 +1666,7 @@
         "name": "Set occupation",
         "info": "# Setting occupation",
         "x": 1840,
-        "y": 140,
+        "y": 160,
         "wires": []
     },
     {
@@ -1714,7 +1676,7 @@
         "name": "Main menu",
         "info": "",
         "x": 1820,
-        "y": 400,
+        "y": 420,
         "wires": []
     },
     {
@@ -1736,7 +1698,7 @@
             "db785c0e.a93d6"
         ],
         "x": 1775,
-        "y": 540,
+        "y": 560,
         "wires": []
     },
     {
@@ -1746,21 +1708,19 @@
         "name": "Send the most popular questions",
         "info": "",
         "x": 1890,
-        "y": 500,
+        "y": 520,
         "wires": []
     },
     {
         "id": "84602d83.794bf",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Send message about ISM department",
+        "name": "Send message with info",
         "links": [
-            "b25d1f4e.85ebd",
-            "94e14c4f.1155d",
             "255971.a036369"
         ],
         "x": 1775,
-        "y": 640,
+        "y": 660,
         "wires": []
     },
     {
@@ -1770,7 +1730,7 @@
         "name": "Send messages about ISM department, NULP, how to use the bot ",
         "info": "",
         "x": 1990,
-        "y": 600,
+        "y": 620,
         "wires": []
     },
     {
@@ -1791,7 +1751,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 840,
+        "y": 900,
         "wires": [
             [
                 "17a4ed75.37c813"
@@ -1811,7 +1771,7 @@
             "c69d98c5.c5cda8"
         ],
         "x": 1775,
-        "y": 840,
+        "y": 900,
         "wires": []
     },
     {
@@ -1821,7 +1781,7 @@
         "name": "Process message",
         "info": "",
         "x": 1850,
-        "y": 800,
+        "y": 860,
         "wires": []
     },
     {
@@ -1842,7 +1802,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1350,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "44ca7e7d.f7226"
@@ -1853,22 +1813,22 @@
         "id": "44ca7e7d.f7226",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Set answer to popular question(pagination)",
+        "name": "Set answer to another question(pagination)",
         "links": [
             "db785c0e.a93d6"
         ],
         "x": 1775,
-        "y": 740,
+        "y": 800,
         "wires": []
     },
     {
         "id": "695523ed.ad23dc",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Set answer to popular question(pagination)",
+        "name": "Set answer to another question(pagination)",
         "info": "",
         "x": 1920,
-        "y": 700,
+        "y": 760,
         "wires": []
     },
     {
@@ -1879,8 +1839,8 @@
         "links": [
             "bb24cad3.d57618"
         ],
-        "x": 1715,
-        "y": 3360,
+        "x": 1775,
+        "y": 3340,
         "wires": []
     },
     {
@@ -1891,8 +1851,8 @@
         "links": [
             "5581481b.706b38"
         ],
-        "x": 1815,
-        "y": 3520,
+        "x": 1775,
+        "y": 3500,
         "wires": []
     },
     {
@@ -1901,8 +1861,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Other user messages",
         "info": "",
-        "x": 1900,
-        "y": 3480,
+        "x": 1860,
+        "y": 3460,
         "wires": []
     },
     {
@@ -1911,8 +1871,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 1750,
-        "y": 3320,
+        "x": 1810,
+        "y": 3300,
         "wires": []
     },
     {
@@ -1940,8 +1900,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 1320,
-        "y": 3440,
+        "x": 1280,
+        "y": 3420,
         "wires": [
             [
                 "712534ba.03dabc"
@@ -1978,7 +1938,7 @@
         "type": "function",
         "z": "96f6108e.64a37",
         "name": "Registering new user row in db",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"id\": msg.chat_id,\n    \"username\": msg.username,\n    \"state\": {\"state\" : \"created\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users\";\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"id\": msg.chat_id,\n    \"username\": msg.username,\n    \"state\": {\"state\" : \"created\"}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1987,8 +1947,7 @@
         "y": 120,
         "wires": [
             [
-                "a67c174.729e1e8",
-                "d9be97f3.f863e8"
+                "a67c174.729e1e8"
             ]
         ]
     },
@@ -2037,7 +1996,7 @@
         "type": "function",
         "z": "df5e43cb.b674f",
         "name": "Setting up message with main menu",
-        "func": "msg.payload_user = msg.payload;\n\nmsg.payload = {\n    text: \"✅ Ви в головному меню. Задавайте питання чи оберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Найпопулярніші питання 🔥\",\n                callback_data: \"theMostPopularQuestions\"            \n            }], \n            [{\n                text: \"Про кафедру ICM 😎\",\n                callback_data: \"AboutISM\"            \n            },\n            {\n                text: \"Про НУЛП 🚀\",\n                callback_data: \"AboutNULP\"            \n            }],\n            [{\n                text: \"Як користуватися ботом 📁\",\n                callback_data: \"HowToUseBot\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nif (msg.payload_user.user.role_name.includes(\"admin\")) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        text: \"Адмін-панель\",\n        callback_data: \"adminMenu\"\n    }]);\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"✅ Ви в головному меню. Задавайте питання чи оберіть необхідний пункт\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Найпопулярніші питання 🔥\",\n                \"callback_data\": \"theMostPopularQuestions\"            \n            }], \n            [{\n                \"text\": \"Про кафедру ICM 😎\",\n                \"callback_data\": \"AboutISM\"            \n            },\n            {\n                \"text\": \"Про НУЛП 🚀\",\n                \"callback_data\": \"AboutNULP\"            \n            }],\n            [{\n                \"text\": \"Як користуватися ботом 📁\",\n                \"callback_data\": \"HowToUseBot\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n//if user is admin, it sends admin-menu button\nif (msg.user_payload.role_name.includes(\"admin\")) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"⚙ Адмін-панель\",\n        \"callback_data\": \"adminMenu\"\n    }]);\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2077,7 +2036,7 @@
         "type": "function",
         "z": "696b129b.360e0c",
         "name": "Is registration completed",
-        "func": "if (msg.payload.user.role_name != \"admin\") {\n    if (msg.payload.user.state.state == \"created\" || msg.payload.user.state.state == \"username\") {\n        //for the next question\n        msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n        \n        return [msg, null, null, null];\n    } else if (msg.payload.user.state.state == \"location\") {\n        //for the next question\n        msg.text = \"Де ви проживаєте?\";\n        \n        return [null, msg, null, null];\n    } else if (msg.payload.user.state.state == \"occupation\") {\n        //for the next question\n        msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, null, msg, null];\n    }\n}\n\nreturn [null, null, null, msg];",
+        "func": "if (!msg.user_payload.role_name.includes(\"admin\")) {\n    if (msg.user_payload.state.state == \"created\" || msg.user_payload.state.state == \"username\") {\n        //for the next question\n        msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n        \n        return [msg, null, null, null];\n    } else if (msg.user_payload.state.state == \"location\") {\n        //for the next question\n        msg.text = \"Виберіть свій регіон\";\n        \n        return [null, msg, null, null];\n    } else if (msg.user_payload.state.state == \"occupation\") {\n        //for the next question\n        msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, null, msg, null];\n    }\n}\n\nreturn [null, null, null, msg];",
         "outputs": 4,
         "noerr": 0,
         "initialize": "",
@@ -2166,7 +2125,8 @@
             "a26ae768.2eea48",
             "18a42917.130a67",
             "c93fac14.b4c41",
-            "aa4734c9.318da8"
+            "aa4734c9.318da8",
+            "f2d2b96e.dd4d58"
         ],
         "x": 355,
         "y": 320,
@@ -2255,7 +2215,7 @@
         "type": "function",
         "z": "696b129b.360e0c",
         "name": "Setting up request message to set username",
-        "func": "msg.payload = {\n    text: msg.text,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так, звісно\",\n                callback_data: \"setCurrentName\"\n            }, \n            {\n                text: \"Я хочу змінити\",\n                callback_data: \"setName\"\n            }]\n        ]\n    },\n    chat_id: msg.chat_id,\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": msg.text,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Так, звісно\",\n                \"callback_data\": \"setCurrentName\"\n            }, \n            {\n                \"text\": \"Я хочу змінити\",\n                \"callback_data\": \"setName\"\n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id,\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2273,7 +2233,7 @@
         "type": "function",
         "z": "d3d080fa.62628",
         "name": "Setting up next or last question",
-        "func": "msg.payload = {\n    text: (msg.message+1) + \". \" + msg.payload.questions[msg.message].question + \"\\n\\nВідповідь:\\n\" + msg.payload.questions[msg.message].answer,\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: [[]]\n    },\n}\n\nif (msg.message > 0) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"◀ Назад\",\n                callback_data: \"theMostPopularQPagination_\" + (msg.message - 1)\n            });\n}\n\nif (msg.message < 4) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"Далі ▶\",\n                callback_data: \"theMostPopularQPagination_\" + (msg.message + 1)\n            });\n}\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Головне меню\",\n        callback_data: \"mainMenu\"\n    }]);\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
+        "func": "msg.sendAsASimpleMessage = false;\n\n\n//if it isn't the first message, gets question id from message\nif (msg.message.startsWith(\"theMostPopularQPagination_\")) {\n    msg.message = parseInt(msg.message.split(\"_\")[1]);\n} else {\n    msg.message = 0;\n    \n    msg.sendAsASimpleMessage = true;\n}\n\n\n//setting up message\nmsg.payload = {\n    \"text\": (msg.message+1) + \". \" + msg.payload.questions[msg.message].question\n        + (msg.user_payload.role_name.includes(\"admin\") ? (\"\\n\\nЗадано: \" + msg.payload.questions[msg.message].stats) : \"\")\n        + \"\\n\\nВідповідь:\\n\" + msg.payload.questions[msg.message].answer,\n    \"chat_id\": msg.chat_id,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[]]\n    },\n}\n\n\n//if it isn't the first message, sets message_id for editing message\nif(!msg.sendAsASimpleMessage) {\n    msg.payload.message_id = msg.message_id;\n}\n\n\n//setting needed control buttons\nif (msg.message > 0) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                \"text\": \"◀ Назад\",\n                \"callback_data\": \"theMostPopularQPagination_\" + (msg.message - 1)\n            });\n}\n\nif (msg.message < 4) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                \"text\": \"Далі ▶\",\n                \"callback_data\": \"theMostPopularQPagination_\" + (msg.message + 1)\n            });\n}\n\n\n//adding main-menu button for regular users or admin-menu and 'back' buttons for admin\nif (msg.user_payload.role_name.includes(\"admin\")) {\n    msg.payload.reply_markup.inline_keyboard = msg.payload.reply_markup.inline_keyboard.concat([[{\n        text: \"◀ Назад до меню статистики\",\n        callback_data: \"statistics\"            \n    }], \n    [{\n        text: \"⚙ Адмін-панель\",\n        callback_data: \"adminMenu\"\n    }]]);\n} else {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"↩ Головне меню\",\n        \"callback_data\": \"mainMenu\"\n    }]);\n}\n\n\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -2303,7 +2263,7 @@
         "id": "9fc24cee.822f5",
         "type": "change",
         "z": "d3d080fa.62628",
-        "name": "Setting up editMessageText url",
+        "name": "Setting up url for editing message",
         "rules": [
             {
                 "t": "set",
@@ -2318,7 +2278,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1390,
+        "x": 1400,
         "y": 300,
         "wires": [
             [
@@ -2352,7 +2312,9 @@
         "name": "Set answer to question(pagination)",
         "links": [
             "44ca7e7d.f7226",
-            "d7b8d232.f7981"
+            "d7b8d232.f7981",
+            "857490ee.89b9d",
+            "87c7d03d.ab97b"
         ],
         "x": 215,
         "y": 180,
@@ -2367,7 +2329,7 @@
         "type": "function",
         "z": "d3d080fa.62628",
         "name": "Getting info from questions",
-        "func": "msg.sendAsASimpleMessage = false;\n\nif (msg.message.startsWith(\"theMostPopularQPagination_\")) {\n    msg.message = parseInt(msg.message.split(\"_\")[1]);\n} else {\n    msg.message = 0;\n    \n    msg.sendAsASimpleMessage = true;\n}\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq?questions_amount=5\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq?questions_amount=5\";\nmsg.headers = msg.apiHeaders;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2384,11 +2346,11 @@
         "id": "255971.a036369",
         "type": "link in",
         "z": "276bc02d.e347",
-        "name": "Send message with page info",
+        "name": "Send message with info",
         "links": [
             "84602d83.794bf"
         ],
-        "x": 75,
+        "x": 195,
         "y": 100,
         "wires": [
             [
@@ -2400,13 +2362,13 @@
         "id": "dd7e88ad.066828",
         "type": "function",
         "z": "276bc02d.e347",
-        "name": "Setting up message info",
-        "func": "msg.payload = {\n    parse_mode: \"html\",\n    text: msg.payload.settings.value,\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"◀ Головне меню\",\n                callback_data: \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
+        "name": "Setting up message with info",
+        "func": "msg.payload = {\n    \"parse_mode\": \"html\",\n    \"text\": msg.payload.settings.value,\n    \"chat_id\": msg.chat_id,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"\n            }]\n        ]\n    },\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 910,
+        "x": 980,
         "y": 100,
         "wires": [
             [
@@ -2418,9 +2380,9 @@
         "id": "640de173.48ae8",
         "type": "comment",
         "z": "276bc02d.e347",
-        "name": "Message with page Info",
+        "name": "Sending message with Info",
         "info": "",
-        "x": 160,
+        "x": 290,
         "y": 60,
         "wires": []
     },
@@ -2428,13 +2390,13 @@
         "id": "7d62bb88.a5bb24",
         "type": "function",
         "z": "276bc02d.e347",
-        "name": "Getting info from InfoPages",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/settings/get?name=\" + msg.message;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "name": "Getting info",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/settings/get?name=\" + msg.message;\nmsg.headers = msg.apiHeaders;\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 300,
+        "x": 370,
         "y": 100,
         "wires": [
             [
@@ -2446,7 +2408,7 @@
         "id": "b8e30ec7.7d583",
         "type": "debug",
         "z": "276bc02d.e347",
-        "name": "Getting info from InfoPage response from db",
+        "name": "Getting info",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -2455,7 +2417,7 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
+        "x": 830,
         "y": 180,
         "wires": []
     },
@@ -2465,7 +2427,7 @@
         "z": "276bc02d.e347",
         "name": "",
         "env": [],
-        "x": 1230,
+        "x": 1290,
         "y": 100,
         "wires": [
             []
@@ -2478,10 +2440,10 @@
         "name": "",
         "env": [],
         "x": 650,
-        "y": 3280,
+        "y": 3360,
         "wires": [
             [
-                "43383010.7a91f"
+                "1677f073.b40cc"
             ]
         ]
     },
@@ -2491,50 +2453,10 @@
         "z": "d3d080fa.62628",
         "name": "",
         "env": [],
-        "x": 1390,
-        "y": 80,
+        "x": 1370,
+        "y": 60,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "de1e2237.23c0a",
-        "type": "function",
-        "z": "96f6108e.64a37",
-        "name": "Getting user row",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 600,
-        "y": 220,
-        "wires": [
-            [
-                "a092bba8.d7b3c8"
-            ]
-        ]
-    },
-    {
-        "id": "a092bba8.d7b3c8",
-        "type": "http request",
-        "z": "96f6108e.64a37",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 810,
-        "y": 220,
-        "wires": [
-            [
-                "41e89314.19813c",
-                "776fd5bc.aa182c"
-            ]
         ]
     },
     {
@@ -2564,7 +2486,7 @@
         "type": "http request",
         "z": "4c6874fb.68b9dc",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -2586,7 +2508,7 @@
         "type": "http request",
         "z": "4c6874fb.68b9dc",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -2607,7 +2529,7 @@
         "type": "http request",
         "z": "3b5b98a.1c38768",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -2628,7 +2550,7 @@
         "type": "http request",
         "z": "68a30d94.469f94",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -2650,7 +2572,7 @@
         "type": "function",
         "z": "68a30d94.469f94",
         "name": "Set occupation field",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"type_name\": msg.occupation,\n    \"state\": {\"state\": \"registered\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"type_name\": msg.occupation,\n    \"state\": {\"state\": \"registered\"}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2668,7 +2590,7 @@
         "type": "http request",
         "z": "cbf72f33.63dd6",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -2677,31 +2599,10 @@
         "proxy": "",
         "authType": "",
         "x": 1790,
-        "y": 180,
+        "y": 200,
         "wires": [
             [
                 "bba92257.ecedb"
-            ]
-        ]
-    },
-    {
-        "id": "2d8d4f52.fd9d1",
-        "type": "http request",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "method": "use",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 1790,
-        "y": 380,
-        "wires": [
-            [
-                "76dc39c7.1f1908"
             ]
         ]
     },
@@ -2731,7 +2632,7 @@
         "type": "http request",
         "z": "cbf72f33.63dd6",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -2739,13 +2640,10 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 3610,
-        "y": 780,
+        "x": 4730,
+        "y": 620,
         "wires": [
-            [
-                "a6c076cb.782348",
-                "44bde95d.ab5328"
-            ]
+            []
         ]
     },
     {
@@ -2761,7 +2659,7 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 570,
+        "x": 630,
         "y": 100,
         "wires": [
             [
@@ -2778,8 +2676,8 @@
         "links": [
             "10bc7ce3.c92493"
         ],
-        "x": 1815,
-        "y": 3440,
+        "x": 1775,
+        "y": 3420,
         "wires": []
     },
     {
@@ -2788,8 +2686,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Admin",
         "info": "",
-        "x": 1850,
-        "y": 3400,
+        "x": 1810,
+        "y": 3380,
         "wires": []
     },
     {
@@ -2807,88 +2705,6 @@
                 "16abb23a.271dde"
             ]
         ]
-    },
-    {
-        "id": "d5cd829c.4da0d",
-        "type": "link in",
-        "z": "27a4d84f.90dc58",
-        "name": "Admin authentication",
-        "links": [
-            "94a275bf.bc4bf8"
-        ],
-        "x": 195,
-        "y": 100,
-        "wires": [
-            [
-                "2c09c454.955c1c"
-            ]
-        ]
-    },
-    {
-        "id": "b9b30aa4.913de8",
-        "type": "comment",
-        "z": "27a4d84f.90dc58",
-        "name": "Admin authentication",
-        "info": "",
-        "x": 280,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "2c09c454.955c1c",
-        "type": "function",
-        "z": "27a4d84f.90dc58",
-        "name": "Setting up message with main menu",
-        "func": "msg.payload = {\n    text: \"Введіть пароль\",\n    chat_id: msg.chat_id\n}\n\n//means admin authentication process\nglobal.set((\"admins.\" + msg.chat_id), \"authentication\");\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 450,
-        "y": 100,
-        "wires": [
-            [
-                "f4cf9845.c9c9e8"
-            ]
-        ]
-    },
-    {
-        "id": "f4cf9845.c9c9e8",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "27a4d84f.90dc58",
-        "name": "",
-        "env": [],
-        "x": 810,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "dae42a0e.30b798",
-        "type": "link in",
-        "z": "741a84b0.eaaafc",
-        "name": "Process admin message",
-        "links": [
-            "5aa25e4d.afa2f"
-        ],
-        "x": 175,
-        "y": 280,
-        "wires": [
-            [
-                "f444d784.4b3ec8"
-            ]
-        ]
-    },
-    {
-        "id": "1ef275a0.a014aa",
-        "type": "comment",
-        "z": "741a84b0.eaaafc",
-        "name": "Process admin message",
-        "info": "",
-        "x": 270,
-        "y": 240,
-        "wires": []
     },
     {
         "id": "174b2f09.720ee1",
@@ -2938,7 +2754,7 @@
         "type": "function",
         "z": "74e0bd75.30b964",
         "name": "Setting up message with admin menu",
-        "func": "msg.payload = {\n    text: \"Ви в адмін-панелі. Виберіть необхідний пункт\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Статистика\",\n                callback_data: \"statistics\"            \n            }], \n            [{\n                text: \"Редагування інформації про ICM 😎\",\n                callback_data: \"editInfo_AboutISM\"            \n            }],\n            [{\n                text: \"Редагування інформації про НУЛП 🚀\",\n                callback_data: \"editInfo_AboutNULP\"            \n            }],\n            [{\n                text: \"Як користуватися ботом 📁\",\n                callback_data: \"editInfo_HowToUseBot\"            \n            }],\n            [{\n                text: \"Оновити список питань 🔄\",\n                callback_data: \"syncFAQ\"            \n            }],\n            [{\n                text: \"Масова розсилка 📩\",\n                callback_data: \"distribution\"            \n            }],\n            [{\n                text: \"◀ Головне меню\",\n                callback_data: \"mainMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nif (msg.payload_admin.user.role_name == \"super-admin\") {\n    msg.payload.reply_markup.inline_keyboard.pop();\n    \n    msg.payload.reply_markup.inline_keyboard.push(\n        [{\n            text: \"Менеджмент адмінів 👨‍⚖️\",\n            callback_data: \"adminManagement\"\n        }],\n        [{\n            text: \"◀ Головне меню\",\n            callback_data: \"mainMenu\"            \n        }]);\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Ви в адмін-панелі. Виберіть необхідний пункт\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Статистика 📈\",\n                \"callback_data\": \"statistics\"            \n            }], \n            [{\n                \"text\": \"Редагування інформації ✍\",\n                \"callback_data\": \"editInfoMenu\"            \n            }],\n            [{\n                \"text\": \"Питання без відповіді ❓\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"Оновити список питань 🔄\",\n                \"callback_data\": \"syncFAQ\"            \n            }],\n            [{\n                \"text\": \"Масова розсилка 📩\",\n                \"callback_data\": \"distribution\"            \n            }],\n            [{\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n// If user is super-admin, it adds admin management button\nif (msg.user_payload.role_name == \"super-admin\") {\n    msg.payload.reply_markup.inline_keyboard.pop();\n    \n    msg.payload.reply_markup.inline_keyboard.push(\n        [{\n            text: \"Менеджмент адмінів 👨‍⚖️\",\n            callback_data: \"adminManagement\"\n        }],\n        [{\n            text: \"↩ Головне меню\",\n            callback_data: \"mainMenu\"            \n        }]);\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2966,7 +2782,7 @@
         "type": "function",
         "z": "68a30d94.469f94",
         "name": "Changing state field to 'occupation'",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"state\": {\"state\": \"occupation\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"state\": {\"state\": \"occupation\"}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2984,7 +2800,7 @@
         "type": "http request",
         "z": "68a30d94.469f94",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -3003,7 +2819,7 @@
         "type": "function",
         "z": "696b129b.360e0c",
         "name": "Changing state filed to 'created'",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"state\": {\"state\": \"created\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"state\": {\"state\": \"created\"}\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3021,7 +2837,7 @@
         "type": "http request",
         "z": "696b129b.360e0c",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -3041,7 +2857,7 @@
         "id": "a5af100c.3c9e6",
         "type": "switch",
         "z": "dbbd86af.74c0d8",
-        "name": "Callback admin query events",
+        "name": "Callback query admin events",
         "property": "message",
         "propertyType": "msg",
         "rules": [
@@ -3072,6 +2888,31 @@
             },
             {
                 "t": "eq",
+                "v": "editInfoMenu",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "unansweredQuestionsMenu",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "unansweredQuestions",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "clearUnansweredQuestionsList",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "syncFAQ",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
                 "v": "distribution",
                 "vt": "str"
             },
@@ -3088,6 +2929,11 @@
             {
                 "t": "eq",
                 "v": "editGroupsForDistribution",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "editAllForDistribution",
                 "vt": "str"
             },
             {
@@ -3114,28 +2960,13 @@
                 "t": "eq",
                 "v": "adminsForDelete",
                 "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "syncFAQ",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "unansweredQuestions",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "clearUnansweredQuestionsList",
-                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 17,
-        "x": 1500,
-        "y": 1440,
+        "outputs": 20,
+        "x": 1460,
+        "y": 1800,
         "wires": [
             [
                 "16626079.4e26d"
@@ -3143,14 +2974,27 @@
             [
                 "441568f.2e4a998"
             ],
-            [
-                "857490ee.89b9d"
-            ],
+            [],
             [
                 "384d9cd0.c20d84"
             ],
             [
                 "88664c92.b9374"
+            ],
+            [
+                "d620ef02.d8b9d"
+            ],
+            [
+                "f0c9f660.bff8d8"
+            ],
+            [
+                "284c3f7b.7c2f8"
+            ],
+            [
+                "f1c3ab8.d32b458"
+            ],
+            [
+                "fd270046.426d4"
             ],
             [
                 "fb5c0751.e781d8"
@@ -3163,6 +3007,9 @@
             ],
             [
                 "b0b82aef.d9adc8"
+            ],
+            [
+                "ba8c27e5.b055f8"
             ],
             [
                 "8ffc49f3.7d4878"
@@ -3178,15 +3025,6 @@
             ],
             [
                 "22333f69.fdca5"
-            ],
-            [
-                "fd270046.426d4"
-            ],
-            [
-                "284c3f7b.7c2f8"
-            ],
-            [
-                "f1c3ab8.d32b458"
             ]
         ]
     },
@@ -3243,7 +3081,7 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Setting up message with admin statistics menu",
-        "func": "msg.payload = {\n    text: \"Виберіть необхідний пункт 📊\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Найбільш поширені питання\",\n                callback_data: \"theMostPopularQuestionsForAdmin\"            \n            }],\n            [{\n                text: \"Питання без відповіді\",\n                callback_data: \"unansweredQuestions\"            \n            }],\n            [{\n                text: \"Очистити список питаннь без відповіді\",\n                callback_data: \"clearUnansweredQuestionsList\"            \n            }],\n            [{\n                text: \"Загальна кількість користувачів\",\n                callback_data: \"totalNumberOfUsers\"            \n            }],\n            [{\n                text: \"Кількість користувачів певної групи\",\n                callback_data: \"groupsMenuNumberOfUsers\"            \n            }],\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Виберіть необхідний пункт 📊\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Найбільш поширені питання 📋\",\n                \"callback_data\": \"theMostPopularQuestions\"            \n            }],\n            [{\n                \"text\": \"Загальна кількість користувачів 🧮\",\n                \"callback_data\": \"totalNumberOfUsers\"            \n            }],\n            [{\n                \"text\": \"Кількість користувачів певної групи 🧮\",\n                \"callback_data\": \"groupsMenuNumberOfUsers\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3276,7 +3114,7 @@
             "fa6195ba.f6b108"
         ],
         "x": 1775,
-        "y": 1400,
+        "y": 1320,
         "wires": []
     },
     {
@@ -3286,7 +3124,7 @@
         "name": "Get total number of users",
         "info": "",
         "x": 1870,
-        "y": 1360,
+        "y": 1280,
         "wires": []
     },
     {
@@ -3299,7 +3137,7 @@
             "1efe31e6.57de7e"
         ],
         "x": 175,
-        "y": 460,
+        "y": 240,
         "wires": [
             [
                 "b21b9fd9.f3f67"
@@ -3313,7 +3151,7 @@
         "name": "Getting total number of users",
         "info": "",
         "x": 280,
-        "y": 420,
+        "y": 200,
         "wires": []
     },
     {
@@ -3321,13 +3159,13 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Getting total number of users",
-        "func": "var group = \"\";\nif (msg.message.split('_')[1]) {\n    group = \"?type_name=\" + msg.message.split('_')[1];\n}\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/statistics\" + group;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/statistics\" + (msg.message.split('_')[1] ? (\"?type_name=\" + msg.message.split('_')[1]) : \"\" );\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 420,
-        "y": 460,
+        "y": 240,
         "wires": [
             [
                 "38d61daa.3cd252"
@@ -3339,13 +3177,13 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Setting up message with total number of users",
-        "func": "msg.payload = {\n    text: \"Загальна кількість користувачів: \" + msg.payload.usersAmount,\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"◀ Назад\",\n                callback_data: \"statistics\"            \n            }],\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Загальна кількість користувачів: \" + msg.payload.usersAmount,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"◀ Назад до меню статистики\",\n                \"callback_data\": \"statistics\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 1120,
-        "y": 460,
+        "y": 240,
         "wires": [
             [
                 "3ef52885.a11438"
@@ -3358,7 +3196,7 @@
         "z": "892838ee.3ab438",
         "name": "",
         "x": 1510,
-        "y": 460,
+        "y": 240,
         "wires": [
             []
         ]
@@ -3377,7 +3215,7 @@
         "proxy": "",
         "authType": "",
         "x": 690,
-        "y": 460,
+        "y": 240,
         "wires": [
             [
                 "84ca21f9.36fa6"
@@ -3392,8 +3230,8 @@
         "links": [
             "fa6195ba.f6b108"
         ],
-        "x": 1795,
-        "y": 2720,
+        "x": 1775,
+        "y": 2820,
         "wires": []
     },
     {
@@ -3402,8 +3240,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Send number of users of a group",
         "info": "",
-        "x": 1910,
-        "y": 2680,
+        "x": 1890,
+        "y": 2780,
         "wires": []
     },
     {
@@ -3423,8 +3261,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1330,
-        "y": 2720,
+        "x": 1310,
+        "y": 2820,
         "wires": [
             [
                 "1efe31e6.57de7e"
@@ -3440,7 +3278,7 @@
             "88664c92.b9374"
         ],
         "x": 175,
-        "y": 600,
+        "y": 380,
         "wires": [
             [
                 "3e97624e.e1943e"
@@ -3454,7 +3292,7 @@
         "name": "Sending menu with groups (number of users)",
         "info": "",
         "x": 330,
-        "y": 560,
+        "y": 340,
         "wires": []
     },
     {
@@ -3462,13 +3300,13 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Setting up message with menu with groups",
-        "func": "msg.payload = {\n    text: \"Виберіть необхідний пункт 📊\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Абітурієнт\",\n                callback_data: \"numberOfUsersOfAGroup_Applicant\"            \n            }, \n            {\n                text: \"Один з батьків\",\n                callback_data: \"numberOfUsersOfAGroup_Parent\"            \n            }],\n            [{\n                text: \"Викладач\",\n                callback_data: \"numberOfUsersOfAGroup_Teacher\"            \n            },\n            {\n                text: \"Студент\",\n                callback_data: \"numberOfUsersOfAGroup_Student\"            \n            }],\n            [{\n                text: \"Інше\",\n                callback_data: \"numberOfUsersOfAGroup_Other\"            \n            }],\n            [{\n                text: \"◀ Назад\",\n                callback_data: \"statistics\"            \n            }],\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Виберіть необхідний пункт 📊\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Абітурієнт\",\n                \"callback_data\": \"numberOfUsersOfAGroup_Applicant\"            \n            }, \n            {\n                \"text\": \"Один з батьків\",\n                \"callback_data\": \"numberOfUsersOfAGroup_Parent\"            \n            }],\n            [{\n                \"text\": \"Викладач\",\n                \"callback_data\": \"numberOfUsersOfAGroup_Teacher\"            \n            },\n            {\n                \"text\": \"Студент\",\n                \"callback_data\": \"numberOfUsersOfAGroup_Student\"            \n            }],\n            [{\n                \"text\": \"Інше\",\n                \"callback_data\": \"numberOfUsersOfAGroup_Other\"            \n            }],\n            [{\n                \"text\": \"◀ Назад\",\n                \"callback_data\": \"statistics\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 470,
-        "y": 600,
+        "y": 380,
         "wires": [
             [
                 "88c9da92.3faac8"
@@ -3481,7 +3319,7 @@
         "z": "892838ee.3ab438",
         "name": "",
         "x": 850,
-        "y": 600,
+        "y": 380,
         "wires": [
             []
         ]
@@ -3495,7 +3333,7 @@
             "e73d99f1.c57c58"
         ],
         "x": 1775,
-        "y": 1480,
+        "y": 1400,
         "wires": []
     },
     {
@@ -3505,7 +3343,7 @@
         "name": "Send menu with groups (number of users)",
         "info": "",
         "x": 1920,
-        "y": 1440,
+        "y": 1360,
         "wires": []
     },
     {
@@ -3531,265 +3369,12 @@
         "wires": []
     },
     {
-        "id": "78e346f1.8e8b28",
-        "type": "function",
-        "z": "892838ee.3ab438",
-        "name": "Setting up next or last question",
-        "func": "msg.payload = {\n    text: (msg.message+1) + \". \" + msg.payload.questions[msg.message].question + \"\\n\\nЗадано: \" + msg.payload.questions[msg.message].stats + \"\\n\\nВідповідь:\\n\" + msg.payload.questions[msg.message].answer,\n    chat_id: msg.chat_id,\n    message_id: msg.message_id,\n    reply_markup: {\n        inline_keyboard: [[]]\n    },\n};\n\nif (msg.message > 0) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"◀ Назад\",\n                callback_data: \"theMostPopularQPaginationForAdmin_\" + (msg.message - 1)\n            });\n}\n\nif (msg.message < 4) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                text: \"Далі ▶\",\n                callback_data: \"theMostPopularQPaginationForAdmin_\" + (msg.message + 1)\n            });\n}\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Назад до меню статистики\",\n        callback_data: \"statistics\"            \n    }])\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        text: \"⏪ Адмін-панель\",\n        callback_data: \"adminMenu\"\n    }]);\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1010,
-        "y": 240,
-        "wires": [
-            [
-                "230ea498.065ddc"
-            ],
-            [
-                "2ef67ced.c751b4"
-            ]
-        ]
-    },
-    {
-        "id": "206e324c.35e26e",
-        "type": "comment",
-        "z": "892838ee.3ab438",
-        "name": "Setting up answer to next or last or first question for admin (pagination)",
-        "info": "",
-        "x": 410,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "2ef67ced.c751b4",
-        "type": "change",
-        "z": "892838ee.3ab438",
-        "name": "Setting up editMessageText url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1350,
-        "y": 360,
-        "wires": [
-            [
-                "134eb23c.9aa8fe"
-            ]
-        ]
-    },
-    {
-        "id": "134eb23c.9aa8fe",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1630,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "4329a74.1062558",
-        "type": "link in",
-        "z": "892838ee.3ab438",
-        "name": "Set answer to question for admin (pagination)",
-        "links": [
-            "857490ee.89b9d",
-            "87c7d03d.ab97b"
-        ],
-        "x": 175,
-        "y": 240,
-        "wires": [
-            [
-                "6ca8bcf8.3c9544"
-            ]
-        ]
-    },
-    {
-        "id": "6ca8bcf8.3c9544",
-        "type": "function",
-        "z": "892838ee.3ab438",
-        "name": "Getting info from questions",
-        "func": "msg.sendAsASimpleMessage = false;\n\nif (msg.message.startsWith(\"theMostPopularQPaginationForAdmin_\")) {\n    msg.message = parseInt(msg.message.split(\"_\")[1]);\n} else {\n    msg.message = 0;\n    \n    msg.sendAsASimpleMessage = true;\n}\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq?questions_amount=5\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 400,
-        "y": 240,
-        "wires": [
-            [
-                "12232cbb.f802d3"
-            ]
-        ]
-    },
-    {
-        "id": "230ea498.065ddc",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "env": [],
-        "x": 1350,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "12232cbb.f802d3",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 670,
-        "y": 240,
-        "wires": [
-            [
-                "78e346f1.8e8b28"
-            ]
-        ]
-    },
-    {
-        "id": "857490ee.89b9d",
-        "type": "link out",
-        "z": "dbbd86af.74c0d8",
-        "name": "Send the most popular questions for admin",
-        "links": [
-            "4329a74.1062558"
-        ],
-        "x": 1775,
-        "y": 1320,
-        "wires": []
-    },
-    {
-        "id": "988b4bfe.7ceae8",
-        "type": "comment",
-        "z": "dbbd86af.74c0d8",
-        "name": "Send the most popular questions for admin",
-        "info": "",
-        "x": 1920,
-        "y": 1280,
-        "wires": []
-    },
-    {
-        "id": "a525eef0.3d2fc",
-        "type": "switch",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set answer to popular question for admin (pagination)",
-        "property": "$split(msg.message, \"_\", 1)",
-        "propertyType": "jsonata",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "theMostPopularQPaginationForAdmin",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1400,
-        "y": 2820,
-        "wires": [
-            [
-                "87c7d03d.ab97b"
-            ]
-        ]
-    },
-    {
-        "id": "87c7d03d.ab97b",
-        "type": "link out",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set answer to popular question(pagination)",
-        "links": [
-            "4329a74.1062558"
-        ],
-        "x": 1795,
-        "y": 2820,
-        "wires": []
-    },
-    {
-        "id": "28ecb014.f4527",
-        "type": "comment",
-        "z": "dbbd86af.74c0d8",
-        "name": "Set answer to popular question(pagination)",
-        "info": "",
-        "x": 1940,
-        "y": 2780,
-        "wires": []
-    },
-    {
-        "id": "84224ec9.c9393",
-        "type": "switch",
-        "z": "741a84b0.eaaafc",
-        "name": "",
-        "property": "msg.payload.user.state.state",
-        "propertyType": "jsonata",
-        "rules": [
-            {
-                "t": "cont",
-                "v": "editingInfo",
-                "vt": "str"
-            },
-            {
-                "t": "cont",
-                "v": "writingTextForDistribution",
-                "vt": "str"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 3,
-        "x": 1150,
-        "y": 280,
-        "wires": [
-            [
-                "537142d8.31be7c"
-            ],
-            [
-                "b736f0dc.7e744"
-            ],
-            [
-                "fd9aa5ae.4abe08"
-            ]
-        ]
-    },
-    {
         "id": "e06e2c86.59eb2",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
         "name": "Start editing info",
         "info": "",
-        "x": 1860,
+        "x": 1840,
         "y": 2880,
         "wires": []
     },
@@ -3810,7 +3395,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1280,
+        "x": 1260,
         "y": 2920,
         "wires": [
             [
@@ -3827,7 +3412,7 @@
             "6eb3f60a.d73ba8",
             "a9fa525e.2b40b"
         ],
-        "x": 1795,
+        "x": 1775,
         "y": 2920,
         "wires": []
     },
@@ -3839,8 +3424,8 @@
         "links": [
             "b634643e.b6e4a8"
         ],
-        "x": 155,
-        "y": 100,
+        "x": 195,
+        "y": 280,
         "wires": [
             [
                 "3b51c244.f6a03e"
@@ -3853,8 +3438,8 @@
         "z": "76bd89c2.eace48",
         "name": "Start editing info",
         "info": "",
-        "x": 220,
-        "y": 60,
+        "x": 260,
+        "y": 240,
         "wires": []
     },
     {
@@ -3862,13 +3447,13 @@
         "type": "function",
         "z": "76bd89c2.eace48",
         "name": "Setting up message to write new text",
-        "func": "msg.payload = {\n    text: \"Вкажіть новий текст для використання 🍓\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Вкажіть новий текст для використання 🍓\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1250,
-        "y": 100,
+        "x": 1290,
+        "y": 280,
         "wires": [
             [
                 "a840a40f.812458"
@@ -3881,33 +3466,11 @@
         "z": "76bd89c2.eace48",
         "name": "",
         "env": [],
-        "x": 1630,
-        "y": 100,
+        "x": 1670,
+        "y": 280,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "537142d8.31be7c",
-        "type": "link out",
-        "z": "741a84b0.eaaafc",
-        "name": "Edit info",
-        "links": [
-            "d609159f.a9e588"
-        ],
-        "x": 1335,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "50e18887.cf9af8",
-        "type": "comment",
-        "z": "741a84b0.eaaafc",
-        "name": "Edit info",
-        "info": "",
-        "x": 1380,
-        "y": 140,
-        "wires": []
     },
     {
         "id": "d609159f.a9e588",
@@ -3918,8 +3481,8 @@
             "537142d8.31be7c",
             "f3b73302.b6bf3"
         ],
-        "x": 155,
-        "y": 240,
+        "x": 195,
+        "y": 420,
         "wires": [
             [
                 "31e9048a.92614c"
@@ -3932,8 +3495,8 @@
         "z": "76bd89c2.eace48",
         "name": "Edit info",
         "info": "",
-        "x": 200,
-        "y": 200,
+        "x": 240,
+        "y": 380,
         "wires": []
     },
     {
@@ -3941,13 +3504,13 @@
         "type": "function",
         "z": "76bd89c2.eace48",
         "name": "Editing info",
-        "func": "msg.method = \"PUT\";\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/settings/change\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"name\": msg.payload.user.state.state.split('_')[1],\n    \"value\": msg.message\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/settings/change\";\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\n    \"name\": msg.user_payload.state.state.split('_')[1],\n    \"value\": msg.message\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 350,
-        "y": 240,
+        "x": 390,
+        "y": 420,
         "wires": [
             [
                 "ca8a8ab0.459f08"
@@ -3959,7 +3522,7 @@
         "type": "http request",
         "z": "76bd89c2.eace48",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -3967,8 +3530,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 590,
-        "y": 240,
+        "x": 630,
+        "y": 420,
         "wires": [
             [
                 "8ef6a097.3e4e9"
@@ -3980,13 +3543,13 @@
         "type": "switch",
         "z": "76bd89c2.eace48",
         "name": "If successful",
-        "property": "payload.status",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
-                "vt": "str"
+                "v": "200",
+                "vt": "num"
             },
             {
                 "t": "else"
@@ -3995,8 +3558,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 870,
-        "y": 240,
+        "x": 910,
+        "y": 420,
         "wires": [
             [
                 "86b37728.c9ce98"
@@ -4011,13 +3574,13 @@
         "type": "function",
         "z": "76bd89c2.eace48",
         "name": "Setting up message about successful editing",
-        "func": "msg.payload = {\n    text: \"Текст успішно змінено\",\n    chat_id: msg.chat_id,\n    reply_markup: {\n        inline_keyboard: [\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"\n            }]\n        ]\n    }\n}\n\nglobal.set((\"admins.\" + msg.chat_id), \"authenticated\");\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Текст успішно змінено\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад до меню редагування інформації\",\n                \"callback_data\": \"editInfoMenu\"\n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"\n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1270,
-        "y": 180,
+        "x": 1310,
+        "y": 360,
         "wires": [
             [
                 "a5df2520.fa5008"
@@ -4030,8 +3593,8 @@
         "z": "76bd89c2.eace48",
         "name": "",
         "env": [],
-        "x": 1630,
-        "y": 180,
+        "x": 1670,
+        "y": 360,
         "wires": [
             []
         ]
@@ -4041,13 +3604,13 @@
         "type": "function",
         "z": "76bd89c2.eace48",
         "name": "Setting up message about failed editing",
-        "func": "msg.payload = {\n    text: \"Сталася помилка\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Сталася помилка\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1260,
-        "y": 300,
+        "x": 1300,
+        "y": 480,
         "wires": [
             [
                 "e6ea5ac9.012de8"
@@ -4060,8 +3623,8 @@
         "z": "76bd89c2.eace48",
         "name": "",
         "env": [],
-        "x": 1630,
-        "y": 300,
+        "x": 1670,
+        "y": 480,
         "wires": [
             []
         ]
@@ -4071,7 +3634,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Setting up state and list with occupations",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload_admin = msg.payload;\n\nif (msg.message == \"distribution\") {\n    msg.payload = {\n        \"state\": {\n            \"state\": \"settingGroupsForDistribution\",\n            \"occupations\": []\n        }\n    };\n} else if (msg.message == \"editGroupsForDistribution\") {\n    \n    msg.addedOccupations = msg.payload.user.state.occupations;\n    \n    msg.payload.user.state.state = \"settingGroupsForDistribution\";\n    msg.payload = {\"state\": msg.payload.user.state};\n}else {\n    msg.addedOccupations = msg.payload.user.state.occupations;\n    \n    occupation = msg.message.split('_')[1];\n    \n    if (msg.addedOccupations.includes(occupation)) msg.addedOccupations.splice(msg.addedOccupations.indexOf(occupation), (msg.addedOccupations.indexOf(occupation)+1));\n    else msg.addedOccupations.push(occupation);\n    \n    msg.payload.user.state.occupations = msg.addedOccupations;\n    msg.payload = {\"state\": msg.payload.user.state};\n}\n\nreturn msg;\n\n\n\n\n\n",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\n\n\n\nif (msg.message == \"distribution\") {\n    \n    msg.payload.state.state = \"settingGroupsForDistribution\";\n    msg.payload.state.occupations = [];\n    \n} else if (msg.message == \"editAllForDistribution\") {\n    \n    msg.addedOccupations = msg.user_payload.state.occupations;\n    \n    msg.payload.state.state = \"settingGroupsForDistribution\";\n    delete msg.payload.state.message;\n    \n} else if (msg.message == \"editGroupsForDistribution\") {\n    \n    msg.addedOccupations = msg.user_payload.state.occupations;\n    \n    msg.payload.state.state = \"settingGroupsForDistribution\";\n    \n}else {\n    \n    msg.addedOccupations = msg.user_payload.state.occupations;\n    \n    occupation = msg.message.split('_')[1];\n    \n    //removes choosed occupation if exists in array\n    if (msg.addedOccupations.includes(occupation)) msg.addedOccupations.splice(msg.addedOccupations.indexOf(occupation), (msg.addedOccupations.indexOf(occupation)+1));\n    else msg.addedOccupations.push(occupation);\n    \n    msg.payload.state.occupations = msg.addedOccupations;\n    \n}\n\n\n\nreturn msg;\n\n\n\n\n\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4092,7 +3655,8 @@
         "links": [
             "fb5c0751.e781d8",
             "9b2645fd.c8ba98",
-            "b0b82aef.d9adc8"
+            "b0b82aef.d9adc8",
+            "ba8c27e5.b055f8"
         ],
         "x": 315,
         "y": 180,
@@ -4133,7 +3697,7 @@
             "a8f532b7.9551d"
         ],
         "x": 1775,
-        "y": 1580,
+        "y": 1940,
         "wires": []
     },
     {
@@ -4143,7 +3707,7 @@
         "name": "Send list of groups for distribution",
         "info": "",
         "x": 1890,
-        "y": 1540,
+        "y": 1900,
         "wires": []
     },
     {
@@ -4163,7 +3727,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1310,
+        "x": 1290,
         "y": 3020,
         "wires": [
             [
@@ -4179,7 +3743,7 @@
         "links": [
             "a8f532b7.9551d"
         ],
-        "x": 1795,
+        "x": 1775,
         "y": 3020,
         "wires": []
     },
@@ -4189,7 +3753,7 @@
         "z": "dbbd86af.74c0d8",
         "name": "Add group for distribution",
         "info": "",
-        "x": 1890,
+        "x": 1870,
         "y": 2980,
         "wires": []
     },
@@ -4275,7 +3839,7 @@
             "fe06c939.f5a5f8"
         ],
         "x": 1775,
-        "y": 1660,
+        "y": 2020,
         "wires": []
     },
     {
@@ -4285,7 +3849,7 @@
         "name": "Send message to write text for distribution",
         "info": "",
         "x": 1920,
-        "y": 1620,
+        "y": 1980,
         "wires": []
     },
     {
@@ -4293,7 +3857,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Setting up message to write text for distribution",
-        "func": "msg.payload = {\n    text: \"Введіть необхідний для розсилки текст\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Введіть необхідний для розсилки текст\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4317,29 +3881,6 @@
         "wires": [
             []
         ]
-    },
-    {
-        "id": "b736f0dc.7e744",
-        "type": "link out",
-        "z": "741a84b0.eaaafc",
-        "name": "Send message with confirming spreading button",
-        "links": [
-            "db5111a4.bf331",
-            "f7fe263.2dba3d8"
-        ],
-        "x": 1335,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "5a3b0e57.a76a5",
-        "type": "comment",
-        "z": "741a84b0.eaaafc",
-        "name": "Send message with confirming spreading button",
-        "info": "",
-        "x": 1500,
-        "y": 240,
-        "wires": []
     },
     {
         "id": "db5111a4.bf331",
@@ -4386,7 +3927,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Setting up message with confirming spreading button",
-        "func": "msg.payload = {\n    text: \"Категорія користувачів: \" + (msg.payload_admin.user.state.occupations.join(', ')) + \"\\nПовідомлення:\\n \" + msg.payload_admin.user.state.message + \"\\n Надіслати повідомлення обраним користувачам?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Ні, повернутись до редагування\",\n                callback_data: \"sendMessageEditingDistribution\"            \n            }], \n            [{\n                text: \"Так, продовжити\",\n                callback_data: \"completeDistribution\"          \n            }],\n            [{\n                text: \"Повністю скасувати розсилку\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Категорія користувачів: \" + (msg.user_payload.state.occupations.join(', '))\n    + \"\\nПовідомлення:\\n \" + msg.user_payload.state.message + \"\\n Надіслати повідомлення обраним користувачам?\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Ні, повернутись до редагування\",\n                \"callback_data\": \"sendMessageEditingDistribution\"            \n            }], \n            [{\n                \"text\": \"Так, продовжити\",\n                \"callback_data\": \"completeDistribution\"          \n            }],\n            [{\n                \"text\": \"Повністю скасувати розсилку\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4408,7 +3949,7 @@
             "8182241d.800bf8"
         ],
         "x": 1775,
-        "y": 1740,
+        "y": 2100,
         "wires": []
     },
     {
@@ -4418,7 +3959,7 @@
         "name": "Send message with buttons for editing distribution",
         "info": "",
         "x": 1940,
-        "y": 1700,
+        "y": 2060,
         "wires": []
     },
     {
@@ -4452,7 +3993,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Setting up message with buttons for editing distribution",
-        "func": "msg.payload = {\n    text: \"Що необхідно відредагувати?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Категорію користувачів\",\n                callback_data: \"editGroupsForDistribution\"            \n            }, \n            {\n                text: \"Текст повідомлення\",\n                callback_data: \"writeMessageForDistribution\"            \n            }],\n            [{\n                text: \"І те і інше\",\n                callback_data: \"distribution\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Що необхідно відредагувати?\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Категорії користувачів\",\n                \"callback_data\": \"editGroupsForDistribution\"            \n            }, \n            {\n                \"text\": \"Текст повідомлення\",\n                \"callback_data\": \"writeMessageForDistribution\"            \n            }],\n            [{\n                \"text\": \"І те і інше\",\n                \"callback_data\": \"editAllForDistribution\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4489,8 +4030,7 @@
         "y": 920,
         "wires": [
             [
-                "d01bf2b1.154b",
-                "7595aabc.c1d6b4"
+                "d01bf2b1.154b"
             ]
         ]
     },
@@ -4509,7 +4049,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Getting users",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?type_name=\" + (msg.payload.user.state.occupations.join('&type_name='));\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload_admin = msg.payload;\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?type_name=\" + (msg.user_payload.state.occupations.join('&type_name='));\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4548,7 +4088,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Completing distibution",
-        "func": "var apiResponse = msg.payload.users;\n\nmsg.payload = {\n    text: msg.payload_admin.user.state.message,\n}\n\nfor (var i = 0; i < apiResponse.length; i++) {\n    msg.payload.chat_id = apiResponse[i].id;\n        \n    node.send(msg);\n}\n\nmsg.payload = {\n    text: \"Назад в головне меню\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "var apiResponse = msg.payload.users;\n\n\n//distribution message\nmsg.payload = {\n    \"text\": msg.user_payload.state.message,\n}\n\n\n//sending distribution message for selected groups of users\nfor (var i = 0; i < apiResponse.length; i++) {\n    msg.payload.chat_id = apiResponse[i].id;\n        \n    node.send(msg);\n}\n\n\n//message about successful distribution(for admin)\nmsg.payload = {\n    \"text\": \"Назад в головне меню\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4576,41 +4116,17 @@
         ]
     },
     {
-        "id": "e26ac470.e2c558",
-        "type": "comment",
-        "z": "741a84b0.eaaafc",
-        "name": "Other user messages",
-        "info": "",
-        "x": 1420,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "fd9aa5ae.4abe08",
-        "type": "link out",
-        "z": "741a84b0.eaaafc",
-        "name": "Process message",
-        "links": [
-            "5581481b.706b38",
-            "3be0d365.f203bc",
-            "c69d98c5.c5cda8"
-        ],
-        "x": 1335,
-        "y": 380,
-        "wires": []
-    },
-    {
         "id": "2c29d5cc.f3f26a",
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Add unanswered question",
-        "func": "msg.method = \"POST\";\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"question\": msg.message\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions\";\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\n    \"question\": msg.message\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 4130,
-        "y": 780,
+        "x": 4430,
+        "y": 520,
         "wires": [
             [
                 "6759fe90.40e07"
@@ -4622,7 +4138,7 @@
         "type": "http request",
         "z": "cbf72f33.63dd6",
         "name": "",
-        "method": "use",
+        "method": "POST",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -4630,12 +4146,10 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 4430,
-        "y": 780,
+        "x": 4730,
+        "y": 520,
         "wires": [
-            [
-                "26bece42.b72052"
-            ]
+            []
         ]
     },
     {
@@ -4643,7 +4157,7 @@
         "type": "function",
         "z": "14785f2b.3d2341",
         "name": "If admin",
-        "func": "if (msg.payload.user && msg.payload.user.role_name.includes(\"admin\")) {\n    return [null, msg];\n}\n\nreturn [msg, null];",
+        "func": "if (msg.statusCode == 200 && msg.user_payload.role_name.includes(\"admin\")) {\n    return [null, msg];\n}\n\nreturn [msg, null];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -4664,34 +4178,17 @@
         ]
     },
     {
-        "id": "d9be97f3.f863e8",
-        "type": "debug",
-        "z": "96f6108e.64a37",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2020,
-        "y": 240,
-        "wires": []
-    },
-    {
         "id": "3b51c244.f6a03e",
         "type": "function",
         "z": "76bd89c2.eace48",
         "name": "Set status 'editing info'",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"state\": {\"state\": (\"editingInfo_\" + msg.message.split('_')[1])}\n}\n\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.state = \"editingInfo_\" + msg.message.split('_')[1];\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 380,
-        "y": 100,
+        "x": 420,
+        "y": 280,
         "wires": [
             [
                 "cf7f49d8.775858"
@@ -4711,8 +4208,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 650,
-        "y": 100,
+        "x": 690,
+        "y": 280,
         "wires": [
             [
                 "31999288.76a66e"
@@ -4724,85 +4221,23 @@
         "type": "switch",
         "z": "76bd89c2.eace48",
         "name": "If success",
-        "property": "payload.status",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
-                "vt": "str"
+                "v": "200",
+                "vt": "num"
             }
         ],
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 880,
-        "y": 100,
+        "x": 920,
+        "y": 280,
         "wires": [
             [
                 "52968a19.95efe4"
-            ]
-        ]
-    },
-    {
-        "id": "5301e7c4.494898",
-        "type": "function",
-        "z": "741a84b0.eaaafc",
-        "name": "Get all admins",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 400,
-        "y": 280,
-        "wires": [
-            [
-                "9d29bcc1.3d405"
-            ]
-        ]
-    },
-    {
-        "id": "9d29bcc1.3d405",
-        "type": "http request",
-        "z": "741a84b0.eaaafc",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 630,
-        "y": 280,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f444d784.4b3ec8",
-        "type": "switch",
-        "z": "741a84b0.eaaafc",
-        "name": "If success",
-        "property": "payload.status",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "success",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 910,
-        "y": 280,
-        "wires": [
-            [
-                "84224ec9.c9393"
             ]
         ]
     },
@@ -4813,7 +4248,7 @@
         "name": "Edit info",
         "info": "",
         "x": 1780,
-        "y": 920,
+        "y": 700,
         "wires": []
     },
     {
@@ -4825,7 +4260,7 @@
             "d609159f.a9e588"
         ],
         "x": 1735,
-        "y": 960,
+        "y": 740,
         "wires": []
     },
     {
@@ -4833,7 +4268,7 @@
         "type": "http request",
         "z": "59350fd8.5c52c",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -4854,13 +4289,13 @@
         "type": "switch",
         "z": "59350fd8.5c52c",
         "name": "If success",
-        "property": "payload.status",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
-                "vt": "str"
+                "v": "200",
+                "vt": "num"
             }
         ],
         "checkall": "true",
@@ -4879,7 +4314,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Setting up message with list of groups for distribution",
-        "func": "var occupations = {\"Applicant\" : '', \"Parent\": '', \"Teacher\": '', \"Student\": '', \"Other\": ''};\n\nif (msg.message != \"distribution\") {\n    for (const [key, value] of Object.entries(occupations)) {\n       if (msg.addedOccupations.includes(key)) occupations[key] = \"✅\";\n    }\n}\n\nmsg.payload = {\n    text: \"Виберіть категорію користувачів 🙂\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: occupations[\"Applicant\"] + \"Абітурієнти\",\n                callback_data: \"addForDistribution_Applicant\"            \n            }, \n            {\n                text: occupations[\"Parent\"] + \"Батьки\",\n                callback_data: \"addForDistribution_Parent\"            \n            }],\n            [{\n                text: occupations[\"Teacher\"] + \"Викладачі\",\n                callback_data: \"addForDistribution_Teacher\"            \n            },\n            {\n                text: occupations[\"Student\"] + \"Студенти\",\n                callback_data: \"addForDistribution_Student\"            \n            }],\n            [{\n                text: occupations[\"Other\"] + \"Інше\",\n                callback_data: \"addForDistribution_Other\"            \n            }],\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nif (msg.message != \"distribution\")  {\n    msg.payload.message_id = msg.message_id;\n    \n    if (Object.values(occupations).includes(\"✅\")) {\n        msg.payload.reply_markup.inline_keyboard.pop();\n        \n        msg.payload.reply_markup.inline_keyboard.push(\n            [{\n                text: \"Продовжити\",\n                callback_data: (msg.payload_admin.user.state.message ? \"goToCompleteDistributionMessage\" : \"writeMessageForDistribution\")        \n            }],\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]);\n    }\n    \n    return [null, msg];\n}\n\nreturn [msg, null];",
+        "func": "var occupations = {\"Applicant\" : '', \"Parent\": '', \"Teacher\": '', \"Student\": '', \"Other\": ''};\n\n\n//marking choosed occupations\nif (msg.message != \"distribution\") {\n    for (const [key, value] of Object.entries(occupations)) {\n       if (msg.addedOccupations.includes(key)) occupations[key] = \"✅\";\n    }\n}\n\n\n\nmsg.payload = {\n    \"text\": \"Виберіть категорію користувачів 🙂\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": occupations[\"Applicant\"] + \"Абітурієнти\",\n                \"callback_data\": \"addForDistribution_Applicant\"            \n            }, \n            {\n                \"text\": occupations[\"Parent\"] + \"Батьки\",\n                \"callback_data\": \"addForDistribution_Parent\"            \n            }],\n            [{\n                \"text\": occupations[\"Teacher\"] + \"Викладачі\",\n                \"callback_data\": \"addForDistribution_Teacher\"            \n            },\n            {\n                \"text\": occupations[\"Student\"] + \"Студенти\",\n                \"callback_data\": \"addForDistribution_Student\"            \n            }],\n            [{\n                \"text\": occupations[\"Other\"] + \"Інше\",\n                \"callback_data\": \"addForDistribution_Other\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n//adds 'continue' button if there are any choosed occupations\nif (msg.message != \"distribution\")  {\n    msg.payload.message_id = msg.message_id;\n    \n    if (Object.values(occupations).includes(\"✅\")) {\n        msg.payload.reply_markup.inline_keyboard.pop();\n        \n        msg.payload.reply_markup.inline_keyboard.push(\n            [{\n                \"text\": \"Продовжити\",\n                \"callback_data\": ((msg.user_payload.state.message) ? \"goToCompleteDistributionMessage\" : \"writeMessageForDistribution\")        \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]);\n    }\n    \n    return [null, msg];\n}\n\n\n\nreturn [msg, null];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -4892,73 +4327,6 @@
             ],
             [
                 "76441be9.c976f4"
-            ]
-        ]
-    },
-    {
-        "id": "70a4f6b8.84e278",
-        "type": "http request",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 1010,
-        "y": 1480,
-        "wires": [
-            [
-                "708284e0.3b6a4c"
-            ]
-        ]
-    },
-    {
-        "id": "91ffc7e7.5a6d18",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Getting user row",
-        "func": "msg.payload_from_hook = msg.payload;\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 860,
-        "y": 1520,
-        "wires": [
-            [
-                "70a4f6b8.84e278"
-            ]
-        ]
-    },
-    {
-        "id": "708284e0.3b6a4c",
-        "type": "switch",
-        "z": "dbbd86af.74c0d8",
-        "name": "Is success",
-        "property": "payload.status",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "success",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1050,
-        "y": 1580,
-        "wires": [
-            [
-                "689e4325.47104c",
-                "59c1267b.ca3c98",
-                "d4173cf4.07cab",
-                "db142eec.63a9b"
             ]
         ]
     },
@@ -4982,13 +4350,12 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1000,
+        "x": 840,
         "y": 2160,
         "wires": [
             [
                 "a5af100c.3c9e6",
                 "4acba4db.21b67c",
-                "a525eef0.3d2fc",
                 "63b0881b.a8f938",
                 "1ec0b11f.98ad7f",
                 "77999755.4ff548",
@@ -5007,46 +4374,7 @@
         "y": 760,
         "wires": [
             [
-                "91ffc7e7.5a6d18"
-            ]
-        ]
-    },
-    {
-        "id": "59cac999.01c698",
-        "type": "http request",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "method": "GET",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 1130,
-        "y": 3280,
-        "wires": [
-            [
-                "7af57ab2.f52244"
-            ]
-        ]
-    },
-    {
-        "id": "43383010.7a91f",
-        "type": "function",
-        "z": "dbbd86af.74c0d8",
-        "name": "Getting user row",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 920,
-        "y": 3280,
-        "wires": [
-            [
-                "59cac999.01c698"
+                "9cf5e768.5f55e8"
             ]
         ]
     },
@@ -5055,7 +4383,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Set status 'writingTextForDistribution'",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload.user.state.state = \"writingTextForDistribution\";\nmsg.payload = {\"state\": msg.payload.user.state};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.state = \"writingTextForDistribution\";\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5094,13 +4422,13 @@
         "type": "switch",
         "z": "59350fd8.5c52c",
         "name": "If success",
-        "property": "payload.status",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
-                "vt": "str"
+                "v": "200",
+                "vt": "num"
             }
         ],
         "checkall": "true",
@@ -5124,7 +4452,7 @@
             "f7fe263.2dba3d8"
         ],
         "x": 1735,
-        "y": 1080,
+        "y": 840,
         "wires": []
     },
     {
@@ -5134,20 +4462,20 @@
         "name": "Send message with confirming spreading button",
         "info": "",
         "x": 1900,
-        "y": 1040,
+        "y": 800,
         "wires": []
     },
     {
         "id": "57e48ccd.cf1694",
         "type": "function",
         "z": "59350fd8.5c52c",
-        "name": "Set status 'writingTextForDistribution'",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\nmsg.payload = {\n    \"state\": {\"state\": \"registered\"}\n}\n\n\nreturn msg;",
+        "name": "Set status 'registered'",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\n    \"state\": {\n        \"state\": \"registered\",\n        \"df_contexts\": (msg.user_payload.state.df_contexts ? msg.user_payload.state.df_contexts : [])   \n    }\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1910,
+        "x": 1860,
         "y": 920,
         "wires": [
             [
@@ -5168,7 +4496,7 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 2250,
+        "x": 2190,
         "y": 920,
         "wires": [
             []
@@ -5179,7 +4507,7 @@
         "type": "function",
         "z": "74e0bd75.30b964",
         "name": "Changing state filed to 'registered''",
-        "func": "msg.method = \"PUT\"\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload_admin = msg.payload;\n\nmsg.payload = {\n    \"state\": {\"state\": \"registered\"}\n}\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders\n\nmsg.payload = {\n    \"state\": {\n        \"state\": \"registered\",\n        \"df_contexts\": msg.user_payload.state.df_contexts ? msg.user_payload.state.df_contexts : []\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5197,7 +4525,7 @@
         "type": "http request",
         "z": "74e0bd75.30b964",
         "name": "",
-        "method": "use",
+        "method": "PUT",
         "ret": "obj",
         "paytoqs": "ignore",
         "url": "",
@@ -5205,7 +4533,7 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 750,
+        "x": 770,
         "y": 180,
         "wires": [
             [
@@ -5220,7 +4548,7 @@
         "name": "Send message with confirming spreading button",
         "info": "",
         "x": 1940,
-        "y": 1860,
+        "y": 2300,
         "wires": []
     },
     {
@@ -5233,7 +4561,7 @@
             "f7fe263.2dba3d8"
         ],
         "x": 1775,
-        "y": 1900,
+        "y": 2340,
         "wires": []
     },
     {
@@ -5262,7 +4590,7 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Set status 'writingTextForDistribution'",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload_admin = msg.payload;\n\nif (!msg.payload.user.state.message) msg.payload.user.state.message = msg.message;\nmsg.payload = {\"state\": msg.payload.user.state};\n    \nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.user_payload.state.message = msg.message;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5284,7 +4612,7 @@
             "b0d5bd6c.c553d"
         ],
         "x": 1775,
-        "y": 1980,
+        "y": 2420,
         "wires": []
     },
     {
@@ -5294,7 +4622,7 @@
         "name": "Complete distribution",
         "info": "",
         "x": 1860,
-        "y": 1940,
+        "y": 2380,
         "wires": []
     },
     {
@@ -5304,7 +4632,7 @@
         "name": "Send list of groups for distribution to edit selected groups",
         "info": "",
         "x": 1970,
-        "y": 1780,
+        "y": 2140,
         "wires": []
     },
     {
@@ -5316,7 +4644,7 @@
             "a8f532b7.9551d"
         ],
         "x": 1775,
-        "y": 1820,
+        "y": 2180,
         "wires": []
     },
     {
@@ -5354,7 +4682,7 @@
             "369d16a4.59851a"
         ],
         "x": 1775,
-        "y": 2060,
+        "y": 2520,
         "wires": []
     },
     {
@@ -5364,7 +4692,7 @@
         "name": "Send message with action buttons for editing admin list",
         "info": "",
         "x": 1960,
-        "y": 2020,
+        "y": 2480,
         "wires": []
     },
     {
@@ -5372,7 +4700,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message with action buttons for editing admins list",
-        "func": "msg.payload = {\n    text: \"Що необхідно відредагувати?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Додати адміна\",\n                callback_data: \"addAdmin\"            \n            }, \n            {\n                text: \"Видалити адміна\",\n                callback_data: \"adminsForDelete\"            \n            }],\n            [{\n                text: \"◀ Назад\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Що необхідно зробити?\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"➕ Додати адміна\",\n                \"callback_data\": \"addAdmin\"            \n            }, \n            {\n                \"text\": \"➖ Видалити адміна\",\n                \"callback_data\": \"adminsForDelete\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5428,7 +4756,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message to write username of new admin",
-        "func": "msg.payload = {\n    text: \"Вкажіть username\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Вкажіть username\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5458,7 +4786,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Set status 'adding admin'",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = {\"state\": {\"state\": \"addingAdmin\"}};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.state = \"addingAdmin\";\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5501,7 +4829,7 @@
             "1837dccf.aa6913"
         ],
         "x": 1775,
-        "y": 2140,
+        "y": 2600,
         "wires": []
     },
     {
@@ -5511,7 +4839,7 @@
         "name": "Send message to write useraname of new admin",
         "info": "",
         "x": 1940,
-        "y": 2100,
+        "y": 2560,
         "wires": []
     },
     {
@@ -5545,7 +4873,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message that new admin successfully added",
-        "func": "msg.payload = {\n    text: \"✅ Адмін успішно доданий\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"✅ Адмін успішно доданий\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"◀ Назад до меню редагування списку адмінів\",\n                \"callback_data\": \"adminManagement\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5575,7 +4903,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Set status 'registered'",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = {\"state\": {\"state\": \"registered\"}};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.state = \"registered\";\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5635,7 +4963,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Adding new admin",
-        "func": "if (msg.message.startsWith(\"@\")) msg.message = msg.message.slice(1);\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/admins/add/?username=\" + msg.message;\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "func": "if (msg.message.startsWith(\"@\")) msg.message = msg.message.slice(1);\n\n\n\nmsg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/admins/add/?username=\" + msg.message;\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5682,7 +5010,7 @@
             "fdc2130b.e08af"
         ],
         "x": 1735,
-        "y": 1180,
+        "y": 960,
         "wires": []
     },
     {
@@ -5692,7 +5020,7 @@
         "name": "Add new admin",
         "info": "",
         "x": 1800,
-        "y": 1140,
+        "y": 920,
         "wires": []
     },
     {
@@ -5701,7 +5029,6 @@
         "z": "14785f2b.3d2341",
         "name": "Is registration completed",
         "links": [
-            "6ff45d49.c66084",
             "4d1e8f79.27d3c"
         ],
         "x": 715,
@@ -5716,23 +5043,6 @@
         "info": "",
         "x": 880,
         "y": 180,
-        "wires": []
-    },
-    {
-        "id": "173d0a39.c80376",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3180,
-        "y": 920,
         "wires": []
     },
     {
@@ -5767,7 +5077,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message with admins for delete",
-        "func": "var admins = msg.payload.users;\n\nmsg.payload = {\n    text: \"Виебріть необхідного адміна\",\n    reply_markup: {\n        inline_keyboard: []\n    },\n    chat_id: msg.chat_id\n}\n\nadmins.forEach((value) => {\n   msg.payload.reply_markup.inline_keyboard.push([{text: (value.username ? value.username : \" \"), callback_data: (\"deleteAdminPrompt_\" + value.id)}]);\n});\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n                text: \"◀ Назад\",\n                callback_data: \"adminMenu\"            \n            }]);\n\nreturn msg;",
+        "func": "var admins = msg.payload.users;\n\n\n\nmsg.payload = {\n    \"text\": \"Виберіть необхідного адміна\",\n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n//creating list of admins\nadmins.forEach((value) => {\n    if (value.username) {\n        msg.payload.reply_markup.inline_keyboard.push([{\"text\": value.username, \"callback_data\": (\"deleteAdminPrompt_\" + value.id)}]);\n    }\n});\n\n\n//if there aren't any admins\nif (!msg.payload.reply_markup.inline_keyboard.length) {\n    msg.payload.text = \"Поки що немає адмінів\";\n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]);\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5801,7 +5111,7 @@
             "e8450ef9.72f97"
         ],
         "x": 1775,
-        "y": 2220,
+        "y": 2680,
         "wires": []
     },
     {
@@ -5811,7 +5121,7 @@
         "name": "Send message with admins for delete",
         "info": "",
         "x": 1910,
-        "y": 2180,
+        "y": 2640,
         "wires": []
     },
     {
@@ -5831,8 +5141,7 @@
         "y": 520,
         "wires": [
             [
-                "12934ff0.323c",
-                "16a2a1ef.06636e"
+                "12934ff0.323c"
             ]
         ]
     },
@@ -5841,7 +5150,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Get admins list",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/admins/list\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/admins/list\";\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5859,23 +5168,31 @@
         "type": "switch",
         "z": "4000ac09.8509f4",
         "name": "If success",
-        "property": "payload.status",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
-                "vt": "str"
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "500",
+                "vt": "num"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
-        "x": 780,
-        "y": 480,
+        "outputs": 2,
+        "x": 800,
+        "y": 520,
         "wires": [
             [
                 "450073bc.f7e6fc"
+            ],
+            [
+                "a8548bd1.669278"
             ]
         ]
     },
@@ -5884,7 +5201,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message that there aren't any admins",
-        "func": "msg.payload = {\n    text: \"Адмінів немає\",\n    reply_markup: {\n        inline_keyboard: [[{\n                text: \"◀ Назад\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Адмінів немає\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"◀ Назад до меню редагування списку адмінів\",\n                \"callback_data\": \"adminsForDelete\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5898,31 +5215,6 @@
         ]
     },
     {
-        "id": "16a2a1ef.06636e",
-        "type": "switch",
-        "z": "4000ac09.8509f4",
-        "name": "If there aren't any admins",
-        "property": "payload.message",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "Admin users not found",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 830,
-        "y": 540,
-        "wires": [
-            [
-                "a8548bd1.669278"
-            ]
-        ]
-    },
-    {
         "id": "59c43f49.d05c1",
         "type": "link out",
         "z": "14785f2b.3d2341",
@@ -5930,7 +5222,7 @@
         "links": [
             "174b2f09.720ee1"
         ],
-        "x": 735,
+        "x": 715,
         "y": 400,
         "wires": []
     },
@@ -5940,7 +5232,7 @@
         "z": "14785f2b.3d2341",
         "name": "Send admin menu",
         "info": "",
-        "x": 810,
+        "x": 790,
         "y": 360,
         "wires": []
     },
@@ -5961,8 +5253,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1300,
-        "y": 3140,
+        "x": 1280,
+        "y": 3120,
         "wires": [
             [
                 "bcc40914.8260d8"
@@ -5977,8 +5269,8 @@
         "links": [
             "6e64f2dd.67beec"
         ],
-        "x": 1795,
-        "y": 3140,
+        "x": 1775,
+        "y": 3120,
         "wires": []
     },
     {
@@ -5987,8 +5279,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Send delete admin prompt",
         "info": "",
-        "x": 1890,
-        "y": 3100,
+        "x": 1870,
+        "y": 3080,
         "wires": []
     },
     {
@@ -6022,7 +5314,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message with delete admin prompt",
-        "func": "msg.payload = {\n    text: \"Ви точно бажаєте видалити цього адміна?\",\n    reply_markup: {\n        inline_keyboard: [[\n            {\n                text: \"Так\",\n                callback_data: (\"deleteAdmin_\" + msg.message.split('_')[1])            \n            }, \n            {\n                text: \"Ні\",\n                callback_data: \"adminsForDelete\"            \n            }],\n            [{\n                text: \"◀ Назад\",\n                callback_data: \"adminsForDelete\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Ви точно бажаєте видалити цього адміна?\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Так\",\n                \"callback_data\": (\"deleteAdmin_\" + msg.message.split('_')[1])            \n            }, \n            {\n                \"text\": \"Ні\",\n                \"callback_data\": \"adminsForDelete\"            \n            }],\n            [{\n                \"text\": \"◀ Назад до списку адмінів\",\n                \"callback_data\": \"adminsForDelete\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6099,7 +5391,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Deleting admin",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/admins/delete/?id=\" + msg.message.split('_')[1];\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/admins/delete/?id=\" + msg.message.split('_')[1];\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6129,8 +5421,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 1300,
-        "y": 3220,
+        "x": 1280,
+        "y": 3200,
         "wires": [
             [
                 "e3d5dff2.1410b"
@@ -6145,8 +5437,8 @@
         "links": [
             "896bfa0a.e7c978"
         ],
-        "x": 1795,
-        "y": 3220,
+        "x": 1775,
+        "y": 3200,
         "wires": []
     },
     {
@@ -6155,8 +5447,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Delete admin",
         "info": "",
-        "x": 1850,
-        "y": 3180,
+        "x": 1830,
+        "y": 3160,
         "wires": []
     },
     {
@@ -6186,13 +5478,13 @@
         "type": "switch",
         "z": "4000ac09.8509f4",
         "name": "If success",
-        "property": "payload.status",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
-                "vt": "str"
+                "v": "200",
+                "vt": "num"
             }
         ],
         "checkall": "true",
@@ -6211,7 +5503,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message that admin successfully deleted",
-        "func": "msg.payload = {\n    text: \"✅ Адмін усмішно видалений\",\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"✅ Адмін усмішно видалений\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6242,143 +5534,23 @@
         "id": "fd270046.426d4",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Sync FAQ",
+        "name": "Sync Questions",
         "links": [
-            "11f5f0e8.a0633f"
+            "9d53dc37.4fb94"
         ],
         "x": 1775,
-        "y": 2300,
+        "y": 1840,
         "wires": []
     },
     {
         "id": "4eddfce1.d18244",
         "type": "comment",
         "z": "dbbd86af.74c0d8",
-        "name": "Sync FAQ",
+        "name": "Sync Questions",
         "info": "",
-        "x": 1820,
-        "y": 2260,
+        "x": 1840,
+        "y": 1800,
         "wires": []
-    },
-    {
-        "id": "11f5f0e8.a0633f",
-        "type": "link in",
-        "z": "54742aae.b4a584",
-        "name": "Sync FAQ",
-        "links": [
-            "fd270046.426d4"
-        ],
-        "x": 195,
-        "y": 100,
-        "wires": [
-            [
-                "b403e5b1.e05d88"
-            ]
-        ]
-    },
-    {
-        "id": "f8b385bd.855528",
-        "type": "comment",
-        "z": "54742aae.b4a584",
-        "name": "Sync FAQ",
-        "info": "",
-        "x": 240,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "a02a40a6.3900a",
-        "type": "http request",
-        "z": "54742aae.b4a584",
-        "name": "",
-        "method": "PUT",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 690,
-        "y": 100,
-        "wires": [
-            [
-                "f3559e3b.d4589"
-            ]
-        ]
-    },
-    {
-        "id": "b403e5b1.e05d88",
-        "type": "function",
-        "z": "54742aae.b4a584",
-        "name": "Sync FAQ",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq/sync\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 400,
-        "y": 100,
-        "wires": [
-            [
-                "a02a40a6.3900a"
-            ]
-        ]
-    },
-    {
-        "id": "7ecadfba.e0e1a",
-        "type": "function",
-        "z": "54742aae.b4a584",
-        "name": "Setting up message successfully sync faq",
-        "func": "msg.payload = {\n    text: \"✅ Список питань успішно оновлено\",\n    reply_markup: {\n        inline_keyboard: [\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1340,
-        "y": 100,
-        "wires": [
-            [
-                "985de521.e20488"
-            ]
-        ]
-    },
-    {
-        "id": "985de521.e20488",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "54742aae.b4a584",
-        "name": "",
-        "env": [],
-        "x": 1750,
-        "y": 100,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "f3559e3b.d4589",
-        "type": "switch",
-        "z": "54742aae.b4a584",
-        "name": "If success",
-        "property": "payload.status",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "success",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 960,
-        "y": 100,
-        "wires": [
-            [
-                "7ecadfba.e0e1a"
-            ]
-        ]
     },
     {
         "id": "284c3f7b.7c2f8",
@@ -6387,10 +5559,11 @@
         "name": "Send message with unanswered questions",
         "links": [
             "f30d3b8.a8367c8",
-            "e09b46a.0ff56b8"
+            "e09b46a.0ff56b8",
+            "66760fd2.1e293"
         ],
         "x": 1775,
-        "y": 2380,
+        "y": 1680,
         "wires": []
     },
     {
@@ -6400,345 +5573,7 @@
         "name": "Send message with unanswered questions",
         "info": "",
         "x": 1920,
-        "y": 2340,
-        "wires": []
-    },
-    {
-        "id": "3927be27.c53412",
-        "type": "link in",
-        "z": "892838ee.3ab438",
-        "name": "Clear unanswered questions list",
-        "links": [
-            "f1c3ab8.d32b458"
-        ],
-        "x": 175,
-        "y": 940,
-        "wires": [
-            [
-                "5eb95d6d.8e2a24"
-            ]
-        ]
-    },
-    {
-        "id": "3eceae62.962792",
-        "type": "comment",
-        "z": "892838ee.3ab438",
-        "name": "Clearing unanswered questions list",
-        "info": "",
-        "x": 300,
-        "y": 900,
-        "wires": []
-    },
-    {
-        "id": "d934bfbd.e2234",
-        "type": "function",
-        "z": "892838ee.3ab438",
-        "name": "Setting up message with menu with groups",
-        "func": "msg.payload = {\n    text: \"✅ Список питань без відповіді успішно очищено\",\n    reply_markup: {\n        inline_keyboard: [\n            [{\n                text: \"◀ Назад\",\n                callback_data: \"statistics\"            \n            }],\n            [{\n                text: \"⏪ Адмін-панель\",\n                callback_data: \"adminMenu\"            \n            }]\n        ]\n    },\n    chat_id: msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1310,
-        "y": 940,
-        "wires": [
-            [
-                "6426e708.54e338"
-            ]
-        ]
-    },
-    {
-        "id": "6426e708.54e338",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "x": 1810,
-        "y": 940,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9c9a6bf3.d43d48",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "DELETE",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 710,
-        "y": 940,
-        "wires": [
-            [
-                "47c7e567.c1cd2c"
-            ]
-        ]
-    },
-    {
-        "id": "5eb95d6d.8e2a24",
-        "type": "function",
-        "z": "892838ee.3ab438",
-        "name": "Clearing unanswered questions list",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/unanswered/clear\";\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 440,
-        "y": 940,
-        "wires": [
-            [
-                "9c9a6bf3.d43d48"
-            ]
-        ]
-    },
-    {
-        "id": "47c7e567.c1cd2c",
-        "type": "switch",
-        "z": "892838ee.3ab438",
-        "name": "If success",
-        "property": "payload.status",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "success",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 920,
-        "y": 940,
-        "wires": [
-            [
-                "d934bfbd.e2234"
-            ]
-        ]
-    },
-    {
-        "id": "e09b46a.0ff56b8",
-        "type": "link in",
-        "z": "892838ee.3ab438",
-        "name": "Sending message with unanswered questions",
-        "links": [
-            "284c3f7b.7c2f8"
-        ],
-        "x": 175,
-        "y": 820,
-        "wires": [
-            [
-                "ec4f25c6.d84fd8"
-            ]
-        ]
-    },
-    {
-        "id": "62495535.5be9fc",
-        "type": "comment",
-        "z": "892838ee.3ab438",
-        "name": "Sending message with unanswered questions",
-        "info": "",
-        "x": 330,
-        "y": 780,
-        "wires": []
-    },
-    {
-        "id": "383002a9.a97b8e",
-        "type": "function",
-        "z": "892838ee.3ab438",
-        "name": "Setting up message with unanswered questions",
-        "func": "msg.headers = {\n    \"Content-Type\": \"multipart/form-data\",\n};\n\nmsg.payload = {\n    \"document\": {\n        \"value\": msg.payload,\n        \"options\": {\n            \"filename\": \"unanswered_questions.xlsx\"\n        }\n    },\n    \"chat_id\": msg.chat_id\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 1100,
-        "y": 820,
-        "wires": [
-            [
-                "7fcff719.f15238"
-            ]
-        ]
-    },
-    {
-        "id": "cb471d22.b187f",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1810,
-        "y": 820,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "7fcff719.f15238",
-        "type": "change",
-        "z": "892838ee.3ab438",
-        "name": "Setting up bot url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/sendDocument\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1510,
-        "y": 820,
-        "wires": [
-            [
-                "cb471d22.b187f"
-            ]
-        ]
-    },
-    {
-        "id": "f1c3ab8.d32b458",
-        "type": "link out",
-        "z": "dbbd86af.74c0d8",
-        "name": "Clear unanswered questions list",
-        "links": [
-            "3927be27.c53412"
-        ],
-        "x": 1775,
-        "y": 2460,
-        "wires": []
-    },
-    {
-        "id": "e951cec6.3097c",
-        "type": "comment",
-        "z": "dbbd86af.74c0d8",
-        "name": "Clear unanswered questions list",
-        "info": "",
-        "x": 1890,
-        "y": 2420,
-        "wires": []
-    },
-    {
-        "id": "f8380ffc.92c4d",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "GET",
-        "ret": "bin",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 690,
-        "y": 820,
-        "wires": [
-            [
-                "383002a9.a97b8e"
-            ]
-        ]
-    },
-    {
-        "id": "ec4f25c6.d84fd8",
-        "type": "function",
-        "z": "892838ee.3ab438",
-        "name": "Get unanswered questions file",
-        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/unanswered/excel\";\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 430,
-        "y": 820,
-        "wires": [
-            [
-                "f8380ffc.92c4d"
-            ]
-        ]
-    },
-    {
-        "id": "a6c076cb.782348",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3880,
-        "y": 920,
-        "wires": []
-    },
-    {
-        "id": "8cd68d5a.41fe5",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 4180,
-        "y": 880,
-        "wires": []
-    },
-    {
-        "id": "26bece42.b72052",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 4560,
-        "y": 860,
-        "wires": []
-    },
-    {
-        "id": "492e5f50.8b03c",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 3600,
-        "y": 900,
+        "y": 1640,
         "wires": []
     },
     {
@@ -6758,8 +5593,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 3840,
-        "y": 780,
+        "x": 4140,
+        "y": 520,
         "wires": [
             [
                 "2c29d5cc.f3f26a"
@@ -6767,32 +5602,661 @@
         ]
     },
     {
-        "id": "7595aabc.c1d6b4",
-        "type": "debug",
-        "z": "59350fd8.5c52c",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 460,
-        "y": 1020,
+        "id": "24561f6c.af24f",
+        "type": "link in",
+        "z": "76bd89c2.eace48",
+        "name": "Send message with editing info buttons",
+        "links": [
+            "d620ef02.d8b9d"
+        ],
+        "x": 195,
+        "y": 140,
+        "wires": [
+            [
+                "63ea27f9.b8b008"
+            ]
+        ]
+    },
+    {
+        "id": "6e76002.3905",
+        "type": "comment",
+        "z": "76bd89c2.eace48",
+        "name": "Sending message with editing info buttons",
+        "info": "",
+        "x": 340,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "7af57ab2.f52244",
-        "type": "switch",
+        "id": "99834576.cad338",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "env": [],
+        "x": 830,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "63ea27f9.b8b008",
+        "type": "function",
+        "z": "76bd89c2.eace48",
+        "name": "Setting up with editing info buttons",
+        "func": "msg.payload = {\n    \"text\": \"Ви в меню редагування інформації. Виберіть необхідний пункт\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"Редагування інформації про ICM 😎\",\n                \"callback_data\": \"editInfo_AboutISM\"            \n            }],\n            [{\n                \"text\": \"Редагування інформації про НУЛП 🚀\",\n                \"callback_data\": \"editInfo_AboutNULP\"            \n            }],\n            [{\n                \"text\": \"Редагування інформації про бота 📁\",\n                \"callback_data\": \"editInfo_HowToUseBot\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 460,
+        "y": 140,
+        "wires": [
+            [
+                "99834576.cad338"
+            ]
+        ]
+    },
+    {
+        "id": "d620ef02.d8b9d",
+        "type": "link out",
         "z": "dbbd86af.74c0d8",
-        "name": "Is success",
-        "property": "payload.status",
+        "name": "Send message with editing info buttons",
+        "links": [
+            "24561f6c.af24f"
+        ],
+        "x": 1775,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "539edd0f.466604",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Send message with editing info buttons",
+        "info": "",
+        "x": 1910,
+        "y": 1460,
+        "wires": []
+    },
+    {
+        "id": "9fff14d2.90c118",
+        "type": "link in",
+        "z": "54742aae.b4a584",
+        "name": "Send message with buttons for unanswered questions",
+        "links": [
+            "f0c9f660.bff8d8"
+        ],
+        "x": 195,
+        "y": 140,
+        "wires": [
+            [
+                "7af37f3.7f1418"
+            ]
+        ]
+    },
+    {
+        "id": "ff6897ea.b2eff8",
+        "type": "comment",
+        "z": "54742aae.b4a584",
+        "name": "Sending message with buttons for unanswered questions",
+        "info": "",
+        "x": 390,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "184bec3.2496514",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "env": [],
+        "x": 990,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7af37f3.7f1418",
+        "type": "function",
+        "z": "54742aae.b4a584",
+        "name": "Setting up message with buttons for unanswered questions",
+        "func": "msg.payload = {\n    \"text\": \"Ви в меню питань без відповіді\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"Отримати список питань 💾\",\n                \"callback_data\": \"unansweredQuestions\"            \n            }],\n            [{\n                \"text\": \"Очистити список питань 🚮\",\n                \"callback_data\": \"clearUnansweredQuestionsList\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 540,
+        "y": 140,
+        "wires": [
+            [
+                "184bec3.2496514"
+            ]
+        ]
+    },
+    {
+        "id": "f0c9f660.bff8d8",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Send message with buttons for unasnwered questions",
+        "links": [
+            "9fff14d2.90c118"
+        ],
+        "x": 1775,
+        "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "bb39c148.1fe9",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Send message with buttons for unasnwered questions",
+        "info": "",
+        "x": 1960,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "6090c471.a438bc",
+        "type": "link in",
+        "z": "54742aae.b4a584",
+        "name": "Clear unanswered questions list",
+        "links": [
+            "f1c3ab8.d32b458"
+        ],
+        "x": 195,
+        "y": 400,
+        "wires": [
+            [
+                "2ac90221.4cfe3e"
+            ]
+        ]
+    },
+    {
+        "id": "c996d188.1ce6e",
+        "type": "comment",
+        "z": "54742aae.b4a584",
+        "name": "Clearing unanswered questions list",
+        "info": "",
+        "x": 320,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e9941081.3b0f7",
+        "type": "function",
+        "z": "54742aae.b4a584",
+        "name": "Setting up message with menu with groups",
+        "func": "msg.payload = {\n    \"text\": \"✅ Список питань успішно очищено\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад до меню питань без відповіді\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1330,
+        "y": 400,
+        "wires": [
+            [
+                "81433343.0281c"
+            ]
+        ]
+    },
+    {
+        "id": "81433343.0281c",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 1750,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4bab2047.acc47",
+        "type": "http request",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "method": "DELETE",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 730,
+        "y": 400,
+        "wires": [
+            [
+                "a47d0526.4da508"
+            ]
+        ]
+    },
+    {
+        "id": "2ac90221.4cfe3e",
+        "type": "function",
+        "z": "54742aae.b4a584",
+        "name": "Clearing unanswered questions list",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/unanswered/clear\";\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "4bab2047.acc47"
+            ]
+        ]
+    },
+    {
+        "id": "a47d0526.4da508",
+        "type": "switch",
+        "z": "54742aae.b4a584",
+        "name": "If success",
+        "property": "statusCode",
         "propertyType": "msg",
         "rules": [
             {
                 "t": "eq",
-                "v": "success",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 940,
+        "y": 400,
+        "wires": [
+            [
+                "e9941081.3b0f7"
+            ]
+        ]
+    },
+    {
+        "id": "66760fd2.1e293",
+        "type": "link in",
+        "z": "54742aae.b4a584",
+        "name": "Sending message with unanswered questions",
+        "links": [
+            "284c3f7b.7c2f8"
+        ],
+        "x": 195,
+        "y": 280,
+        "wires": [
+            [
+                "7e589091.ac239"
+            ]
+        ]
+    },
+    {
+        "id": "9588ceaf.71c1b",
+        "type": "comment",
+        "z": "54742aae.b4a584",
+        "name": "Sending message with unanswered questions",
+        "info": "",
+        "x": 350,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "acd562be.aaded",
+        "type": "function",
+        "z": "54742aae.b4a584",
+        "name": "Setting up message with unanswered questions",
+        "func": "msg.headers = {\n    \"Content-Type\": \"multipart/form-data\",\n};\n\n\n\nmsg.payload = {\n    \"document\": {\n        \"value\": msg.payload,\n        \"options\": {\n            \"filename\": \"unanswered_questions.xlsx\"\n        }\n    },\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1560,
+        "y": 240,
+        "wires": [
+            [
+                "629e8960.30f938"
+            ]
+        ]
+    },
+    {
+        "id": "618246b2.5e69f8",
+        "type": "http request",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 2270,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "629e8960.30f938",
+        "type": "change",
+        "z": "54742aae.b4a584",
+        "name": "Setting up bot url",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/sendDocument\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1970,
+        "y": 240,
+        "wires": [
+            [
+                "618246b2.5e69f8"
+            ]
+        ]
+    },
+    {
+        "id": "54533caf.4b9264",
+        "type": "http request",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 710,
+        "y": 280,
+        "wires": [
+            [
+                "9120030b.c786d"
+            ]
+        ]
+    },
+    {
+        "id": "7e589091.ac239",
+        "type": "function",
+        "z": "54742aae.b4a584",
+        "name": "Get unanswered questions file",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/unanswered/excel\";\nmsg.headers = {\n    \"pass-hash\": msg.apiHeaders[\"pass-hash\"]\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 450,
+        "y": 280,
+        "wires": [
+            [
+                "54533caf.4b9264"
+            ]
+        ]
+    },
+    {
+        "id": "6441929d.534f0c",
+        "type": "function",
+        "z": "54742aae.b4a584",
+        "name": "Setting up message that unanswered questions list is empty",
+        "func": "msg.payload = {\n    \"text\": \"Поки що список порожній…\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад до меню питань без відповіді\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1600,
+        "y": 320,
+        "wires": [
+            [
+                "d79d3e10.34989"
+            ]
+        ]
+    },
+    {
+        "id": "d79d3e10.34989",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 2070,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b03fc51b.b4da68",
+        "type": "http request",
+        "z": "b72c2b01.aad3f8",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 550,
+        "y": 120,
+        "wires": [
+            [
+                "bb8c001e.ffd0e"
+            ]
+        ]
+    },
+    {
+        "id": "4ee311e.188f1f",
+        "type": "function",
+        "z": "b72c2b01.aad3f8",
+        "name": "Getting user row",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users/\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "b03fc51b.b4da68"
+            ]
+        ]
+    },
+    {
+        "id": "bb8c001e.ffd0e",
+        "type": "switch",
+        "z": "b72c2b01.aad3f8",
+        "name": "Is success",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 830,
+        "y": 120,
+        "wires": [
+            [
+                "965ff527.75b118"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1677f073.b40cc",
+        "type": "subflow:b72c2b01.aad3f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 960,
+        "y": 3320,
+        "wires": [
+            [
+                "c255e784.8ab028"
+            ],
+            [
+                "712534ba.03dabc"
+            ]
+        ]
+    },
+    {
+        "id": "9cf5e768.5f55e8",
+        "type": "subflow:b72c2b01.aad3f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "env": [],
+        "x": 860,
+        "y": 860,
+        "wires": [
+            [
+                "689e4325.47104c",
+                "59c1267b.ca3c98",
+                "d4173cf4.07cab",
+                "db142eec.63a9b",
+                "d005894c.44ba08"
+            ],
+            [
+                "8dcc1de3.974b7"
+            ]
+        ]
+    },
+    {
+        "id": "8dcc1de3.974b7",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "/start",
+        "links": [
+            "bb24cad3.d57618"
+        ],
+        "x": 855,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "82b811cc.dbe66",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Start",
+        "info": "",
+        "x": 890,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "9120030b.c786d",
+        "type": "switch",
+        "z": "54742aae.b4a584",
+        "name": "If success",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "500",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 980,
+        "y": 280,
+        "wires": [
+            [
+                "acd562be.aaded"
+            ],
+            [
+                "6441929d.534f0c"
+            ]
+        ]
+    },
+    {
+        "id": "a75bccca.68779",
+        "type": "switch",
+        "z": "96f6108e.64a37",
+        "name": "Checking presence of user row",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "500",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1170,
+        "y": 220,
+        "wires": [
+            [
+                "58ada314.42903c"
+            ],
+            [
+                "65f19cea.cc3ef4"
+            ]
+        ]
+    },
+    {
+        "id": "5c02823e.dbdd4c",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "if it is main intent",
+        "func": "if (!msg.message.startsWith(\"answerToDFQuestion_\")) {\n    msg.intentName = msg._dialogflow.intent.displayName;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 4170,
+        "y": 620,
+        "wires": [
+            [
+                "a8d398a0.9fa888"
+            ]
+        ]
+    },
+    {
+        "id": "b0119f00.7210b",
+        "type": "switch",
+        "z": "cbf72f33.63dd6",
+        "name": "If entering location",
+        "property": "user_payload.state.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "location",
                 "vt": "str"
             },
             {
@@ -6802,15 +6266,441 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1210,
-        "y": 3360,
+        "x": 2200,
+        "y": 560,
         "wires": [
             [
-                "c255e784.8ab028"
+                "a7d45f28.55134"
             ],
             [
-                "712534ba.03dabc"
+                "8c22d5f5.4223e8"
             ]
         ]
+    },
+    {
+        "id": "a7d45f28.55134",
+        "type": "switch",
+        "z": "cbf72f33.63dd6",
+        "name": "If location is right",
+        "property": "_dialogflow.intent.displayName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "city-handler",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 2490,
+        "y": 300,
+        "wires": [
+            [
+                "10d2cf14.6be591"
+            ],
+            [
+                "24a96f40.20d96"
+            ]
+        ]
+    },
+    {
+        "id": "76e09347.1a3e1c",
+        "type": "link out",
+        "z": "cbf72f33.63dd6",
+        "name": "Move on to choosing occupation",
+        "links": [
+            "4b1be78d.e0a2d8",
+            "62bdcfd6.d166e"
+        ],
+        "x": 3155,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "c8a7083b.f7d208",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Move on to choosing occupation",
+        "info": "",
+        "x": 3270,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "71ae8da0.60e554",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Saving the city field",
+        "info": "",
+        "x": 2990,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d23432d6.a9a3a",
+        "type": "http request",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 2970,
+        "y": 200,
+        "wires": [
+            [
+                "76e09347.1a3e1c"
+            ]
+        ]
+    },
+    {
+        "id": "10d2cf14.6be591",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Set city",
+        "func": "msg.payload = {\n    \"city\": msg._dialogflow.parameters.fields[\"geo-city\"].stringValue\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2760,
+        "y": 240,
+        "wires": [
+            [
+                "d23432d6.a9a3a"
+            ]
+        ]
+    },
+    {
+        "id": "24a96f40.20d96",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "Setting up dialogflow response",
+        "func": "msg.payload = {\n    \"chat_id\": msg.chat_id,\n    \"text\": \"Введіть коректне місце проживання\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2850,
+        "y": 340,
+        "wires": [
+            [
+                "86041235.da0c4"
+            ]
+        ]
+    },
+    {
+        "id": "86041235.da0c4",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "env": [],
+        "x": 3190,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72384851.df5ad8",
+        "type": "http request",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 2850,
+        "y": 560,
+        "wires": [
+            [
+                "63a1490b.736ab8"
+            ]
+        ]
+    },
+    {
+        "id": "965ff527.75b118",
+        "type": "function",
+        "z": "b72c2b01.aad3f8",
+        "name": "Save user",
+        "func": "msg.user_payload = msg.payload.user;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1090,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d005894c.44ba08",
+        "type": "switch",
+        "z": "dbbd86af.74c0d8",
+        "name": "Answer to dialogflow question",
+        "property": "$split(msg.message, \"_\", 1)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "setLocation",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1310,
+        "y": 1000,
+        "wires": [
+            [
+                "70efa88d.2724b8"
+            ]
+        ]
+    },
+    {
+        "id": "70efa88d.2724b8",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set location field",
+        "links": [
+            "5698bc81.4bcd84"
+        ],
+        "x": 1775,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "321dbb26.bd7754",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Set location field",
+        "info": "",
+        "x": 1840,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "5698bc81.4bcd84",
+        "type": "link in",
+        "z": "cbf72f33.63dd6",
+        "name": "Set location field",
+        "links": [
+            "70efa88d.2724b8"
+        ],
+        "x": 2555,
+        "y": 180,
+        "wires": [
+            [
+                "eb3210bc.339dd"
+            ]
+        ]
+    },
+    {
+        "id": "148c6b0b.9fb785",
+        "type": "comment",
+        "z": "cbf72f33.63dd6",
+        "name": "Setting location field",
+        "info": "",
+        "x": 2630,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "eb3210bc.339dd",
+        "type": "function",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\nmsg.payload = {\n    \"city\": msg.message.split('_')[1]\n}\n\n//for the next message\nmsg.text = \"Супер. Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 2740,
+        "y": 180,
+        "wires": [
+            [
+                "d23432d6.a9a3a"
+            ]
+        ]
+    },
+    {
+        "id": "f1c3ab8.d32b458",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Clear unanswered questions list",
+        "links": [
+            "3927be27.c53412",
+            "6090c471.a438bc"
+        ],
+        "x": 1775,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "e951cec6.3097c",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Clear unanswered questions list",
+        "info": "",
+        "x": 1890,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "9d53dc37.4fb94",
+        "type": "link in",
+        "z": "f0c759b9.ab1e08",
+        "name": "Sync Questions",
+        "links": [
+            "fd270046.426d4"
+        ],
+        "x": 195,
+        "y": 140,
+        "wires": [
+            [
+                "227ae12f.658a6e"
+            ]
+        ]
+    },
+    {
+        "id": "54f7e15e.b10ea",
+        "type": "comment",
+        "z": "f0c759b9.ab1e08",
+        "name": "Sync Questions",
+        "info": "",
+        "x": 260,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e1c9587e.08ce58",
+        "type": "http request",
+        "z": "f0c759b9.ab1e08",
+        "name": "",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 610,
+        "y": 140,
+        "wires": [
+            [
+                "4a355ff7.3f8cb"
+            ]
+        ]
+    },
+    {
+        "id": "227ae12f.658a6e",
+        "type": "function",
+        "z": "f0c759b9.ab1e08",
+        "name": "Sync FAQ",
+        "func": "msg.url = \"https://tg-bot-uni-develop.herokuapp.com/api/v1/questions/faq/sync\";\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "e1c9587e.08ce58"
+            ]
+        ]
+    },
+    {
+        "id": "6bb9ad50.a931f4",
+        "type": "function",
+        "z": "f0c759b9.ab1e08",
+        "name": "Setting up message successfully sync faq",
+        "func": "msg.payload = {\n    \"text\": \"✅ Список питань успішно оновлено\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад до меню питань без відповіді\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 1240,
+        "y": 140,
+        "wires": [
+            [
+                "dac84b26.3b7ef8"
+            ]
+        ]
+    },
+    {
+        "id": "dac84b26.3b7ef8",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "f0c759b9.ab1e08",
+        "name": "",
+        "env": [],
+        "x": 1670,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a355ff7.3f8cb",
+        "type": "switch",
+        "z": "f0c759b9.ab1e08",
+        "name": "If success",
+        "property": "statusCode",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "200",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 860,
+        "y": 140,
+        "wires": [
+            [
+                "6bb9ad50.a931f4"
+            ]
+        ]
+    },
+    {
+        "id": "ba8c27e5.b055f8",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Go to editing all for distribution",
+        "links": [
+            "a8f532b7.9551d"
+        ],
+        "x": 1775,
+        "y": 2260,
+        "wires": []
+    },
+    {
+        "id": "90400be5.c6ce18",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Go to editing all for distribution",
+        "info": "",
+        "x": 1880,
+        "y": 2220,
+        "wires": []
     }
 ]
