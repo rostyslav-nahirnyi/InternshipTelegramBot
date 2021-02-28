@@ -14,13 +14,6 @@
         "info": ""
     },
     {
-        "id": "696b129b.360e0c",
-        "type": "tab",
-        "label": "Is registration completed",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "4c6874fb.68b9dc",
         "type": "tab",
         "label": "Editing username",
@@ -38,6 +31,13 @@
         "id": "68a30d94.469f94",
         "type": "tab",
         "label": "Editing occupation",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "696b129b.360e0c",
+        "type": "tab",
+        "label": "Is registration completed",
         "disabled": false,
         "info": ""
     },
@@ -310,6 +310,74 @@
         "color": "#DDAA99"
     },
     {
+        "id": "5f6976c0.70d2f8",
+        "type": "subflow",
+        "name": "Edit message",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "3dce6908.e37b76"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 920,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "6c35ddb6.3c1d14",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "bdbd1830.acc9f8",
+        "type": "subflow",
+        "name": "Send new message or edit message",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 120,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "33c4750a.4d769a"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 820,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "e28e4ad2.958008",
+                        "port": 0
+                    },
+                    {
+                        "id": "b8767d03.835e4",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
         "id": "529c4263.aeab0c",
         "type": "MySQLdatabase",
         "name": "",
@@ -414,7 +482,7 @@
         "y": 160,
         "wires": [
             [
-                "c538e448.9052c8"
+                "996f3e12.5bded"
             ]
         ]
     },
@@ -484,7 +552,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3270,
+        "x": 3370,
         "y": 140,
         "wires": []
     },
@@ -498,7 +566,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2500,
+        "x": 2600,
         "y": 160,
         "wires": [
             [
@@ -619,7 +687,7 @@
         "type": "function",
         "z": "3b5b98a.1c38768",
         "name": "Setting up question for location",
-        "func": "var cities = ['Вінницька', 'Волинська', 'Дніпропетровська', 'Донецька', 'Житомирська', 'Закарпатська', 'Запорізька',\n    'Івано-Франківська', 'Київська', 'Кіровоградська', 'Луганська', 'Львівська', 'Миколаївська',\n    'Одеська', 'Полтавська', 'Рівненська', 'Сумська', 'Тернопільська', 'Харківська', 'Херсонська',\n    'Хмельницька', 'Черкаська', 'Чернівецька', 'Чернігівська', 'АР Крим', 'за межами України'];\n\n\n\nmsg.payload = {\n    \"text\": (msg.text ? msg.text : \"Будь ласка, оберіть один з варіантів\"),    \n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id,\n    \n}\n\n\n\nmsg.firstMessage = true;\n\n\n\nfunction getEmojiById(index) {\n    var emojies = [\"1️⃣\", \"2️⃣\"];\n    \n    return emojies[index];\n    \n}\n\n\n\nif(!msg.locationsPageId) {\n    \n    msg.locationsPageId = parseInt(msg.message.split('_')[1]);\n    msg.firstMessage = false;\n    msg.payload.message_id = msg.message_id;\n    \n}\n\n\n\nvar buttonsRow = [];\nfor(var i = ((msg.locationsPageId-1)*14); (i < cities.length && i <= (msg.locationsPageId*13)); i++) {\n    \n    buttonsRow.push({\"text\": (cities[i]), \"callback_data\": (\"setLocation_\" + cities[i])});\n    \n    if ((((i+1)%2) == 0) || (i == (cities.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n}\n\n\n\n//setting needed control buttons\nif (msg.locationsPageId > 1) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (getEmojiById(msg.locationsPageId - 2) + \" ◀\"),\n                \"callback_data\": \"selectingLocationPagination_\" + (msg.locationsPageId - 1)\n            }]);\n}\n\nif (msg.locationsPageId < 2) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (\"▶ \" + getEmojiById(msg.locationsPageId)),\n                \"callback_data\": \"selectingLocationPagination_\" + (msg.locationsPageId + 1)\n            }]);\n}\n\n\n\nreturn msg;",
+        "func": "var cities = ['Вінницька', 'Волинська', 'Дніпропетровська', 'Донецька', 'Житомирська', 'Закарпатська', 'Запорізька',\n    'Івано-Франківська', 'Київська', 'Кіровоградська', 'Луганська', 'Львівська', 'Миколаївська',\n    'Одеська', 'Полтавська', 'Рівненська', 'Сумська', 'Тернопільська', 'Харківська', 'Херсонська',\n    'Хмельницька', 'Черкаська', 'Чернівецька', 'Чернігівська', 'АР Крим', 'за межами України'];\n\n\n\nmsg.payload = {\n    \"text\": (msg.text ? msg.text : \"Будь ласка, оберіть один з варіантів\"),    \n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id,\n    \n}\n\n\n\nfunction getEmojiById(index) {\n    var emojies = [\"1️⃣\", \"2️⃣\"];\n    \n    return emojies[index];\n    \n}\n\n\n\nif(!msg.locationsPageId) {\n    \n    msg.locationsPageId = parseInt(msg.message.split('_')[1]);\n    \n}\n\n\n\nvar buttonsRow = [];\nfor(var i = ((msg.locationsPageId-1)*14); (i < cities.length && i <= (msg.locationsPageId*13)); i++) {\n    \n    buttonsRow.push({\"text\": (cities[i]), \"callback_data\": (\"setLocation_\" + cities[i])});\n    \n    if ((((i+1)%2) == 0) || (i == (cities.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n}\n\n\n\n//setting needed control buttons\nif (msg.locationsPageId > 1) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (getEmojiById(msg.locationsPageId - 2) + \" ◀\"),\n                \"callback_data\": \"selectingLocationPagination_\" + (msg.locationsPageId - 1)\n            }]);\n}\n\nif (msg.locationsPageId < 2) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (\"▶ \" + getEmojiById(msg.locationsPageId)),\n                \"callback_data\": \"selectingLocationPagination_\" + (msg.locationsPageId + 1)\n            }]);\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -628,7 +696,7 @@
         "y": 140,
         "wires": [
             [
-                "123a10e0.c9c01f"
+                "a9557143.ea5a3"
             ]
         ]
     },
@@ -642,8 +710,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1390,
-        "y": 80,
+        "x": 1270,
+        "y": 140,
         "wires": [
             [
                 "b664e337.3b22e"
@@ -663,8 +731,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 2120,
-        "y": 60,
+        "x": 2000,
+        "y": 120,
         "wires": []
     },
     {
@@ -717,7 +785,7 @@
         "y": 300,
         "wires": [
             [
-                "6a938578.b8740c"
+                "7cb07f12.4a9b1"
             ]
         ]
     },
@@ -731,8 +799,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2530,
-        "y": 180,
+        "x": 2790,
+        "y": 200,
         "wires": [
             [
                 "1001a33d.d9504d"
@@ -749,8 +817,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2550,
-        "y": 240,
+        "x": 2810,
+        "y": 260,
         "wires": [
             [
                 "1001a33d.d9504d"
@@ -767,8 +835,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2520,
-        "y": 300,
+        "x": 2780,
+        "y": 320,
         "wires": [
             [
                 "1001a33d.d9504d"
@@ -785,8 +853,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2520,
-        "y": 360,
+        "x": 2780,
+        "y": 380,
         "wires": [
             [
                 "1001a33d.d9504d"
@@ -803,8 +871,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2510,
-        "y": 420,
+        "x": 2770,
+        "y": 440,
         "wires": [
             [
                 "1001a33d.d9504d"
@@ -824,8 +892,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 3660,
-        "y": 280,
+        "x": 3920,
+        "y": 300,
         "wires": []
     },
     {
@@ -837,8 +905,8 @@
             "f1be3b15.c41ab8",
             "502c79bf.c60c68"
         ],
-        "x": 3515,
-        "y": 240,
+        "x": 3775,
+        "y": 260,
         "wires": []
     },
     {
@@ -851,8 +919,8 @@
             "8d8d567.b8915a8",
             "9f17155a.a2e3d8"
         ],
-        "x": 2075,
-        "y": 180,
+        "x": 2335,
+        "y": 200,
         "wires": [
             [
                 "efb68a90.a747e8"
@@ -869,8 +937,8 @@
             "a7216124.6534",
             "ab9f10ed.c145a"
         ],
-        "x": 2075,
-        "y": 240,
+        "x": 2335,
+        "y": 260,
         "wires": [
             [
                 "35734a3f.d60566"
@@ -887,8 +955,8 @@
             "5ffcf5e0.aa2fec",
             "7f128497.b6240c"
         ],
-        "x": 2075,
-        "y": 300,
+        "x": 2335,
+        "y": 320,
         "wires": [
             [
                 "28c9f7e4.efea48"
@@ -905,8 +973,8 @@
             "3b6ee588.2aab8a",
             "68c78f79.2c1b2"
         ],
-        "x": 2075,
-        "y": 360,
+        "x": 2335,
+        "y": 380,
         "wires": [
             [
                 "564c6898.976ac8"
@@ -923,8 +991,8 @@
             "9eae2df4.d9717",
             "7501c22.02e853c"
         ],
-        "x": 2075,
-        "y": 420,
+        "x": 2335,
+        "y": 440,
         "wires": [
             [
                 "acac65a4.a6de98"
@@ -937,8 +1005,8 @@
         "z": "68a30d94.469f94",
         "name": "Setting occupation",
         "info": "",
-        "x": 2150,
-        "y": 140,
+        "x": 2410,
+        "y": 160,
         "wires": []
     },
     {
@@ -957,8 +1025,8 @@
         "z": "68a30d94.469f94",
         "name": "Move on to printing main menu",
         "info": "",
-        "x": 3630,
-        "y": 200,
+        "x": 3890,
+        "y": 220,
         "wires": []
     },
     {
@@ -966,7 +1034,7 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Editing username or city or move on to processing message",
-        "func": "function isTooLongAnswer(text, max_length, hasMainMenuButton = false) {\n    if (msg.message.length > max_length) {\n        \n        msg.payload = {\n            \"text\": text,\n            \"chat_id\": msg.chat_id,\n            \"reply_markup\": {\n                \"inline_keyboard\": []\n            }\n        }\n        \n        if (hasMainMenuButton) {\n            \n            //adds main menu button if hasMenuButtons is true\n            msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"\n            }]);\n        \n            //if user is admin, it sends admin-menu button\n            if (msg.user_payload.role_name.includes(\"admin\")) {\n                msg.payload.reply_markup.inline_keyboard.push([{\n                    \"text\": \"⚙ Адмін-панель\",\n                    \"callback_data\": \"adminMenu\"\n                }]);\n            }\n            \n        }\n        \n        \n        \n        return true;\n        \n    }\n    \n    \n    \n    return false;\n    \n}\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nif (msg.statusCode == 200) {\n    //for admins\n    if (msg.user_payload.role_name.includes(\"admin\")) {\n        if (msg.user_payload.state.state.startsWith(\"editingInfo\")) {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів 2000. Спробуйте знову\", 2000)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n        \n            return [null, null, null, msg, null, null, null];\n            \n        } else if (msg.user_payload.state.state == \"writingTextForDistribution\") {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів 4096. Спробуйте знову\", 4096)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, msg, null, null];\n            \n        } else if (msg.user_payload.state.state == \"addingAdmin\") {\n            \n            if (msg.message.startsWith(\"@\")) {\n                msg.message = msg.message.slice(1);\n            }\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів 32. Спробуйте знову\", 32)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, null, msg, null];\n            \n        }\n    }\n    \n    \n    //registrations and dialogflow\n    if (msg.user_payload.state.state == \"username\") {\n        if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів 255. Спробуйте знову\", 255)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n        \n        msg.payload = {\n            \"name\": msg.message\n        }\n        \n        //for the next question\n        msg.text = \"Зрозуміло. Оберіть свою область\";\n        msg.locationsPageId = 1;\n        \n        return [msg, null, null, null, null, null];\n        \n    } else if (msg.user_payload.state.state == \"registered\" || msg.user_payload.state.state == \"settingGroupsForDistribution\") {\n        \n        //sending saved contexts\n        msg.queryParams = {\n            \"contexts\": msg.user_payload.state.df_contexts\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"answerToDFQuestion_\")) {\n            msg.payload = msg.message.slice(19);\n            \n            msg.intentName = msg.payload;\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        \n        //if questions to dialogflow is too long\n        if (isTooLongAnswer(\"Питання надто довге. Максимальна кількість символів 255. Спробуйте знову\", 255, true)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n\n\n\n        return [null, null, msg, null, null, null, null];\n\n    }\n}\n\n\n\nreturn [null, null, null, null, null, null, msg];",
+        "func": "msg.newMessage = true;\n\n\n\nfunction isTooLongAnswer(text, max_length, hasMainMenuButton = false) {\n    if (msg.message.length > max_length) {\n        \n        msg.payload = {\n            \"text\": text,\n            \"chat_id\": msg.chat_id,\n            \"reply_markup\": {\n                \"inline_keyboard\": []\n            }\n        }\n        \n        if (hasMainMenuButton) {\n            \n            //adds main menu button if hasMenuButtons is true\n            msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"\n            }]);\n        \n            //if user is admin, it sends admin-menu button\n            if (msg.user_payload.role_name.includes(\"admin\")) {\n                msg.payload.reply_markup.inline_keyboard.push([{\n                    \"text\": \"⚙ Адмін-панель\",\n                    \"callback_data\": \"adminMenu\"\n                }]);\n            }\n            \n        }\n        \n        \n        \n        return true;\n        \n    }\n    \n    \n    \n    return false;\n    \n}\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nif (msg.statusCode == 200) {\n    //for admins\n    if (msg.user_payload.role_name.includes(\"admin\")) {\n        if (msg.user_payload.state.state.startsWith(\"editingInfo\")) {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів: 2000. Спробуйте знову\", 2000)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n        \n            return [null, null, null, msg, null, null, null];\n            \n        } else if (msg.user_payload.state.state == \"writingTextForDistribution\") {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів: 4096. Спробуйте знову\", 4096)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, msg, null, null];\n            \n        } else if (msg.user_payload.state.state == \"addingAdmin\") {\n            \n            if (msg.message.startsWith(\"@\")) {\n                msg.message = msg.message.slice(1);\n            }\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів: 32. Спробуйте знову\", 32)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, null, msg, null];\n            \n        }\n    }\n    \n    \n    //registrations and dialogflow\n    if (msg.user_payload.state.state == \"username\") {\n        if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів: 255. Спробуйте знову\", 255)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n        \n        msg.payload = {\n            \"name\": msg.message\n        }\n        \n        //for the next question\n        msg.text = \"Зрозуміло. Оберіть свою область\";\n        msg.locationsPageId = 1;\n        \n        return [msg, null, null, null, null, null];\n        \n    } else if (msg.user_payload.state.state == \"registered\" || msg.user_payload.state.state == \"settingGroupsForDistribution\") {\n        \n        //sending saved contexts\n        msg.queryParams = {\n            \"contexts\": msg.user_payload.state.df_contexts\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"answerToDFQuestion_\")) {\n            \n            msg.payload = msg.message.slice(19);\n            \n            msg.intentName = msg.payload;\n            \n            msg.newMessage = false;\n            \n        } else {\n            \n            msg.payload = msg.message;\n            \n        }\n        \n        \n        //if questions to dialogflow is too long\n        if (isTooLongAnswer(\"Питання надто довге. Максимальна кількість символів: 255. Спробуйте знову\", 255, true)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n\n\n\n        return [null, null, msg, null, null, null, null];\n\n    }\n}\n\n\n\nreturn [null, null, null, null, null, null, msg];",
         "outputs": 7,
         "noerr": 0,
         "initialize": "",
@@ -1152,7 +1220,7 @@
         "y": 520,
         "wires": [
             [
-                "5a2ebc6a.567e54"
+                "32d02ee3.d6cc12"
             ]
         ]
     },
@@ -1272,63 +1340,6 @@
         "y": 380,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "5a2ebc6a.567e54",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "env": [],
-        "x": 3270,
-        "y": 520,
-        "wires": [
-            [
-                "44bde95d.ab5328",
-                "5c02823e.dbdd4c"
-            ]
-        ]
-    },
-    {
-        "id": "6a938578.b8740c",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "68a30d94.469f94",
-        "name": "",
-        "env": [],
-        "x": 820,
-        "y": 300,
-        "wires": [
-            [
-                "5cdcad90.c84254"
-            ]
-        ]
-    },
-    {
-        "id": "bcaa2825.03ec98",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "3b5b98a.1c38768",
-        "name": "",
-        "env": [],
-        "x": 1030,
-        "y": 80,
-        "wires": [
-            [
-                "f83bba65.663248"
-            ]
-        ]
-    },
-    {
-        "id": "c538e448.9052c8",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "4c6874fb.68b9dc",
-        "name": "",
-        "env": [],
-        "x": 2130,
-        "y": 160,
-        "wires": [
-            [
-                "32bc9488.39455c"
-            ]
         ]
     },
     {
@@ -1468,7 +1479,7 @@
         "initialize": "",
         "finalize": "",
         "x": 3930,
-        "y": 580,
+        "y": 560,
         "wires": [
             [
                 "e07b395f.fb4a38"
@@ -1517,7 +1528,7 @@
         "y": 800,
         "wires": [
             [
-                "c017e434.7d5098"
+                "9cf5e768.5f55e8"
             ],
             [
                 "336efa19.615be6"
@@ -1591,11 +1602,16 @@
                 "t": "eq",
                 "v": "HowToUseBot",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "checkUserState",
+                "vt": "str"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 12,
+        "outputs": 13,
         "x": 1280,
         "y": 340,
         "wires": [
@@ -1634,6 +1650,9 @@
             ],
             [
                 "84602d83.794bf"
+            ],
+            [
+                "b4b6b768.2c65f8"
             ]
         ]
     },
@@ -1831,7 +1850,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 900,
+        "y": 1000,
         "wires": [
             [
                 "17a4ed75.37c813"
@@ -1851,7 +1870,7 @@
             "c69d98c5.c5cda8"
         ],
         "x": 1775,
-        "y": 900,
+        "y": 1000,
         "wires": []
     },
     {
@@ -1861,7 +1880,7 @@
         "name": "Process message",
         "info": "",
         "x": 1850,
-        "y": 860,
+        "y": 960,
         "wires": []
     },
     {
@@ -1882,7 +1901,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1350,
-        "y": 800,
+        "y": 900,
         "wires": [
             [
                 "44ca7e7d.f7226"
@@ -1898,7 +1917,7 @@
             "db785c0e.a93d6"
         ],
         "x": 1775,
-        "y": 800,
+        "y": 900,
         "wires": []
     },
     {
@@ -1908,7 +1927,7 @@
         "name": "Set answer to another question(pagination)",
         "info": "",
         "x": 1920,
-        "y": 760,
+        "y": 860,
         "wires": []
     },
     {
@@ -1920,7 +1939,7 @@
             "bb24cad3.d57618"
         ],
         "x": 1775,
-        "y": 4000,
+        "y": 4100,
         "wires": []
     },
     {
@@ -1932,7 +1951,7 @@
             "5581481b.706b38"
         ],
         "x": 1775,
-        "y": 4160,
+        "y": 4260,
         "wires": []
     },
     {
@@ -1942,7 +1961,7 @@
         "name": "Other user messages",
         "info": "",
         "x": 1860,
-        "y": 4120,
+        "y": 4220,
         "wires": []
     },
     {
@@ -1952,7 +1971,7 @@
         "name": "Start",
         "info": "",
         "x": 1810,
-        "y": 3960,
+        "y": 4060,
         "wires": []
     },
     {
@@ -1981,7 +2000,7 @@
         "repair": false,
         "outputs": 3,
         "x": 1280,
-        "y": 4080,
+        "y": 4180,
         "wires": [
             [
                 "712534ba.03dabc"
@@ -2085,7 +2104,7 @@
         "y": 140,
         "wires": [
             [
-                "744eb46c.1a166c"
+                "4fbd66e3.fbd4e8"
             ]
         ]
     },
@@ -2100,23 +2119,11 @@
         "wires": []
     },
     {
-        "id": "744eb46c.1a166c",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "df5e43cb.b674f",
-        "name": "",
-        "env": [],
-        "x": 1650,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "58a6af09.78559",
         "type": "function",
         "z": "696b129b.360e0c",
         "name": "Is registration completed",
-        "func": "if (!msg.user_payload.role_name.includes(\"admin\")) {\n    \n    if (msg.user_payload.state.state == \"created\" || msg.user_payload.state.state == \"username\") {\n        \n        //for the next question\n        msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n        \n        return [msg, null, null, null];\n        \n    } else if (msg.user_payload.state.state == \"location\") {\n        \n        //for the next question\n        msg.text = \"Будь ласка, оберіть один з варіантів\";\n        msg.locationsPageId = 1;\n        \n        return [null, msg, null, null];\n        \n    } else if (msg.user_payload.state.state == \"occupation\") {\n        \n        //for the next question\n        msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, null, msg, null];\n        \n    }\n    \n}\n\n\n\nreturn [null, null, null, msg];",
+        "func": "msg.newMessage = true;\n\n\n\nif (!msg.user_payload.role_name.includes(\"admin\")) {\n    \n    if (msg.user_payload.state.state == \"created\" || msg.user_payload.state.state == \"username\") {\n        \n        //for the next question\n        msg.text = \"Чи можу я до вас звертатися \" + msg.first_name + \" \" + msg.last_name + \"?\";\n        \n        return [msg, null, null, null];\n        \n    } else if (msg.user_payload.state.state == \"location\") {\n        \n        //for the next question\n        msg.text = \"Будь ласка, оберіть один з варіантів\";\n        msg.locationsPageId = 1;\n        \n        return [null, msg, null, null];\n        \n    } else if (msg.user_payload.state.state == \"occupation\") {\n        \n        //for the next question\n        msg.text = \"Для кращого підбору FAQ 📊 виберіть свій вид зайнятості\";\n        \n        return [null, null, msg, null];\n        \n    }\n    \n}\n\n\n\nreturn [null, null, null, msg];",
         "outputs": 4,
         "noerr": 0,
         "initialize": "",
@@ -2207,7 +2214,8 @@
             "c93fac14.b4c41",
             "aa4734c9.318da8",
             "f2d2b96e.dd4d58",
-            "7900dc4d.f07c74"
+            "7900dc4d.f07c74",
+            "b4b6b768.2c65f8"
         ],
         "x": 355,
         "y": 320,
@@ -2314,8 +2322,8 @@
         "type": "function",
         "z": "d3d080fa.62628",
         "name": "Setting up next or last question",
-        "func": "msg.sendAsASimpleMessage = true;\n\nvar questionId = 0;\n\n\n\nfunction getEmojiById(index) {\n    var emojies = [\"1️⃣\", \"2️⃣\", \"3️⃣\", \"4️⃣\", \"5️⃣\"];\n    \n    return emojies[index];\n    \n}\n\n\n\nfunction fromAdminPanel() {\n    if (msg.user_payload.role_name.includes(\"admin\") && (msg.message.startsWith(\"theMostPopularQPaginationForAdmin_\") || msg.message == \"theMostPopularQuestionsForAdmin\")) {\n        return true;\n    }\n}\n\n\n//if it isn't the first message, gets question id from message\nif (msg.message.startsWith(\"theMostPopularQPagination_\") || msg.message.startsWith(\"theMostPopularQPaginationForAdmin_\")) {\n    questionId = parseInt(msg.message.split(\"_\")[1]);\n    \n    msg.sendAsASimpleMessage = false;\n    \n}\n\n\n//setting up message\nmsg.payload = {\n    \"parse_mode\": \"html\",\n    \"text\": (questionId+1) + \". \" + msg.payload.questions[questionId].question\n        + (msg.user_payload.role_name.includes(\"admin\") ? (\"\\n\\n<b>Задано:</b> \" + msg.payload.questions[questionId].stats) : \"\")\n        + \"\\n\\n<b>Відповідь:</b>\\n\" + msg.payload.questions[questionId].answer,\n    \"chat_id\": msg.chat_id,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[]]\n    },\n}\n\n\n//if it isn't the first message, sets message_id for editing message\nif(!msg.sendAsASimpleMessage) {\n    msg.payload.message_id = msg.message_id;\n}\n\n\n//setting needed control buttons\nif (questionId > 0) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                \"text\": (getEmojiById(questionId - 1) + \" ◀\"),\n                \"callback_data\": ( fromAdminPanel() ? \"theMostPopularQPaginationForAdmin_\" : \"theMostPopularQPagination_\" ) + (questionId - 1)\n            });\n}\n\nif (questionId < 4) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                \"text\": (\"▶ \" + getEmojiById(questionId + 1)),\n                \"callback_data\": ( fromAdminPanel() ? \"theMostPopularQPaginationForAdmin_\" : \"theMostPopularQPagination_\" ) + (questionId + 1)\n            });\n}\n\n\n//adding main-menu button if opened from main menu users or 'back to statistic' button if opened from admin menu\nif (fromAdminPanel()) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Назад до меню статистики\",\n        callback_data: \"statistics\"            \n    }]);\n} else {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"↩ Головне меню\",\n        \"callback_data\": \"mainMenu\"\n    }]);\n}\n\n\n//adds admin menu button if user is admin\nif (msg.user_payload.role_name.includes(\"admin\")) {\n    \n    msg.payload.reply_markup.inline_keyboard.push([{\n        text: \"⚙ Адмін-панель\",\n        callback_data: \"adminMenu\"\n    }]);\n    \n}\n\n\n\nif (msg.sendAsASimpleMessage) return [msg, null];\nelse return [null, msg];",
-        "outputs": 2,
+        "func": "var questionId = 0;\n\n\n\nfunction getEmojiById(index) {\n    var emojies = [\"1️⃣\", \"2️⃣\", \"3️⃣\", \"4️⃣\", \"5️⃣\"];\n    \n    return emojies[index];\n    \n}\n\n\n\nfunction fromAdminPanel() {\n    if (msg.user_payload.role_name.includes(\"admin\") && (msg.message.startsWith(\"theMostPopularQPaginationForAdmin_\") || msg.message == \"theMostPopularQuestionsForAdmin\")) {\n        return true;\n    }\n}\n\n\n//if it isn't the first message, gets question id from message\nif (msg.message.startsWith(\"theMostPopularQPagination_\") || msg.message.startsWith(\"theMostPopularQPaginationForAdmin_\")) {\n    questionId = parseInt(msg.message.split(\"_\")[1]);\n    \n}\n\n\n//setting up message\nmsg.payload = {\n    \"parse_mode\": \"html\",\n    \"text\": (questionId+1) + \". \" + msg.payload.questions[questionId].question\n        + (msg.user_payload.role_name.includes(\"admin\") ? (\"\\n\\n<b>Задано:</b> \" + msg.payload.questions[questionId].stats) : \"\")\n        + \"\\n\\n<b>Відповідь:</b>\\n\" + msg.payload.questions[questionId].answer,\n    \"chat_id\": msg.chat_id,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[]]\n    },\n}\n\n\n//setting needed control buttons\nif (questionId > 0) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                \"text\": (getEmojiById(questionId - 1) + \" ◀\"),\n                \"callback_data\": ( fromAdminPanel() ? \"theMostPopularQPaginationForAdmin_\" : \"theMostPopularQPagination_\" ) + (questionId - 1)\n            });\n}\n\nif (questionId < 4) {\n    msg.payload.reply_markup.inline_keyboard[0].push({\n                \"text\": (\"▶ \" + getEmojiById(questionId + 1)),\n                \"callback_data\": ( fromAdminPanel() ? \"theMostPopularQPaginationForAdmin_\" : \"theMostPopularQPagination_\" ) + (questionId + 1)\n            });\n}\n\n\n//adding main-menu button if opened from main menu users or 'back to statistic' button if opened from admin menu\nif (fromAdminPanel()) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        text: \"◀ Назад до меню статистики\",\n        callback_data: \"statistics\"            \n    }]);\n} else {\n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"↩ Головне меню\",\n        \"callback_data\": \"mainMenu\"\n    }]);\n}\n\n\n//adds admin menu button if user is admin\nif (msg.user_payload.role_name.includes(\"admin\")) {\n    \n    msg.payload.reply_markup.inline_keyboard.push([{\n        text: \"⚙ Адмін-панель\",\n        callback_data: \"adminMenu\"\n    }]);\n    \n}\n\n\n\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -2323,10 +2331,7 @@
         "y": 160,
         "wires": [
             [
-                "d5c114ce.369d48"
-            ],
-            [
-                "9fc24cee.822f5"
+                "8367e3d.2a8bd2"
             ]
         ]
     },
@@ -2339,52 +2344,6 @@
         "x": 420,
         "y": 140,
         "wires": []
-    },
-    {
-        "id": "9fc24cee.822f5",
-        "type": "change",
-        "z": "d3d080fa.62628",
-        "name": "Setting up url for editing message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1460,
-        "y": 280,
-        "wires": [
-            [
-                "43f8240a.a3c04c"
-            ]
-        ]
-    },
-    {
-        "id": "43f8240a.a3c04c",
-        "type": "http request",
-        "z": "d3d080fa.62628",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1730,
-        "y": 280,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "db785c0e.a93d6",
@@ -2455,7 +2414,7 @@
         "y": 60,
         "wires": [
             [
-                "a38f117b.4a1c1"
+                "c56106b.0c23df8"
             ]
         ]
     },
@@ -2505,41 +2464,17 @@
         "wires": []
     },
     {
-        "id": "a38f117b.4a1c1",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "276bc02d.e347",
-        "name": "",
-        "env": [],
-        "x": 1350,
-        "y": 60,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "336efa19.615be6",
         "type": "subflow:4001764a.8341f8",
         "z": "dbbd86af.74c0d8",
         "name": "",
         "env": [],
         "x": 650,
-        "y": 4020,
+        "y": 4120,
         "wires": [
             [
                 "1677f073.b40cc"
             ]
-        ]
-    },
-    {
-        "id": "d5c114ce.369d48",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "d3d080fa.62628",
-        "name": "",
-        "env": [],
-        "x": 1430,
-        "y": 40,
-        "wires": [
-            []
         ]
     },
     {
@@ -2552,8 +2487,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 2930,
-        "y": 280,
+        "x": 3190,
+        "y": 300,
         "wires": [
             [
                 "bad01863.8f7ad8"
@@ -2569,7 +2504,7 @@
             "10bc7ce3.c92493"
         ],
         "x": 1775,
-        "y": 4080,
+        "y": 4180,
         "wires": []
     },
     {
@@ -2579,7 +2514,7 @@
         "name": "Admin",
         "info": "",
         "x": 1810,
-        "y": 4040,
+        "y": 4140,
         "wires": []
     },
     {
@@ -2630,18 +2565,6 @@
         "wires": []
     },
     {
-        "id": "ee6a100.26f8bf",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "74e0bd75.30b964",
-        "name": "",
-        "env": [],
-        "x": 1650,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "7a6c7bed.6c8544",
         "type": "function",
         "z": "74e0bd75.30b964",
@@ -2655,7 +2578,7 @@
         "y": 160,
         "wires": [
             [
-                "ee6a100.26f8bf"
+                "dd81d33f.b8bea"
             ]
         ]
     },
@@ -2679,7 +2602,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1180,
+        "x": 1320,
         "y": 300,
         "wires": [
             [
@@ -2828,7 +2751,7 @@
         "repair": false,
         "outputs": 22,
         "x": 1460,
-        "y": 1980,
+        "y": 2080,
         "wires": [
             [
                 "16626079.4e26d"
@@ -2907,7 +2830,7 @@
             "e6b71aba.a6e668"
         ],
         "x": 1775,
-        "y": 1320,
+        "y": 1420,
         "wires": []
     },
     {
@@ -2917,7 +2840,7 @@
         "name": "Send admin statistics menu",
         "info": "",
         "x": 1880,
-        "y": 1280,
+        "y": 1380,
         "wires": []
     },
     {
@@ -2960,19 +2883,8 @@
         "y": 80,
         "wires": [
             [
-                "ef71566a.78a108"
+                "7f5f1f49.25a54"
             ]
-        ]
-    },
-    {
-        "id": "ef71566a.78a108",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "x": 1670,
-        "y": 80,
-        "wires": [
-            []
         ]
     },
     {
@@ -2984,7 +2896,7 @@
             "fa6195ba.f6b108"
         ],
         "x": 1775,
-        "y": 3240,
+        "y": 3340,
         "wires": []
     },
     {
@@ -2994,7 +2906,7 @@
         "name": "Send number of users of a group",
         "info": "",
         "x": 1890,
-        "y": 3200,
+        "y": 3300,
         "wires": []
     },
     {
@@ -3015,7 +2927,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1310,
-        "y": 3240,
+        "y": 3340,
         "wires": [
             [
                 "1efe31e6.57de7e"
@@ -3054,7 +2966,7 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Setting up message with menu with groups",
-        "func": "var groups = [[\"Applicant\", '', \"Абітурієнти\"], [\"Parent\", '', \"Батьки\"], [\"Teacher\", '', \"Викладачі\"], [\"Student\", '', \"Студенти\"], [\"Other\", '', \"Інше\"]];\n\n\n\nmsg.payload = {\n    \"text\": \"Оберіть необхідні пункти 📊\",\n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nmsg.firstMessage = true;\n\n\n\nif (msg.message.startsWith(\"selectGroup\")) {\n    \n    msg.firstMessage = false;\n    msg.payload.message_id = msg.message_id;\n    \n}\n\n\n//mark selected groups\nif (msg.selectedGroups) {\n    \n    groups.forEach((value, index) => {\n       \n       if (msg.selectedGroups.includes(value[0])) {\n           groups[index][1] = \"✅\";\n       }\n        \n    });\n    \n}\n\n\n//settings buttons with groups\nvar buttonsRow = [];\ngroups.forEach((value, index) => {\n   \n    buttonsRow.push({\n        \"text\": (value[1] + \" \" + value[2]),\n        \"callback_data\": \"selectGroup_\" + value[0]\n    });\n    \n    if ((((index+1)%2) == 0) || (index == (groups.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n});\n\n\n//if there are any selected groups\nif (msg.selectedGroups.length) {\n    \n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"Підтвердити вибір\",\n        \"callback_data\": \"getNumberOfUsers\"\n    }]);\n    \n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"◀ Назад до меню статистики\",\n        \"callback_data\": \"statistics\"            \n    }],\n    [{\n        \"text\": \"⚙ Адмін-панель\",\n        \"callback_data\": \"adminMenu\"            \n    }]);\n\n\n\nreturn msg;",
+        "func": "var groups = [[\"Applicant\", '', \"Абітурієнти\"], [\"Parent\", '', \"Батьки\"], [\"Teacher\", '', \"Викладачі\"], [\"Student\", '', \"Студенти\"], [\"Other\", '', \"Інше\"]];\n\n\n\nmsg.payload = {\n    \"text\": \"Оберіть необхідні пункти 📊\",\n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nif (msg.message.startsWith(\"selectGroup\")) {\n    \n    msg.payload.message_id = msg.message_id;\n    \n}\n\n\n//mark selected groups\nif (msg.selectedGroups) {\n    \n    groups.forEach((value, index) => {\n       \n       if (msg.selectedGroups.includes(value[0])) {\n           groups[index][1] = \"✅\";\n       }\n        \n    });\n    \n}\n\n\n//settings buttons with groups\nvar buttonsRow = [];\ngroups.forEach((value, index) => {\n   \n    buttonsRow.push({\n        \"text\": (value[1] + \" \" + value[2]),\n        \"callback_data\": \"selectGroup_\" + value[0]\n    });\n    \n    if ((((index+1)%2) == 0) || (index == (groups.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n});\n\n\n//if there are any selected groups\nif (msg.selectedGroups.length) {\n    \n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"Підтвердити вибір\",\n        \"callback_data\": \"getNumberOfUsers\"\n    }]);\n    \n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"◀ Назад до меню статистики\",\n        \"callback_data\": \"statistics\"            \n    }],\n    [{\n        \"text\": \"⚙ Адмін-панель\",\n        \"callback_data\": \"adminMenu\"            \n    }]);\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3063,7 +2975,7 @@
         "y": 220,
         "wires": [
             [
-                "14b49f99.4eb11"
+                "11c896c0.177619"
             ]
         ]
     },
@@ -3076,7 +2988,7 @@
             "e73d99f1.c57c58"
         ],
         "x": 1775,
-        "y": 1480,
+        "y": 1580,
         "wires": []
     },
     {
@@ -3086,7 +2998,7 @@
         "name": "Send menu with groups (number of users)",
         "info": "",
         "x": 1920,
-        "y": 1440,
+        "y": 1540,
         "wires": []
     },
     {
@@ -3098,7 +3010,7 @@
             "174b2f09.720ee1"
         ],
         "x": 1775,
-        "y": 1220,
+        "y": 1320,
         "wires": []
     },
     {
@@ -3108,7 +3020,7 @@
         "name": "Send admin menu",
         "info": "",
         "x": 1850,
-        "y": 1180,
+        "y": 1280,
         "wires": []
     },
     {
@@ -3118,7 +3030,7 @@
         "name": "Start editing info",
         "info": "",
         "x": 1840,
-        "y": 3540,
+        "y": 3640,
         "wires": []
     },
     {
@@ -3139,7 +3051,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1260,
-        "y": 3580,
+        "y": 3680,
         "wires": [
             [
                 "b634643e.b6e4a8"
@@ -3156,7 +3068,7 @@
             "a9fa525e.2b40b"
         ],
         "x": 1775,
-        "y": 3580,
+        "y": 3680,
         "wires": []
     },
     {
@@ -3199,20 +3111,8 @@
         "y": 260,
         "wires": [
             [
-                "a840a40f.812458"
+                "e729601e.dbcfe"
             ]
-        ]
-    },
-    {
-        "id": "a840a40f.812458",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "76bd89c2.eace48",
-        "name": "",
-        "env": [],
-        "x": 1590,
-        "y": 260,
-        "wires": [
-            []
         ]
     },
     {
@@ -3338,18 +3238,6 @@
         "wires": []
     },
     {
-        "id": "e70f41c0.f3098",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "59350fd8.5c52c",
-        "name": "",
-        "env": [],
-        "x": 1930,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "fb5c0751.e781d8",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
@@ -3358,7 +3246,7 @@
             "a8f532b7.9551d"
         ],
         "x": 1775,
-        "y": 2280,
+        "y": 2380,
         "wires": []
     },
     {
@@ -3368,7 +3256,7 @@
         "name": "Send list of groups for distribution",
         "info": "",
         "x": 1890,
-        "y": 2240,
+        "y": 2340,
         "wires": []
     },
     {
@@ -3389,7 +3277,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1290,
-        "y": 3680,
+        "y": 3780,
         "wires": [
             [
                 "9b2645fd.c8ba98"
@@ -3405,7 +3293,7 @@
             "a8f532b7.9551d"
         ],
         "x": 1775,
-        "y": 3680,
+        "y": 3780,
         "wires": []
     },
     {
@@ -3415,54 +3303,8 @@
         "name": "Add group for distribution",
         "info": "",
         "x": 1870,
-        "y": 3640,
+        "y": 3740,
         "wires": []
-    },
-    {
-        "id": "5b54cd4a.61f504",
-        "type": "http request",
-        "z": "59350fd8.5c52c",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2230,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "76441be9.c976f4",
-        "type": "change",
-        "z": "59350fd8.5c52c",
-        "name": "Setting up editMessageText url",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1950,
-        "y": 240,
-        "wires": [
-            [
-                "5b54cd4a.61f504"
-            ]
-        ]
     },
     {
         "id": "b5ff5cf5.c0b24",
@@ -3500,7 +3342,7 @@
             "fe06c939.f5a5f8"
         ],
         "x": 1775,
-        "y": 2360,
+        "y": 2460,
         "wires": []
     },
     {
@@ -3510,7 +3352,7 @@
         "name": "Send message to write text for distribution",
         "info": "",
         "x": 1920,
-        "y": 2320,
+        "y": 2420,
         "wires": []
     },
     {
@@ -3527,20 +3369,8 @@
         "y": 300,
         "wires": [
             [
-                "a033be76.0e7ac"
+                "666d9ee6.cdeaa"
             ]
-        ]
-    },
-    {
-        "id": "a033be76.0e7ac",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "59350fd8.5c52c",
-        "name": "",
-        "env": [],
-        "x": 1830,
-        "y": 300,
-        "wires": [
-            []
         ]
     },
     {
@@ -3610,7 +3440,7 @@
             "8182241d.800bf8"
         ],
         "x": 1775,
-        "y": 2440,
+        "y": 2540,
         "wires": []
     },
     {
@@ -3620,7 +3450,7 @@
         "name": "Send message with buttons for editing distribution",
         "info": "",
         "x": 1940,
-        "y": 2400,
+        "y": 2500,
         "wires": []
     },
     {
@@ -3663,20 +3493,8 @@
         "y": 460,
         "wires": [
             [
-                "f33aa358.28c37"
+                "16510651.7b789a"
             ]
-        ]
-    },
-    {
-        "id": "f33aa358.28c37",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "59350fd8.5c52c",
-        "name": "",
-        "env": [],
-        "x": 1030,
-        "y": 460,
-        "wires": [
-            []
         ]
     },
     {
@@ -3724,7 +3542,7 @@
                 "c93fac14.b4c41"
             ],
             [
-                "59c43f49.d05c1"
+                "db827d08.1e0a1"
             ]
         ],
         "outputLabels": [
@@ -3777,8 +3595,8 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Setting up message with list of groups for distribution",
-        "func": "var groups = [[\"Applicant\", '', \"Абітурієнти\"], [\"Parent\", '', \"Батьки\"], [\"Teacher\", '', \"Викладачі\"], [\"Student\", '', \"Студенти\"], [\"Other\", '', \"Інше\"]];\n\n\n\nmsg.payload = {\n    \"text\": \"Виберіть необхідні категорії користувачів 🙂\",\n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n//marking choosed groups\nif (msg.message != \"distribution\")  {\n    \n    groups.forEach((value, index) => {\n        \n        if (msg.addedGroups.includes(value[0])) groups[index][1] = \"✅\";\n        \n    });\n    \n}\n\n\n//adding inline buttons of groups\nvar groupsButtons = [];\ngroups.forEach((value, index) => {\n\n    groupsButtons.push({\n            \"text\": value[1] + \" \" + value[2],\n            \"callback_data\": \"addForDistribution_\" + value[0]            \n        });\n\n    if((index+1)%2 == 0 || index == (groups.length-1)) {\n\n        msg.payload.reply_markup.inline_keyboard.push(groupsButtons);\n        \n        groupsButtons = [];\n\n    }\n\n});\n\n\n\nif (msg.message != \"distribution\")  {\n    \n    //adds 'continue' button if there are any choosed groups\n    msg.payload.message_id = msg.message_id;\n    \n    if (groups.flat().includes(\"✅\")) {\n        \n        msg.payload.reply_markup.inline_keyboard.push(\n            [{\n                \"text\": \"Підтвердити вибір\",\n                \"callback_data\": ((msg.user_payload.state.message) ? \"goToCompleteDistributionMessage\" : \"writeMessageForDistribution\")        \n            }]);\n            \n    }\n    \n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push(\n        [{\n            \"text\": \"⚙ Адмін-панель\",\n            \"callback_data\": \"adminMenu\"            \n        }]);\n\n\n\nif (msg.message != \"distribution\") {\n    \n    return [null, msg];\n    \n}\n\n\n\nreturn [msg, null];",
-        "outputs": 2,
+        "func": "var groups = [[\"Applicant\", '', \"Абітурієнти\"], [\"Parent\", '', \"Батьки\"], [\"Teacher\", '', \"Викладачі\"], [\"Student\", '', \"Студенти\"], [\"Other\", '', \"Інше\"]];\n\n\n\nmsg.payload = {\n    \"text\": \"Виберіть необхідні категорії користувачів 🙂\",\n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n//marking choosed groups\nif (msg.message != \"distribution\")  {\n    \n    groups.forEach((value, index) => {\n        \n        if (msg.addedGroups.includes(value[0])) groups[index][1] = \"✅\";\n        \n    });\n    \n}\n\n\n//adding inline buttons of groups\nvar groupsButtons = [];\ngroups.forEach((value, index) => {\n\n    groupsButtons.push({\n            \"text\": value[1] + \" \" + value[2],\n            \"callback_data\": \"addForDistribution_\" + value[0]            \n        });\n\n    if((index+1)%2 == 0 || index == (groups.length-1)) {\n\n        msg.payload.reply_markup.inline_keyboard.push(groupsButtons);\n        \n        groupsButtons = [];\n\n    }\n\n});\n\n\n\nif (msg.message != \"distribution\")  {\n    \n    //adds 'continue' button if there are any choosed groups\n    msg.payload.message_id = msg.message_id;\n    \n    if (groups.flat().includes(\"✅\")) {\n        \n        msg.payload.reply_markup.inline_keyboard.push(\n            [{\n                \"text\": \"Підтвердити вибір\",\n                \"callback_data\": ((msg.user_payload.state.message) ? \"goToCompleteDistributionMessage\" : \"writeMessageForDistribution\")        \n            }]);\n            \n    }\n    \n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push(\n    [{\n        \"text\": \"⚙ Адмін-панель\",\n        \"callback_data\": \"adminMenu\"            \n    }]);\n\n\n\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
@@ -3786,10 +3604,7 @@
         "y": 160,
         "wires": [
             [
-                "e70f41c0.f3098"
-            ],
-            [
-                "76441be9.c976f4"
+                "9518124e.27385"
             ]
         ]
     },
@@ -3814,7 +3629,7 @@
         "repair": false,
         "outputs": 2,
         "x": 840,
-        "y": 2340,
+        "y": 2440,
         "wires": [
             [
                 "a5af100c.3c9e6",
@@ -3829,20 +3644,6 @@
                 "eeb74c9c.a355"
             ],
             []
-        ]
-    },
-    {
-        "id": "c017e434.7d5098",
-        "type": "subflow:4001764a.8341f8",
-        "z": "dbbd86af.74c0d8",
-        "name": "",
-        "env": [],
-        "x": 870,
-        "y": 760,
-        "wires": [
-            [
-                "9cf5e768.5f55e8"
-            ]
         ]
     },
     {
@@ -3911,7 +3712,7 @@
         "name": "Send message with confirming spreading button",
         "info": "",
         "x": 1940,
-        "y": 2640,
+        "y": 2740,
         "wires": []
     },
     {
@@ -3924,7 +3725,7 @@
             "f7fe263.2dba3d8"
         ],
         "x": 1775,
-        "y": 2680,
+        "y": 2780,
         "wires": []
     },
     {
@@ -3955,7 +3756,7 @@
             "111e6153.b4b4af"
         ],
         "x": 1775,
-        "y": 2760,
+        "y": 2860,
         "wires": []
     },
     {
@@ -3965,7 +3766,7 @@
         "name": "Complete distribution",
         "info": "",
         "x": 1860,
-        "y": 2720,
+        "y": 2820,
         "wires": []
     },
     {
@@ -3975,7 +3776,7 @@
         "name": "Send list of groups for distribution to edit selected groups",
         "info": "",
         "x": 1970,
-        "y": 2480,
+        "y": 2580,
         "wires": []
     },
     {
@@ -3987,7 +3788,7 @@
             "a8f532b7.9551d"
         ],
         "x": 1775,
-        "y": 2520,
+        "y": 2620,
         "wires": []
     },
     {
@@ -4025,7 +3826,7 @@
             "369d16a4.59851a"
         ],
         "x": 1775,
-        "y": 2860,
+        "y": 2960,
         "wires": []
     },
     {
@@ -4035,7 +3836,7 @@
         "name": "Send message with action buttons for editing admin list",
         "info": "",
         "x": 1960,
-        "y": 2820,
+        "y": 2920,
         "wires": []
     },
     {
@@ -4052,20 +3853,8 @@
         "y": 80,
         "wires": [
             [
-                "8ae69bf9.340b58"
+                "d73fe302.1696"
             ]
-        ]
-    },
-    {
-        "id": "8ae69bf9.340b58",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "4000ac09.8509f4",
-        "name": "",
-        "env": [],
-        "x": 1690,
-        "y": 80,
-        "wires": [
-            []
         ]
     },
     {
@@ -4108,20 +3897,8 @@
         "y": 220,
         "wires": [
             [
-                "7893b837.3bd568"
+                "3d245a1b.924156"
             ]
-        ]
-    },
-    {
-        "id": "7893b837.3bd568",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "4000ac09.8509f4",
-        "name": "",
-        "env": [],
-        "x": 1670,
-        "y": 220,
-        "wires": [
-            []
         ]
     },
     {
@@ -4151,7 +3928,7 @@
             "1837dccf.aa6913"
         ],
         "x": 1775,
-        "y": 2940,
+        "y": 3040,
         "wires": []
     },
     {
@@ -4161,7 +3938,7 @@
         "name": "Send message to write useraname of new admin",
         "info": "",
         "x": 1940,
-        "y": 2900,
+        "y": 3000,
         "wires": []
     },
     {
@@ -4293,20 +4070,8 @@
         "y": 500,
         "wires": [
             [
-                "200c282d.8dfb58"
+                "9f639060.b5e87"
             ]
-        ]
-    },
-    {
-        "id": "200c282d.8dfb58",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "4000ac09.8509f4",
-        "name": "",
-        "env": [],
-        "x": 1570,
-        "y": 500,
-        "wires": [
-            []
         ]
     },
     {
@@ -4318,7 +4083,7 @@
             "e8450ef9.72f97"
         ],
         "x": 1775,
-        "y": 3020,
+        "y": 3120,
         "wires": []
     },
     {
@@ -4328,7 +4093,7 @@
         "name": "Send message with admins to delete",
         "info": "",
         "x": 1900,
-        "y": 2980,
+        "y": 3080,
         "wires": []
     },
     {
@@ -4389,7 +4154,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1280,
-        "y": 3780,
+        "y": 3880,
         "wires": [
             [
                 "bcc40914.8260d8"
@@ -4405,7 +4170,7 @@
             "6e64f2dd.67beec"
         ],
         "x": 1775,
-        "y": 3780,
+        "y": 3880,
         "wires": []
     },
     {
@@ -4415,7 +4180,7 @@
         "name": "Send delete admin prompt",
         "info": "",
         "x": 1870,
-        "y": 3740,
+        "y": 3840,
         "wires": []
     },
     {
@@ -4458,20 +4223,8 @@
         "y": 680,
         "wires": [
             [
-                "3f12676f.7ff6e8"
+                "fbb37424.951ca8"
             ]
-        ]
-    },
-    {
-        "id": "3f12676f.7ff6e8",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "4000ac09.8509f4",
-        "name": "",
-        "env": [],
-        "x": 850,
-        "y": 680,
-        "wires": [
-            []
         ]
     },
     {
@@ -4536,7 +4289,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1280,
-        "y": 3860,
+        "y": 3960,
         "wires": [
             [
                 "e3d5dff2.1410b"
@@ -4552,7 +4305,7 @@
             "896bfa0a.e7c978"
         ],
         "x": 1775,
-        "y": 3860,
+        "y": 3960,
         "wires": []
     },
     {
@@ -4562,7 +4315,7 @@
         "name": "Delete admin",
         "info": "",
         "x": 1830,
-        "y": 3820,
+        "y": 3920,
         "wires": []
     },
     {
@@ -4571,7 +4324,7 @@
         "z": "4000ac09.8509f4",
         "name": "Send message with admins for delete",
         "info": "",
-        "x": 2010,
+        "x": 1950,
         "y": 740,
         "wires": []
     },
@@ -4583,7 +4336,7 @@
         "links": [
             "e8450ef9.72f97"
         ],
-        "x": 1875,
+        "x": 1815,
         "y": 780,
         "wires": []
     },
@@ -4592,7 +4345,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message that admin successfully deleted",
-        "func": "msg.payload = {\n    \"text\": \"✅ Адмін усмішно видалений\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"✅ Адмін усмішно видалений\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nmsg.newMessage = true;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4601,21 +4354,7 @@
         "y": 780,
         "wires": [
             [
-                "146cf952.ae8097"
-            ]
-        ]
-    },
-    {
-        "id": "146cf952.ae8097",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "4000ac09.8509f4",
-        "name": "",
-        "env": [],
-        "x": 1610,
-        "y": 780,
-        "wires": [
-            [
-                "5b187e5e.156ae"
+                "edfa56dd.7611a8"
             ]
         ]
     },
@@ -4628,7 +4367,7 @@
             "9d53dc37.4fb94"
         ],
         "x": 1775,
-        "y": 2180,
+        "y": 2280,
         "wires": []
     },
     {
@@ -4638,7 +4377,7 @@
         "name": "Sync Questions",
         "info": "",
         "x": 1840,
-        "y": 2140,
+        "y": 2240,
         "wires": []
     },
     {
@@ -4652,7 +4391,7 @@
             "66760fd2.1e293"
         ],
         "x": 1775,
-        "y": 1920,
+        "y": 2020,
         "wires": []
     },
     {
@@ -4662,7 +4401,7 @@
         "name": "Send message with unanswered questions",
         "info": "",
         "x": 1920,
-        "y": 1880,
+        "y": 1980,
         "wires": []
     },
     {
@@ -4717,18 +4456,6 @@
         "wires": []
     },
     {
-        "id": "99834576.cad338",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "76bd89c2.eace48",
-        "name": "",
-        "env": [],
-        "x": 870,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "63ea27f9.b8b008",
         "type": "function",
         "z": "76bd89c2.eace48",
@@ -4742,7 +4469,7 @@
         "y": 140,
         "wires": [
             [
-                "99834576.cad338"
+                "3603875.f3aa578"
             ]
         ]
     },
@@ -4755,7 +4482,7 @@
             "24561f6c.af24f"
         ],
         "x": 1775,
-        "y": 1740,
+        "y": 1840,
         "wires": []
     },
     {
@@ -4765,7 +4492,7 @@
         "name": "Send message with editing info buttons",
         "info": "",
         "x": 1910,
-        "y": 1700,
+        "y": 1800,
         "wires": []
     },
     {
@@ -4774,7 +4501,9 @@
         "z": "54742aae.b4a584",
         "name": "Send message with buttons for unanswered questions",
         "links": [
-            "f0c9f660.bff8d8"
+            "f0c9f660.bff8d8",
+            "d983ec57.fa0ba",
+            "9d17e62a.98a198"
         ],
         "x": 195,
         "y": 140,
@@ -4795,23 +4524,11 @@
         "wires": []
     },
     {
-        "id": "184bec3.2496514",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "54742aae.b4a584",
-        "name": "",
-        "env": [],
-        "x": 990,
-        "y": 140,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "7af37f3.7f1418",
         "type": "function",
         "z": "54742aae.b4a584",
         "name": "Setting up message with buttons for unanswered questions",
-        "func": "msg.payload = {\n    \"text\": \"Ви в меню питань без відповіді\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"Отримати список питань 💾\",\n                \"callback_data\": \"unansweredQuestions\"            \n            }],\n            [{\n                \"text\": \"Очистити список питань 🚮\",\n                \"callback_data\": \"clearUnansweredQuestionsListPrompt\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Ви в меню питань без відповіді\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"Отримати список питань 💾\",\n                \"callback_data\": \"unansweredQuestions\"            \n            }],\n            [{\n                \"text\": \"Очистити список питань 🚮\",\n                \"callback_data\": \"clearUnansweredQuestionsListPrompt\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id,\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4820,7 +4537,7 @@
         "y": 140,
         "wires": [
             [
-                "184bec3.2496514"
+                "287043ca.1b1f0c"
             ]
         ]
     },
@@ -4833,7 +4550,7 @@
             "9fff14d2.90c118"
         ],
         "x": 1775,
-        "y": 1840,
+        "y": 1940,
         "wires": []
     },
     {
@@ -4843,7 +4560,7 @@
         "name": "Send message with buttons for unasnwered questions",
         "info": "",
         "x": 1960,
-        "y": 1800,
+        "y": 1900,
         "wires": []
     },
     {
@@ -4877,7 +4594,7 @@
         "type": "function",
         "z": "54742aae.b4a584",
         "name": "Setting up message with menu with groups",
-        "func": "msg.payload = {\n    \"text\": \"✅ Список питань успішно очищено\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад до меню питань без відповіді\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"✅ Список питань успішно очищено\",\n    \"chat_id\": msg.chat_id\n}\n\n\n//for next message\nmsg.newMessage = true;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4886,19 +4603,8 @@
         "y": 460,
         "wires": [
             [
-                "81433343.0281c"
+                "f92ac32a.a79b2"
             ]
-        ]
-    },
-    {
-        "id": "81433343.0281c",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "54742aae.b4a584",
-        "name": "",
-        "x": 1710,
-        "y": 460,
-        "wires": [
-            []
         ]
     },
     {
@@ -4950,7 +4656,7 @@
         "type": "function",
         "z": "54742aae.b4a584",
         "name": "Setting up message with unanswered questions",
-        "func": "msg.headers = {\n    \"Content-Type\": \"multipart/form-data\",\n};\n\n\n\nmsg.payload = {\n    \"document\": {\n        \"value\": msg.payload,\n        \"options\": {\n            \"filename\": \"unanswered_questions.xlsx\"\n        }\n    },\n    \"reply_markup\": {\n        \"inline_keyboard\": [\n            [{\n                \"text\": \"◀ Назад до меню питань без відповіді\",\n                \"callback_data\": \"unansweredQuestionsMenu\"            \n            }],\n            [{\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.headers = {\n    \"Content-Type\": \"multipart/form-data\",\n};\n\n\n\nmsg.payload = {\n    \"document\": {\n        \"value\": msg.payload,\n        \"options\": {\n            \"filename\": \"unanswered_questions.xlsx\"\n        }\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n//for next message\nmsg.newMessage = true;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4979,7 +4685,9 @@
         "x": 2170,
         "y": 240,
         "wires": [
-            []
+            [
+                "d983ec57.fa0ba"
+            ]
         ]
     },
     {
@@ -5062,19 +4770,8 @@
         "y": 280,
         "wires": [
             [
-                "d79d3e10.34989"
+                "3c57704.719529"
             ]
-        ]
-    },
-    {
-        "id": "d79d3e10.34989",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "54742aae.b4a584",
-        "name": "",
-        "x": 1970,
-        "y": 280,
-        "wires": [
-            []
         ]
     },
     {
@@ -5102,7 +4799,7 @@
         "name": "",
         "env": [],
         "x": 960,
-        "y": 3980,
+        "y": 4080,
         "wires": [
             [
                 "c255e784.8ab028"
@@ -5118,8 +4815,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "",
         "env": [],
-        "x": 860,
-        "y": 860,
+        "x": 880,
+        "y": 760,
         "wires": [
             [
                 "689e4325.47104c",
@@ -5142,8 +4839,8 @@
         "links": [
             "bb24cad3.d57618"
         ],
-        "x": 855,
-        "y": 980,
+        "x": 875,
+        "y": 880,
         "wires": []
     },
     {
@@ -5152,8 +4849,8 @@
         "z": "dbbd86af.74c0d8",
         "name": "Start",
         "info": "",
-        "x": 890,
-        "y": 940,
+        "x": 910,
+        "y": 840,
         "wires": []
     },
     {
@@ -5241,7 +4938,7 @@
         "initialize": "",
         "finalize": "",
         "x": 3650,
-        "y": 580,
+        "y": 560,
         "wires": [
             [
                 "a8d398a0.9fa888"
@@ -5282,7 +4979,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1260,
-        "y": 1080,
+        "y": 1180,
         "wires": [
             [
                 "70efa88d.2724b8"
@@ -5298,7 +4995,7 @@
             "ff9f3a85.5d7428"
         ],
         "x": 1775,
-        "y": 1080,
+        "y": 1180,
         "wires": []
     },
     {
@@ -5308,7 +5005,7 @@
         "name": "Set location field",
         "info": "",
         "x": 1840,
-        "y": 1040,
+        "y": 1140,
         "wires": []
     },
     {
@@ -5321,7 +5018,7 @@
             "6090c471.a438bc"
         ],
         "x": 1775,
-        "y": 2080,
+        "y": 2180,
         "wires": []
     },
     {
@@ -5331,7 +5028,7 @@
         "name": "Clear unanswered questions list",
         "info": "",
         "x": 1890,
-        "y": 2040,
+        "y": 2140,
         "wires": []
     },
     {
@@ -5392,20 +5089,8 @@
         "y": 120,
         "wires": [
             [
-                "dac84b26.3b7ef8"
+                "b0251ba6.aff118"
             ]
-        ]
-    },
-    {
-        "id": "dac84b26.3b7ef8",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "f0c759b9.ab1e08",
-        "name": "",
-        "env": [],
-        "x": 1550,
-        "y": 120,
-        "wires": [
-            []
         ]
     },
     {
@@ -5417,7 +5102,7 @@
             "a8f532b7.9551d"
         ],
         "x": 1775,
-        "y": 2600,
+        "y": 2700,
         "wires": []
     },
     {
@@ -5427,7 +5112,7 @@
         "name": "Go to editing all for distribution",
         "info": "",
         "x": 1880,
-        "y": 2560,
+        "y": 2660,
         "wires": []
     },
     {
@@ -5457,18 +5142,6 @@
         "wires": []
     },
     {
-        "id": "83a0b2b2.0a24b",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "54742aae.b4a584",
-        "name": "",
-        "env": [],
-        "x": 990,
-        "y": 400,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "94c91a35.873668",
         "type": "function",
         "z": "54742aae.b4a584",
@@ -5482,7 +5155,7 @@
         "y": 400,
         "wires": [
             [
-                "83a0b2b2.0a24b"
+                "a8798d79.4d392"
             ]
         ]
     },
@@ -5495,7 +5168,7 @@
             "d6822df2.3d2d6"
         ],
         "x": 1775,
-        "y": 2000,
+        "y": 2100,
         "wires": []
     },
     {
@@ -5505,7 +5178,7 @@
         "name": "Send message with prompt for clearing unanswered questions list",
         "info": "",
         "x": 1990,
-        "y": 1960,
+        "y": 2060,
         "wires": []
     },
     {
@@ -5662,7 +5335,7 @@
             "db785c0e.a93d6"
         ],
         "x": 1775,
-        "y": 1400,
+        "y": 1500,
         "wires": []
     },
     {
@@ -5672,7 +5345,7 @@
         "name": "Send the most popular questions for admin",
         "info": "",
         "x": 1920,
-        "y": 1360,
+        "y": 1460,
         "wires": []
     },
     {
@@ -5693,7 +5366,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1380,
-        "y": 3160,
+        "y": 3260,
         "wires": [
             [
                 "1be045b7.482f5a"
@@ -5709,7 +5382,7 @@
             "db785c0e.a93d6"
         ],
         "x": 1775,
-        "y": 3160,
+        "y": 3260,
         "wires": []
     },
     {
@@ -5719,7 +5392,7 @@
         "name": "Set answer to another question(pagination) for admin",
         "info": "",
         "x": 1950,
-        "y": 3120,
+        "y": 3220,
         "wires": []
     },
     {
@@ -5797,7 +5470,7 @@
         "type": "function",
         "z": "92b7cb8d.995738",
         "name": "Setting up error message",
-        "func": "msg.payload = {\n    \"text\": \"Сталася помилка\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Сталася помилка\",\n    \"reply_markup\": {\n        \"inline_keyboard\": {\n            \"text\": \"Спробувати знову\",\n            \"callback_data\": \"checkUserState\"\n        }\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5865,7 +5538,7 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "4c6874fb.68b9dc",
         "name": "",
-        "x": 2850,
+        "x": 2950,
         "y": 160,
         "wires": [
             [
@@ -5881,7 +5554,7 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "4c6874fb.68b9dc",
         "name": "",
-        "x": 3170,
+        "x": 3270,
         "y": 180,
         "wires": [
             []
@@ -5919,8 +5592,8 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "3b5b98a.1c38768",
         "name": "",
-        "x": 1730,
-        "y": 80,
+        "x": 1610,
+        "y": 140,
         "wires": [
             [
                 "c6df9017.a5565"
@@ -5935,8 +5608,8 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "3b5b98a.1c38768",
         "name": "",
-        "x": 2030,
-        "y": 100,
+        "x": 1910,
+        "y": 160,
         "wires": [
             []
         ]
@@ -5973,7 +5646,7 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "68a30d94.469f94",
         "name": "",
-        "x": 1550,
+        "x": 1690,
         "y": 300,
         "wires": [
             [],
@@ -5987,7 +5660,7 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "68a30d94.469f94",
         "name": "",
-        "x": 1870,
+        "x": 2010,
         "y": 320,
         "wires": [
             []
@@ -5998,8 +5671,8 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "68a30d94.469f94",
         "name": "",
-        "x": 3270,
-        "y": 280,
+        "x": 3530,
+        "y": 300,
         "wires": [
             [
                 "59d394d6.305dac",
@@ -6015,8 +5688,8 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "68a30d94.469f94",
         "name": "",
-        "x": 3590,
-        "y": 320,
+        "x": 3850,
+        "y": 340,
         "wires": [
             []
         ]
@@ -6179,7 +5852,7 @@
         "z": "cbf72f33.63dd6",
         "name": "",
         "x": 4270,
-        "y": 580,
+        "y": 560,
         "wires": [
             [],
             []
@@ -6607,6 +6280,7 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "4000ac09.8509f4",
         "name": "",
+        "env": [],
         "x": 750,
         "y": 820,
         "wires": [
@@ -6833,7 +6507,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1270,
-        "y": 1000,
+        "y": 1100,
         "wires": [
             [
                 "dfc4ca.9d1c3b38"
@@ -6849,7 +6523,7 @@
             "1835ced7.6011d1"
         ],
         "x": 1775,
-        "y": 1000,
+        "y": 1100,
         "wires": []
     },
     {
@@ -6859,83 +6533,8 @@
         "name": "Location pagination",
         "info": "",
         "x": 1850,
-        "y": 960,
+        "y": 1060,
         "wires": []
-    },
-    {
-        "id": "123a10e0.c9c01f",
-        "type": "switch",
-        "z": "3b5b98a.1c38768",
-        "name": "If first message",
-        "property": "firstMessage",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 780,
-        "y": 140,
-        "wires": [
-            [
-                "bcaa2825.03ec98"
-            ],
-            [
-                "1e11e3a8.78271c"
-            ]
-        ]
-    },
-    {
-        "id": "1e11e3a8.78271c",
-        "type": "change",
-        "z": "3b5b98a.1c38768",
-        "name": "Setting up url for editing message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1060,
-        "y": 200,
-        "wires": [
-            [
-                "8d5e022c.aa2f4"
-            ]
-        ]
-    },
-    {
-        "id": "8d5e022c.aa2f4",
-        "type": "http request",
-        "z": "3b5b98a.1c38768",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 1330,
-        "y": 200,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "1d2bda75.7455e6",
@@ -6960,7 +6559,7 @@
         "type": "function",
         "z": "892838ee.3ab438",
         "name": "Setting up message with locations to select for statistics",
-        "func": "var cities = {\"Вінницька\" : '', \"Волинська\" : '', \"Дніпропетровська\" : '', \"Донецька\" : '', \"Житомирська\" : '', \"Закарпатська\" : '', \"Запорізька\" : '',\n    \"Івано-Франківська\" : '', \"Київська\" : '', \"Кіровоградська\" : '', \"Луганська\" : '', \"Львівська\" : '', \"Миколаївська\" : '',\n    \"Одеська\" : '', \"Полтавська\" : '', \"Рівненська\" : '', \"Сумська\" : '', \"Тернопільська\" : '', \"Харківська\" : '', \"Херсонська\" : '',\n    \"Хмельницька\" : '', \"Черкаська\" : '', \"Чернівецька\" : '', \"Чернігівська\" : '', \"АР Крим\" : '', \"за межами України\" : ''};\n\n\n\nmsg.payload = {\n    \"text\": \"Оберіть необхідні пункти 📊\",    \n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id,\n    \n}\n\n\n\nmsg.firstMessage = false;\n\n\n\nfunction getEmojiById(index) {\n    var emojies = [\"1️⃣\", \"2️⃣\"];\n    \n    return emojies[index];\n    \n}\n\n\n\nif (msg.message == \"locationMenuNumberOfUsers\") {\n    \n    msg.locationsPageId = 1;\n    msg.firstMessage = true;\n    \n}\n\n\n//setting page id\nif(msg.message.split('_')[0] == \"selectingLocationStatisticsPagination\") {\n    \n    msg.locationsPageId = parseInt(msg.message.split('_')[1]);\n    msg.payload.message_id = msg.message_id;\n    \n} else if (msg.message.startsWith(\"selectLocationStatistics\")) {\n    \n    msg.locationsPageId = parseInt(msg.message.split('_')[2]);\n    msg.payload.message_id = msg.message_id;\n    \n}\n\n\n//mark selected locations\nfor (const [key, value] of Object.entries(cities)) {\n\n    if (msg.selectedLocations.includes(key)) {\n        cities[key] = \"✅\";\n    }\n\n}\n\n\n//setting location buttons\nvar buttonsRow = [];\nfor(var i = ((msg.locationsPageId-1)*14); (i < Object.keys(cities).length && i <= (msg.locationsPageId*13)); i++) {\n    \n    buttonsRow.push({\n        \"text\": (cities[Object.keys(cities)[i]] + \" \" + (Object.keys(cities)[i])),\n        \"callback_data\": (\"selectLocationStatistics_\" + Object.keys(cities)[i] + \"_\" + msg.locationsPageId)\n    });\n    \n    if ((((i+1)%2) == 0) || (i == (cities.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n}\n\n\n\n//setting needed control buttons\nif (msg.locationsPageId > 1) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (getEmojiById(msg.locationsPageId - 2) + \" ◀\"),\n                \"callback_data\": \"selectingLocationStatisticsPagination_\" + (msg.locationsPageId - 1)\n            }]);\n}\n\nif (msg.locationsPageId < 2) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (\"▶ \" + getEmojiById(msg.locationsPageId)),\n                \"callback_data\": \"selectingLocationStatisticsPagination_\" + (msg.locationsPageId + 1)\n            }]);\n}\n\n\n//if there are any selected locations\nif (msg.selectedLocations.length) {\n    \n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"Підтвердити вибір\",\n        \"callback_data\": \"getNumberOfUsers\"\n    }]);\n    \n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push(\n    [{\n        \"text\": \"◀ Назад до меню статистики\",\n        \"callback_data\": \"statistics\"            \n    }],\n    [{\n        \"text\": \"⚙ Адмін-панель\",\n        \"callback_data\": \"adminMenu\"            \n    }]);\n\n\n\nreturn msg;",
+        "func": "var cities = {\"Вінницька\" : '', \"Волинська\" : '', \"Дніпропетровська\" : '', \"Донецька\" : '', \"Житомирська\" : '', \"Закарпатська\" : '', \"Запорізька\" : '',\n    \"Івано-Франківська\" : '', \"Київська\" : '', \"Кіровоградська\" : '', \"Луганська\" : '', \"Львівська\" : '', \"Миколаївська\" : '',\n    \"Одеська\" : '', \"Полтавська\" : '', \"Рівненська\" : '', \"Сумська\" : '', \"Тернопільська\" : '', \"Харківська\" : '', \"Херсонська\" : '',\n    \"Хмельницька\" : '', \"Черкаська\" : '', \"Чернівецька\" : '', \"Чернігівська\" : '', \"АР Крим\" : '', \"за межами України\" : ''};\n\n\n\nmsg.payload = {\n    \"text\": \"Оберіть необхідні пункти 📊\",    \n    \"reply_markup\": {\n        \"inline_keyboard\": []\n    },\n    \"chat_id\": msg.chat_id,\n    \n}\n\n\n\nfunction getEmojiById(index) {\n    var emojies = [\"1️⃣\", \"2️⃣\"];\n    \n    return emojies[index];\n    \n}\n\n\n\nif (msg.message == \"locationMenuNumberOfUsers\") {\n    \n    msg.locationsPageId = 1;\n    \n}\n\n\n//setting page id\nif(msg.message.split('_')[0] == \"selectingLocationStatisticsPagination\") {\n    \n    msg.locationsPageId = parseInt(msg.message.split('_')[1]);\n    msg.payload.message_id = msg.message_id;\n    \n} else if (msg.message.startsWith(\"selectLocationStatistics\")) {\n    \n    msg.locationsPageId = parseInt(msg.message.split('_')[2]);\n    msg.payload.message_id = msg.message_id;\n    \n}\n\n\n//mark selected locations\nfor (const [key, value] of Object.entries(cities)) {\n\n    if (msg.selectedLocations.includes(key)) {\n        cities[key] = \"✅\";\n    }\n\n}\n\n\n//setting location buttons\nvar buttonsRow = [];\nfor(var i = ((msg.locationsPageId-1)*14); (i < Object.keys(cities).length && i <= (msg.locationsPageId*13)); i++) {\n    \n    buttonsRow.push({\n        \"text\": (cities[Object.keys(cities)[i]] + \" \" + (Object.keys(cities)[i])),\n        \"callback_data\": (\"selectLocationStatistics_\" + Object.keys(cities)[i] + \"_\" + msg.locationsPageId)\n    });\n    \n    if ((((i+1)%2) == 0) || (i == (cities.length-1))) {\n        msg.payload.reply_markup.inline_keyboard.push(buttonsRow);\n        buttonsRow = [];\n    }\n    \n}\n\n\n\n//setting needed control buttons\nif (msg.locationsPageId > 1) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (getEmojiById(msg.locationsPageId - 2) + \" ◀\"),\n                \"callback_data\": \"selectingLocationStatisticsPagination_\" + (msg.locationsPageId - 1)\n            }]);\n}\n\nif (msg.locationsPageId < 2) {\n    msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": (\"▶ \" + getEmojiById(msg.locationsPageId)),\n                \"callback_data\": \"selectingLocationStatisticsPagination_\" + (msg.locationsPageId + 1)\n            }]);\n}\n\n\n//if there are any selected locations\nif (msg.selectedLocations.length) {\n    \n    msg.payload.reply_markup.inline_keyboard.push([{\n        \"text\": \"Підтвердити вибір\",\n        \"callback_data\": \"getNumberOfUsers\"\n    }]);\n    \n}\n\n\n\nmsg.payload.reply_markup.inline_keyboard.push(\n    [{\n        \"text\": \"◀ Назад до меню статистики\",\n        \"callback_data\": \"statistics\"            \n    }],\n    [{\n        \"text\": \"⚙ Адмін-панель\",\n        \"callback_data\": \"adminMenu\"            \n    }]);\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -6969,7 +6568,7 @@
         "y": 320,
         "wires": [
             [
-                "b355cdd2.e1a"
+                "7edb2d9c.c881c4"
             ]
         ]
     },
@@ -6984,93 +6583,6 @@
         "wires": []
     },
     {
-        "id": "5f5980d1.03e1b",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "env": [],
-        "x": 2030,
-        "y": 300,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "b355cdd2.e1a",
-        "type": "switch",
-        "z": "892838ee.3ab438",
-        "name": "If first message",
-        "property": "firstMessage",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1780,
-        "y": 320,
-        "wires": [
-            [
-                "5f5980d1.03e1b"
-            ],
-            [
-                "d07f0c5.58555f"
-            ]
-        ]
-    },
-    {
-        "id": "d07f0c5.58555f",
-        "type": "change",
-        "z": "892838ee.3ab438",
-        "name": "Setting up url for editing message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 2060,
-        "y": 340,
-        "wires": [
-            [
-                "1caa4746.d3a0a9"
-            ]
-        ]
-    },
-    {
-        "id": "1caa4746.d3a0a9",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2330,
-        "y": 340,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "1096c37b.59fa1d",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
@@ -7079,7 +6591,7 @@
             "1d2bda75.7455e6"
         ],
         "x": 1775,
-        "y": 1560,
+        "y": 1660,
         "wires": []
     },
     {
@@ -7089,7 +6601,7 @@
         "name": "Send message with locations to select for statistics (number of users)",
         "info": "",
         "x": 2000,
-        "y": 1520,
+        "y": 1620,
         "wires": []
     },
     {
@@ -7155,7 +6667,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1290,
-        "y": 3480,
+        "y": 3580,
         "wires": [
             [
                 "a8bbfb59.fc5a78"
@@ -7171,7 +6683,7 @@
             "1d2bda75.7455e6"
         ],
         "x": 1775,
-        "y": 3480,
+        "y": 3580,
         "wires": []
     },
     {
@@ -7181,7 +6693,7 @@
         "name": "Select location (statistics)",
         "info": "",
         "x": 1870,
-        "y": 3440,
+        "y": 3540,
         "wires": []
     },
     {
@@ -7202,7 +6714,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1330,
-        "y": 3320,
+        "y": 3420,
         "wires": [
             [
                 "399b67d2.932128"
@@ -7218,7 +6730,7 @@
             "1d2bda75.7455e6"
         ],
         "x": 1775,
-        "y": 3320,
+        "y": 3420,
         "wires": []
     },
     {
@@ -7228,7 +6740,7 @@
         "name": "Change page of locations (statistics)",
         "info": "",
         "x": 1900,
-        "y": 3280,
+        "y": 3380,
         "wires": []
     },
     {
@@ -7334,19 +6846,8 @@
         "y": 460,
         "wires": [
             [
-                "7aebcff9.a4d75"
+                "9df3df56.73575"
             ]
-        ]
-    },
-    {
-        "id": "7aebcff9.a4d75",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "x": 1630,
-        "y": 460,
-        "wires": [
-            []
         ]
     },
     {
@@ -7385,7 +6886,7 @@
             "da37521.b37e1b"
         ],
         "x": 1775,
-        "y": 1640,
+        "y": 1740,
         "wires": []
     },
     {
@@ -7395,7 +6896,7 @@
         "name": "Get number of users by locations (number of users)",
         "info": "",
         "x": 1950,
-        "y": 1600,
+        "y": 1700,
         "wires": []
     },
     {
@@ -7444,93 +6945,6 @@
         ]
     },
     {
-        "id": "80aca55e.3db458",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "env": [],
-        "x": 1930,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "14b49f99.4eb11",
-        "type": "switch",
-        "z": "892838ee.3ab438",
-        "name": "If first message",
-        "property": "firstMessage",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            },
-            {
-                "t": "else"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 1680,
-        "y": 220,
-        "wires": [
-            [
-                "80aca55e.3db458"
-            ],
-            [
-                "bc871251.823e2"
-            ]
-        ]
-    },
-    {
-        "id": "bc871251.823e2",
-        "type": "change",
-        "z": "892838ee.3ab438",
-        "name": "Setting up url for editing message",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1960,
-        "y": 240,
-        "wires": [
-            [
-                "a0aa5411.927178"
-            ]
-        ]
-    },
-    {
-        "id": "a0aa5411.927178",
-        "type": "http request",
-        "z": "892838ee.3ab438",
-        "name": "",
-        "method": "POST",
-        "ret": "obj",
-        "paytoqs": "ignore",
-        "url": "",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "basic",
-        "x": 2210,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "932defa9.df42a",
         "type": "link out",
         "z": "dbbd86af.74c0d8",
@@ -7539,7 +6953,7 @@
             "e73d99f1.c57c58"
         ],
         "x": 1775,
-        "y": 3400,
+        "y": 3500,
         "wires": []
     },
     {
@@ -7549,7 +6963,7 @@
         "name": "Select group (statistics)",
         "info": "",
         "x": 1860,
-        "y": 3360,
+        "y": 3460,
         "wires": []
     },
     {
@@ -7570,11 +6984,518 @@
         "repair": false,
         "outputs": 1,
         "x": 1290,
-        "y": 3400,
+        "y": 3500,
         "wires": [
             [
                 "932defa9.df42a"
             ]
         ]
+    },
+    {
+        "id": "3dce6908.e37b76",
+        "type": "change",
+        "z": "5f6976c0.70d2f8",
+        "name": "Setting up parameters for edititng message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.message_id",
+                "pt": "msg",
+                "to": "message_id",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "\"https://api.telegram.org/bot\" & $env('TOKEN') & \"/editMessageText\"",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 100,
+        "wires": [
+            [
+                "6c35ddb6.3c1d14"
+            ]
+        ]
+    },
+    {
+        "id": "6c35ddb6.3c1d14",
+        "type": "http request",
+        "z": "5f6976c0.70d2f8",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "basic",
+        "x": 730,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33c4750a.4d769a",
+        "type": "switch",
+        "z": "bdbd1830.acc9f8",
+        "name": "If new message",
+        "property": "newMessage",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 320,
+        "y": 160,
+        "wires": [
+            [
+                "e28e4ad2.958008"
+            ],
+            [
+                "b8767d03.835e4"
+            ]
+        ]
+    },
+    {
+        "id": "b8767d03.835e4",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "bdbd1830.acc9f8",
+        "name": "",
+        "x": 590,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e28e4ad2.958008",
+        "type": "subflow:411ddac8.164cb4",
+        "z": "bdbd1830.acc9f8",
+        "name": "",
+        "x": 590,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "996f3e12.5bded",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "4c6874fb.68b9dc",
+        "name": "",
+        "x": 2200,
+        "y": 160,
+        "wires": [
+            [
+                "32bc9488.39455c"
+            ]
+        ]
+    },
+    {
+        "id": "a9557143.ea5a3",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "3b5b98a.1c38768",
+        "name": "",
+        "x": 840,
+        "y": 140,
+        "wires": [
+            [
+                "f83bba65.663248"
+            ]
+        ]
+    },
+    {
+        "id": "7cb07f12.4a9b1",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "68a30d94.469f94",
+        "name": "",
+        "x": 880,
+        "y": 300,
+        "wires": [
+            [
+                "5cdcad90.c84254"
+            ]
+        ]
+    },
+    {
+        "id": "4fbd66e3.fbd4e8",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "df5e43cb.b674f",
+        "name": "",
+        "x": 1720,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8367e3d.2a8bd2",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "d3d080fa.62628",
+        "name": "",
+        "x": 1430,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c56106b.0c23df8",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "276bc02d.e347",
+        "name": "",
+        "x": 1350,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "32d02ee3.d6cc12",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "cbf72f33.63dd6",
+        "name": "",
+        "x": 3320,
+        "y": 520,
+        "wires": [
+            [
+                "44bde95d.ab5328",
+                "5c02823e.dbdd4c"
+            ]
+        ]
+    },
+    {
+        "id": "dd81d33f.b8bea",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "74e0bd75.30b964",
+        "name": "",
+        "x": 1700,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "db827d08.1e0a1",
+        "type": "change",
+        "z": "14785f2b.3d2341",
+        "name": "Set as new message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "newMessage",
+                "pt": "msg",
+                "to": "true",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 560,
+        "y": 400,
+        "wires": [
+            [
+                "59c43f49.d05c1"
+            ]
+        ]
+    },
+    {
+        "id": "7f5f1f49.25a54",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "892838ee.3ab438",
+        "name": "",
+        "x": 1630,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "11c896c0.177619",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "892838ee.3ab438",
+        "name": "",
+        "x": 1650,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7edb2d9c.c881c4",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "892838ee.3ab438",
+        "name": "",
+        "x": 1730,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9df3df56.73575",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "892838ee.3ab438",
+        "name": "",
+        "x": 1610,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3603875.f3aa578",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "x": 790,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e729601e.dbcfe",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "x": 1550,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a8798d79.4d392",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 950,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f92ac32a.a79b2",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 1650,
+        "y": 460,
+        "wires": [
+            [
+                "9d17e62a.98a198"
+            ]
+        ]
+    },
+    {
+        "id": "b0251ba6.aff118",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "f0c759b9.ab1e08",
+        "name": "",
+        "x": 1470,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9518124e.27385",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "59350fd8.5c52c",
+        "name": "",
+        "x": 1870,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "666d9ee6.cdeaa",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "59350fd8.5c52c",
+        "name": "",
+        "x": 1770,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16510651.7b789a",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "59350fd8.5c52c",
+        "name": "",
+        "x": 1030,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d73fe302.1696",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "4000ac09.8509f4",
+        "name": "",
+        "x": 1650,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3d245a1b.924156",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "4000ac09.8509f4",
+        "name": "",
+        "x": 1630,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "edfa56dd.7611a8",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "4000ac09.8509f4",
+        "name": "",
+        "x": 1610,
+        "y": 780,
+        "wires": [
+            [
+                "5b187e5e.156ae"
+            ]
+        ]
+    },
+    {
+        "id": "fbb37424.951ca8",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "4000ac09.8509f4",
+        "name": "",
+        "x": 830,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9f639060.b5e87",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "4000ac09.8509f4",
+        "name": "",
+        "x": 1580,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d983ec57.fa0ba",
+        "type": "link out",
+        "z": "54742aae.b4a584",
+        "name": "Go to sending message with buttons for unanswered questions",
+        "links": [
+            "9fff14d2.90c118"
+        ],
+        "x": 2375,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a975cb5a.81ae88",
+        "type": "comment",
+        "z": "54742aae.b4a584",
+        "name": "Go to sending message with buttons for unanswered questions",
+        "info": "",
+        "x": 2580,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9d17e62a.98a198",
+        "type": "link out",
+        "z": "54742aae.b4a584",
+        "name": "Go to sending message with buttons for unanswered questions",
+        "links": [
+            "9fff14d2.90c118"
+        ],
+        "x": 1875,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "6ddcd2c6.3e3f3c",
+        "type": "comment",
+        "z": "54742aae.b4a584",
+        "name": "Go to sending message with buttons for unanswered questions",
+        "info": "",
+        "x": 2080,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "287043ca.1b1f0c",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 1020,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3c57704.719529",
+        "type": "subflow:5f6976c0.70d2f8",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 1910,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4b6b768.2c65f8",
+        "type": "link out",
+        "z": "dbbd86af.74c0d8",
+        "name": "Check if registration is completed",
+        "links": [
+            "4d1e8f79.27d3c"
+        ],
+        "x": 1775,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "4446766b.329858",
+        "type": "comment",
+        "z": "dbbd86af.74c0d8",
+        "name": "Check if registration is completed",
+        "info": "",
+        "x": 1890,
+        "y": 720,
+        "wires": []
     }
 ]
