@@ -2470,7 +2470,7 @@
         "name": "",
         "env": [],
         "x": 650,
-        "y": 4120,
+        "y": 4080,
         "wires": [
             [
                 "1677f073.b40cc"
@@ -3102,7 +3102,7 @@
         "type": "function",
         "z": "76bd89c2.eace48",
         "name": "Setting up message to write new text",
-        "func": "msg.payload = {\n    \"text\": \"Вкажіть новий текст для використання ✍\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Вкажіть новий текст для використання ✍\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"❌ Скасувати\",\n                \"callback_data\": \"editInfoMenu\"            \n            }]]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3888,7 +3888,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Setting up message to write username of new admin",
-        "func": "msg.payload = {\n    \"text\": \"Вкажіть username ✍\",\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Вкажіть username ✍\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"❌ Скасувати\",\n                \"callback_data\": \"adminManagement\"            \n            }]]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4441,7 +4441,7 @@
         "y": 140,
         "wires": [
             [
-                "63ea27f9.b8b008"
+                "dbdd928c.cc465"
             ]
         ]
     },
@@ -4465,8 +4465,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 460,
-        "y": 140,
+        "x": 1260,
+        "y": 120,
         "wires": [
             [
                 "3603875.f3aa578"
@@ -4686,7 +4686,7 @@
         "y": 240,
         "wires": [
             [
-                "d983ec57.fa0ba"
+                "d00f088.16a13f8"
             ]
         ]
     },
@@ -7268,8 +7268,8 @@
         "type": "subflow:5f6976c0.70d2f8",
         "z": "76bd89c2.eace48",
         "name": "",
-        "x": 790,
-        "y": 140,
+        "x": 1590,
+        "y": 120,
         "wires": [
             []
         ]
@@ -7418,7 +7418,7 @@
         "links": [
             "9fff14d2.90c118"
         ],
-        "x": 2375,
+        "x": 2715,
         "y": 240,
         "wires": []
     },
@@ -7428,7 +7428,7 @@
         "z": "54742aae.b4a584",
         "name": "Go to sending message with buttons for unanswered questions",
         "info": "",
-        "x": 2580,
+        "x": 2920,
         "y": 200,
         "wires": []
     },
@@ -7497,5 +7497,63 @@
         "x": 1890,
         "y": 720,
         "wires": []
+    },
+    {
+        "id": "6c84090e.f06d58",
+        "type": "subflow:92b7cb8d.995738",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "x": 1210,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cbccaf76.737f5",
+        "type": "subflow:1bbcb62d.90d9ea",
+        "z": "76bd89c2.eace48",
+        "name": "",
+        "x": 870,
+        "y": 140,
+        "wires": [
+            [
+                "63ea27f9.b8b008"
+            ],
+            [
+                "6c84090e.f06d58"
+            ]
+        ]
+    },
+    {
+        "id": "dbdd928c.cc465",
+        "type": "function",
+        "z": "76bd89c2.eace48",
+        "name": "Changing state filed to 'registered''",
+        "func": "msg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders\n\n\n\nmsg.payload = {\n    \"state\": {\n        \"state\": \"registered\",\n        \"df_contexts\": msg.user_payload.state.df_contexts ? msg.user_payload.state.df_contexts : []\n    }\n}\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 460,
+        "y": 140,
+        "wires": [
+            [
+                "cbccaf76.737f5"
+            ]
+        ]
+    },
+    {
+        "id": "d00f088.16a13f8",
+        "type": "subflow:4001764a.8341f8",
+        "z": "54742aae.b4a584",
+        "name": "",
+        "x": 2450,
+        "y": 240,
+        "wires": [
+            [
+                "d983ec57.fa0ba"
+            ]
+        ]
     }
 ]
