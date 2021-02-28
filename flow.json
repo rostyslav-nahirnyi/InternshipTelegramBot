@@ -966,7 +966,7 @@
         "type": "function",
         "z": "cbf72f33.63dd6",
         "name": "Editing username or city or move on to processing message",
-        "func": "function isTooLongAnswer(text, max_length, hasMainMenuButton = false) {\n    if (msg.message.length > max_length) {\n        \n        msg.payload = {\n            \"text\": text,\n            \"chat_id\": msg.chat_id,\n            \"reply_markup\": {\n                \"inline_keyboard\": []\n            }\n        }\n        \n        if (hasMainMenuButton) {\n            \n            //adds main menu button if hasMenuButtons is true\n            msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"\n            }]);\n        \n            //if user is admin, it sends admin-menu button\n            if (msg.user_payload.role_name.includes(\"admin\")) {\n                msg.payload.reply_markup.inline_keyboard.push([{\n                    \"text\": \"⚙ Адмін-панель\",\n                    \"callback_data\": \"adminMenu\"\n                }]);\n            }\n            \n        }\n        \n        \n        \n        return true;\n        \n    }\n    \n    \n    \n    return false;\n    \n}\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nif (msg.statusCode == 200) {\n    //for admins\n    if (msg.user_payload.role_name.includes(\"admin\")) {\n        if (msg.user_payload.state.state.startsWith(\"editingInfo\")) {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів 2000. Спробуйте знову\", 2000)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n        \n            return [null, null, null, msg, null, null, null];\n            \n        } else if (msg.user_payload.state.state == \"writingTextForDistribution\") {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів 4096. Спробуйте знову\", 4096)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, msg, null, null];\n            \n        } else if (msg.user_payload.state.state == \"addingAdmin\") {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів 32. Спробуйте знову\", 32)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, null, msg, null];\n            \n        }\n    }\n    \n    \n    //registrations and dialogflow\n    if (msg.user_payload.state.state == \"username\") {\n        if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів 255. Спробуйте знову\", 255)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n        \n        msg.payload = {\n            \"name\": msg.message\n        }\n        \n        //for the next question\n        msg.text = \"Зрозуміло. Оберіть свою область\";\n        msg.locationsPageId = 1;\n        \n        return [msg, null, null, null, null, null];\n        \n    } else if (msg.user_payload.state.state == \"registered\" || msg.user_payload.state.state == \"settingGroupsForDistribution\") {\n        \n        //sending saved contexts\n        msg.queryParams = {\n            \"contexts\": msg.user_payload.state.df_contexts\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"answerToDFQuestion_\")) {\n            msg.payload = msg.message.slice(19);\n            \n            msg.intentName = msg.payload;\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        \n        //if questions to dialogflow is too long\n        if (isTooLongAnswer(\"Питання надто довге. Максимальна кількість символів 255. Спробуйте знову\", 255, true)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n\n\n\n        return [null, null, msg, null, null, null, null];\n\n    }\n}\n\n\n\nreturn [null, null, null, null, null, null, msg];",
+        "func": "function isTooLongAnswer(text, max_length, hasMainMenuButton = false) {\n    if (msg.message.length > max_length) {\n        \n        msg.payload = {\n            \"text\": text,\n            \"chat_id\": msg.chat_id,\n            \"reply_markup\": {\n                \"inline_keyboard\": []\n            }\n        }\n        \n        if (hasMainMenuButton) {\n            \n            //adds main menu button if hasMenuButtons is true\n            msg.payload.reply_markup.inline_keyboard.push([{\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"\n            }]);\n        \n            //if user is admin, it sends admin-menu button\n            if (msg.user_payload.role_name.includes(\"admin\")) {\n                msg.payload.reply_markup.inline_keyboard.push([{\n                    \"text\": \"⚙ Адмін-панель\",\n                    \"callback_data\": \"adminMenu\"\n                }]);\n            }\n            \n        }\n        \n        \n        \n        return true;\n        \n    }\n    \n    \n    \n    return false;\n    \n}\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nif (msg.statusCode == 200) {\n    //for admins\n    if (msg.user_payload.role_name.includes(\"admin\")) {\n        if (msg.user_payload.state.state.startsWith(\"editingInfo\")) {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів 2000. Спробуйте знову\", 2000)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n        \n            return [null, null, null, msg, null, null, null];\n            \n        } else if (msg.user_payload.state.state == \"writingTextForDistribution\") {\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Текст надто довгий. Максимальна кількість символів 4096. Спробуйте знову\", 4096)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, msg, null, null];\n            \n        } else if (msg.user_payload.state.state == \"addingAdmin\") {\n            \n            if (msg.message.startsWith(\"@\")) {\n                msg.message = msg.message.slice(1);\n            }\n            \n            //if text is too long\n            if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів 32. Спробуйте знову\", 32)) {\n                \n                return [null, msg, null, null, null, null, null];\n                \n            }\n            \n            return [null, null, null, null, null, msg, null];\n            \n        }\n    }\n    \n    \n    //registrations and dialogflow\n    if (msg.user_payload.state.state == \"username\") {\n        if (isTooLongAnswer(\"Ім'я надто довге. Максимальна кількість символів 255. Спробуйте знову\", 255)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n        \n        msg.payload = {\n            \"name\": msg.message\n        }\n        \n        //for the next question\n        msg.text = \"Зрозуміло. Оберіть свою область\";\n        msg.locationsPageId = 1;\n        \n        return [msg, null, null, null, null, null];\n        \n    } else if (msg.user_payload.state.state == \"registered\" || msg.user_payload.state.state == \"settingGroupsForDistribution\") {\n        \n        //sending saved contexts\n        msg.queryParams = {\n            \"contexts\": msg.user_payload.state.df_contexts\n        };\n        \n        //slice if it is answer to dialogflow question\n        if (msg.message.startsWith(\"answerToDFQuestion_\")) {\n            msg.payload = msg.message.slice(19);\n            \n            msg.intentName = msg.payload;\n        } else {\n            msg.payload = msg.message;\n        }\n        \n        \n        //if questions to dialogflow is too long\n        if (isTooLongAnswer(\"Питання надто довге. Максимальна кількість символів 255. Спробуйте знову\", 255, true)) {\n            \n            return [null, msg, null, null, null, null, null];\n            \n        }\n\n\n\n        return [null, null, msg, null, null, null, null];\n\n    }\n}\n\n\n\nreturn [null, null, null, null, null, null, msg];",
         "outputs": 7,
         "noerr": 0,
         "initialize": "",
@@ -978,8 +978,7 @@
                 "9eb50018.a1a75"
             ],
             [
-                "5b53c12b.cc56",
-                "c508393e.54b098"
+                "5b53c12b.cc56"
             ],
             [
                 "c82c545b.287d98"
@@ -2019,7 +2018,7 @@
         "type": "function",
         "z": "96f6108e.64a37",
         "name": "Registering new user row in db",
-        "func": "msg.method = \"POST\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users\";\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\n    \"id\": msg.chat_id,\n    \"username\": msg.username,\n    \"state\": {\"state\" : \"created\"}\n}\n\n\n\nreturn msg;",
+        "func": "msg.method = \"POST\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users\";\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\n    \"id\": msg.chat_id,\n    \"username\": \"@\" + msg.username,\n    \"state\": {\"state\" : \"created\"}\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -4196,7 +4195,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Adding new admin",
-        "func": "if (msg.message.startsWith(\"@\")) msg.message = msg.message.slice(1);\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/admins/add/?username=\" + msg.message;\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
+        "func": "msg.message = \"@\" + msg.message;\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/admins/add/?username=\" + msg.message;\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -7577,21 +7576,5 @@
                 "932defa9.df42a"
             ]
         ]
-    },
-    {
-        "id": "c508393e.54b098",
-        "type": "debug",
-        "z": "cbf72f33.63dd6",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1760,
-        "y": 460,
-        "wires": []
     }
 ]
