@@ -296,7 +296,7 @@
         ],
         "out": [
             {
-                "x": 940,
+                "x": 1180,
                 "y": 100,
                 "wires": [
                     {
@@ -1652,7 +1652,7 @@
                 "84602d83.794bf"
             ],
             [
-                "b4b6b768.2c65f8"
+                "a8aae999.e84388"
             ]
         ]
     },
@@ -3387,7 +3387,7 @@
         "y": 600,
         "wires": [
             [
-                "f768f6de.9cf298"
+                "2c829482.ce7b4c"
             ]
         ]
     },
@@ -3402,18 +3402,6 @@
         "wires": []
     },
     {
-        "id": "9ef6addc.728b4",
-        "type": "subflow:411ddac8.164cb4",
-        "z": "59350fd8.5c52c",
-        "name": "",
-        "env": [],
-        "x": 1830,
-        "y": 580,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "fc0983c6.40571",
         "type": "function",
         "z": "59350fd8.5c52c",
@@ -3423,11 +3411,11 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1440,
+        "x": 2360,
         "y": 580,
         "wires": [
             [
-                "9ef6addc.728b4"
+                "3d57090f.06f046"
             ]
         ]
     },
@@ -3733,12 +3721,12 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Set status 'writingTextForDistribution'",
-        "func": "msg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.state = \"registered\";\nif(msg.message != \"goToCompleteDistributionMessage\") {\n    msg.user_payload.state.message = msg.message;\n}\n\n\n\nreturn msg;",
+        "func": "msg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/users?id=\" + msg.chat_id;\nmsg.headers = msg.apiHeaders;\n\n\n\nmsg.payload = {\"state\": msg.user_payload.state};\nmsg.payload.state.state = \"distributionConfirmationStage\";\nif(msg.message != \"goToCompleteDistributionMessage\") {\n    msg.user_payload.state.message = msg.message;\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 570,
+        "x": 1490,
         "y": 600,
         "wires": [
             [
@@ -3972,7 +3960,7 @@
         "type": "function",
         "z": "4000ac09.8509f4",
         "name": "Adding new admin",
-        "func": "msg.message = \"@\" + msg.message;\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/admins/add/?username=\" + msg.message;\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
+        "func": "msg.message = \"@\" + msg.message;\n\n\n\nmsg.method = \"PUT\";\nmsg.url = env.get(\"API_URL\") + \"/api/v1/admins/add/?username=\" + encodeURIComponent(msg.message);\nmsg.headers = msg.apiHeaders;\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5470,7 +5458,7 @@
         "type": "function",
         "z": "92b7cb8d.995738",
         "name": "Setting up error message",
-        "func": "msg.payload = {\n    \"text\": \"Сталася помилка\",\n    \"reply_markup\": {\n        \"inline_keyboard\": {\n            \"text\": \"Спробувати знову\",\n            \"callback_data\": \"checkUserState\"\n        }\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
+        "func": "msg.payload = {\n    \"text\": \"Сталася помилка\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[{\n            \"text\": \"Спробувати знову\",\n            \"callback_data\": \"checkUserState\"\n        }]]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -5479,7 +5467,7 @@
         "y": 100,
         "wires": [
             [
-                "49985d26.f659c4"
+                "e8a2b74d.ea5df8"
             ]
         ]
     },
@@ -5488,7 +5476,7 @@
         "type": "subflow:411ddac8.164cb4",
         "z": "92b7cb8d.995738",
         "name": "",
-        "x": 650,
+        "x": 890,
         "y": 100,
         "wires": [
             []
@@ -5499,7 +5487,7 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "1bbcb62d.90d9ea",
         "name": "",
-        "x": 1030,
+        "x": 1040,
         "y": 160,
         "wires": [
             []
@@ -6020,7 +6008,7 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "59350fd8.5c52c",
         "name": "",
-        "x": 1330,
+        "x": 2250,
         "y": 620,
         "wires": [
             []
@@ -6031,7 +6019,7 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "59350fd8.5c52c",
         "name": "",
-        "x": 990,
+        "x": 1910,
         "y": 600,
         "wires": [
             [
@@ -6047,8 +6035,8 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "59350fd8.5c52c",
         "name": "",
-        "x": 870,
-        "y": 740,
+        "x": 1970,
+        "y": 720,
         "wires": [
             [
                 "a09c0ff1.528c5"
@@ -6063,8 +6051,8 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "59350fd8.5c52c",
         "name": "",
-        "x": 1210,
-        "y": 760,
+        "x": 2310,
+        "y": 740,
         "wires": [
             []
         ]
@@ -6079,8 +6067,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 520,
-        "y": 740,
+        "x": 1620,
+        "y": 720,
         "wires": [
             [
                 "dca0b3db.0aa02"
@@ -6092,16 +6080,19 @@
         "type": "function",
         "z": "59350fd8.5c52c",
         "name": "Completing distibution",
-        "func": "var apiResponse = msg.payload.users;\n\n\n//distribution message\nmsg.payload = {\n    \"text\": msg.user_payload.state.message,\n}\n\n\n//sending distribution message for selected groups of users\nfor (var i = 0; i < apiResponse.length; i++) {\n    msg.payload.chat_id = apiResponse[i].id;\n        \n    node.send(msg);\n}\n\n\n//message about successful distribution(for admin)\nmsg.payload = {\n    \"text\": \"✅ Розсилка успішно здійснена\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn msg;",
-        "outputs": 1,
+        "func": "var apiResponse = msg.payload.users;\n\n\n//distribution message\nmsg.payload = {\n    \"text\": msg.user_payload.state.message,\n    \"reply_markup\": {\n        \"inline_keyboard\": [[{\n                \"text\": \"↩ Головне меню\",\n                \"callback_data\": \"mainMenu\"\n            }]\n        ]\n    }\n}\n\n\n//sending distribution message for selected groups of users\nfor (var i = 0; i < apiResponse.length; i++) {\n    msg.payload.chat_id = apiResponse[i].id;\n        \n    node.send([msg, null]);\n}\n\n\n//message about successful distribution(for admin)\nmsg.payload = {\n    \"text\": \"✅ Розсилка успішно здійснена\",\n    \"reply_markup\": {\n        \"inline_keyboard\": [[\n            {\n                \"text\": \"⚙ Адмін-панель\",\n                \"callback_data\": \"adminMenu\"            \n            }]\n        ]\n    },\n    \"chat_id\": msg.chat_id\n}\n\n\n\nreturn [null, msg];",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1220,
-        "y": 720,
+        "x": 2320,
+        "y": 700,
         "wires": [
             [
                 "33e611e8.1dd02e"
+            ],
+            [
+                "294e42dd.e3603e"
             ]
         ]
     },
@@ -6117,7 +6108,7 @@
         "y": 740,
         "wires": [
             [
-                "d01bf2b1.154b"
+                "f9e0b20d.eb141"
             ]
         ]
     },
@@ -6127,12 +6118,10 @@
         "z": "59350fd8.5c52c",
         "name": "",
         "env": [],
-        "x": 1530,
-        "y": 720,
+        "x": 2910,
+        "y": 680,
         "wires": [
-            [
-                "57e48ccd.cf1694"
-            ]
+            []
         ]
     },
     {
@@ -6145,8 +6134,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 1860,
-        "y": 720,
+        "x": 900,
+        "y": 740,
         "wires": [
             [
                 "f34d71e6.5c808"
@@ -6158,10 +6147,12 @@
         "type": "subflow:1bbcb62d.90d9ea",
         "z": "59350fd8.5c52c",
         "name": "",
-        "x": 2250,
-        "y": 720,
+        "x": 1290,
+        "y": 740,
         "wires": [
-            [],
+            [
+                "d01bf2b1.154b"
+            ],
             [
                 "f0ebe6dd.aa87f8"
             ]
@@ -6172,8 +6163,8 @@
         "type": "subflow:92b7cb8d.995738",
         "z": "59350fd8.5c52c",
         "name": "",
-        "x": 2590,
-        "y": 740,
+        "x": 1630,
+        "y": 760,
         "wires": [
             []
         ]
@@ -7553,6 +7544,139 @@
         "wires": [
             [
                 "d983ec57.fa0ba"
+            ]
+        ]
+    },
+    {
+        "id": "a8aae999.e84388",
+        "type": "subflow:4001764a.8341f8",
+        "z": "dbbd86af.74c0d8",
+        "name": "",
+        "x": 1570,
+        "y": 760,
+        "wires": [
+            [
+                "b4b6b768.2c65f8"
+            ]
+        ]
+    },
+    {
+        "id": "f9e0b20d.eb141",
+        "type": "switch",
+        "z": "59350fd8.5c52c",
+        "name": "If distributionConfirmationStage",
+        "property": "user_payload.state.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "distributionConfirmationStage",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 550,
+        "y": 740,
+        "wires": [
+            [
+                "57e48ccd.cf1694"
+            ]
+        ]
+    },
+    {
+        "id": "2c829482.ce7b4c",
+        "type": "switch",
+        "z": "59350fd8.5c52c",
+        "name": "If settingGroupsForDistribution set as message for editing last message",
+        "property": "user_payload.state.state",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "settingGroupsForDistribution",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 660,
+        "y": 600,
+        "wires": [
+            [
+                "f768f6de.9cf298"
+            ],
+            [
+                "4f8594f6.736dbc"
+            ]
+        ]
+    },
+    {
+        "id": "4f8594f6.736dbc",
+        "type": "change",
+        "z": "59350fd8.5c52c",
+        "name": "Set as new message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "newMessage",
+                "pt": "msg",
+                "to": "true",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1120,
+        "y": 640,
+        "wires": [
+            [
+                "f768f6de.9cf298"
+            ]
+        ]
+    },
+    {
+        "id": "3d57090f.06f046",
+        "type": "subflow:bdbd1830.acc9f8",
+        "z": "59350fd8.5c52c",
+        "name": "",
+        "x": 2800,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "294e42dd.e3603e",
+        "type": "subflow:4001764a.8341f8",
+        "z": "59350fd8.5c52c",
+        "name": "",
+        "x": 2570,
+        "y": 720,
+        "wires": [
+            [
+                "33e611e8.1dd02e"
+            ]
+        ]
+    },
+    {
+        "id": "e8a2b74d.ea5df8",
+        "type": "subflow:4001764a.8341f8",
+        "z": "92b7cb8d.995738",
+        "name": "",
+        "x": 590,
+        "y": 100,
+        "wires": [
+            [
+                "49985d26.f659c4"
             ]
         ]
     }
