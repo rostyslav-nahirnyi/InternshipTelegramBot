@@ -378,24 +378,9 @@
         "color": "#DDAA99"
     },
     {
-        "id": "529c4263.aeab0c",
-        "type": "MySQLdatabase",
-        "name": "",
-        "host": "localhost",
-        "port": "3306",
-        "db": "internship_telegram_bot",
-        "tz": "",
-        "charset": "UTF8"
-    },
-    {
         "id": "b513f9.a96b5c08",
         "type": "dialogflowv2-token",
         "name": "Questions"
-    },
-    {
-        "id": "95f1f9c.778f308",
-        "type": "dialogflowv2-token",
-        "name": "dialogflow_node_red"
     },
     {
         "id": "83a6c20c.1b51b",
